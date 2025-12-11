@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Reclamación de Copyright (DMCA)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* ---------------------------------- */
+        /* 1. ESTILOS CSS (Modo Claro/Oscuro) */
+        /* ---------------------------------- */
+        
+        /* Variables para Modo Claro y Oscuro */
+        :root {
+            /* Modo Claro */
+            --color-primary: #007bff;
+            --color-text: #333;
+            --color-background: #f4f4f9;
+            --color-card-background: #fff;
+            --color-border: #ddd;
+            --color-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            /* Modo Oscuro */
+            --color-primary: #79aeff;
+            --color-text: #e0e0e0;
+            --color-background: #121212;
+            --color-card-background: #1e1e1e;
+            --color-border: #333;
+            --color-shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Estilos Generales */
+        body {
+            font-family: 'Segoe UI', arial, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: var(--color-card-background);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px var(--color-shadow);
+        }
+
+        header h1 {
+            color: var(--color-primary);
+            border-bottom: 2px solid var(--color-border);
+            padding-bottom: 10px;
+        }
+
+        /* Estilos del Formulario */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        fieldset {
+            border: 1px solid var(--color-border);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+
+        legend {
+            font-weight: bold;
+            color: var(--color-primary);
+            padding: 0 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--color-border);
+            border-radius: 5px;
+            box-sizing: border-box; 
+            background-color: var(--color-background); 
+            color: var(--color-text);
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--color-primary);
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        small {
+            display: block;
+            margin-top: 5px;
+            color: #6c757d; 
+            font-size: 0.85em;
+        }
+
+        /* Checkbox Group Styling */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-top: 4px; 
+            width: auto;
+        }
+
+        .checkbox-group label {
+            display: inline;
+            font-weight: normal;
+        }
+
+        /* Botón de Envío */
+        .submit-button {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Botón de Cambio de Tema */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: var(--color-card-background);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        /* Iconos del botón de tema */
+        .theme-toggle::after {
+            content: '🌙'; /* Ícono para modo claro (sugiere cambiar a oscuro) */
+            margin-left: 8px;
+        }
+        [data-theme="dark"] .theme-toggle::after {
+            content: '☀️'; /* Ícono para modo oscuro (sugiere cambiar a claro) */
+        }
+        
+        /* Media Queries para Responsividad */
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px 10px;
+                padding: 20px;
+            }
+            header h1 {
+                font-size: 1.5em;
+            }
+            .theme-toggle {
+                position: static; 
+                margin-bottom: 20px;
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <button id="themeToggle" class="theme-toggle">Cambiar Tema</button>
+
+    <div class="container">
+        <header>
+            <h1><i class="fa-solid fa-file"></i> | Formulario de Reclamación de Derechos de Autor (DMCA)</h1>
+            <p>Utilice este formulario para reportar contenido que cree que infringe sus derechos de autor.</p>
+        </header>
+
+        <form id="dmcaForm" action="https://formspree.io/f/mqagrnvp" method="POST">
+            
+            <fieldset>
+                <legend>Información del Reclamante</legend>
+
+                <div class="form-group">
+                    <label for="full_name">Nombre Completo o Nombre de la Empresa:</label>
+                    <input type="text" id="full_name" name="Nombre del Reclamante" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact_email">Correo Electrónico de Contacto (Obligatorio):</label>
+                    <input type="email" id="contact_email" name="_replyto" required>
+                    <small>Este correo NO se mostrará públicamente. Se usará para contactarle.</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signature_name">Firma Electrónica (Nombre Completo):</label>
+                    <input type="text" id="signature_name" name="Firma Electrónica" required>
+                    <small>Al firmar, declara que toda la información es precisa y que usted es el propietario o agente autorizado.</small>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Detalles del Contenido Infractor</legend>
+
+                <div class="form-group">
+                    <label for="infringing_url">URL Específica en Cocacolalandia donde se encuentra el contenido:</label>
+                    <input type="url" id="infringing_url" name="URL Infractora" required>
+                    <small>Ejemplo: https://sites.google.com/view/cocacolalandia/juego/acumulador-de-cocacolas</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="original_work_url">URL o Ubicación donde se encuentra su Obra Original:</label>
+                    <input type="url" id="original_work_url" name="URL de Obra Original" required>
+                    <small>Prueba que demuestra la titularidad de los derechos de autor.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descripción Detallada de la Infracción:</label>
+                    <textarea id="description" name="Descripción de la Infracción" rows="5" required></textarea>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Declaraciones Legales (Requeridas por DMCA)</legend>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="declaration1" name="Declaracion_Propiedad" value="Aceptada" required>
+                    <label for="declaration1">Declaro, bajo pena de perjurio, que soy el propietario de los derechos de autor o un agente autorizado para actuar en nombre del propietario de un derecho exclusivo que supuestamente se ha infringido.</label>
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="declaration2" name="Declaracion_Buena_Fe" value="Aceptada" required>
+                    <label for="declaration2">Declaro, de buena fe, que el uso del material de la manera reclamada no está autorizado por el propietario de los derechos de autor, su agente o la ley.</label>
+                </div>
+                
+            </fieldset>
+
+            <div class="form-group submit-group">
+                <button type="submit" class="submit-button"><i class="fa-solid fa-paper-plane"></i> | Enviar Reclamación DMCA</button>
+            </div>
+            
+            <input type="hidden" name="_subject" value="Nueva Reclamación DMCA de Cocacolalandia">
+            <input type="hidden" name="_next" value="https://www.tiendanube.com/blog/pagina-de-agradecimiento/">
+            
+        </form>
+    </div>
+
+    <script>
+        /* ---------------------------------- */
+        /* 2. JAVASCRIPT (Funcionalidad Tema) */
+        /* ---------------------------------- */
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('themeToggle');
+            const htmlElement = document.documentElement;
+            
+            // Cargar el tema guardado o usar 'light' por defecto
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            htmlElement.setAttribute('data-theme', currentTheme);
+
+            // Manejar el click del botón
+            themeToggle.addEventListener('click', () => {
+                const current = htmlElement.getAttribute('data-theme');
+                const newTheme = current === 'dark' ? 'light' : 'dark';
+                
+                // Aplicar y guardar el nuevo tema
+                htmlElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+        });
+    </script>
+</body>
+</html>

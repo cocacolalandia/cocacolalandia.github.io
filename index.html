@@ -1,287 +1,709 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
-  <head>
-
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Cocacolalandia 26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Courier New:wght@400;600;800&amp;display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon family=Material+Icons">
+    <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/11/13/19/20251113193935-KD98JKSA.js" defer></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0c0e1b;
+            --card-color: #14172b;
+            --text-color: #fff;
+            --accent: #00c6ff;
+            --accent2: #bc13fe;
+            --shadow: 0 0 15px rgba(0, 198, 255, 0.3);
+        }
 
-    <title>Cyborg - Awesome HTML5 Template</title>
+        .light-mode {
+            --bg-color: #f4f6fa;
+            --card-color: #ffffff;
+            --text-color: #0c0e1b;
+            --shadow: 0 0 15px rgba(188, 19, 254, 0.15);
+        }
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        html,
+        body {
+            height: 100%
+        }
 
+        body {
+            margin: 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            /* FONT: Courier New required */
+            font-family: "Courier New", Courier, monospace;
+            transition: background 0.3s, color 0.3s;
+        }
 
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-cyborg-gaming.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-<!--
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background: rgba(10, 12, 25, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-TemplateMo 579 Cyborg Gaming
+        /* Logo (replaces h1 text) */
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-https://templatemo.com/tm-579-cyborg-gaming
+        .header-logo img {
+            height: 48px;
+            width: auto;
+            display: block;
+            -webkit-user-drag: none;
+        }
 
--->
-  </head>
+        /* Search input styling (updated but respecting original colors) */
+        header .search-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        header input#search {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            outline: none;
+            font-size: 15px;
+            width: 220px;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-color);
+            transition: box-shadow .18s, border-color .18s, background .18s;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        header input#search::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        header input#search:focus {
+            border-color: rgba(255, 255, 255, 0.14);
+            box-shadow: 0 6px 18px rgba(0, 198, 255, 0.06);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* theme toggle (keeps original look) */
+        #toggleTheme {
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--accent);
+        }
+
+        #toggleTheme:hover {
+            color: var(--accent2);
+        }
+
+        /* Typewriter title area (new): placed under header, centered, does not change original layout */
+        .typewriter-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 26px 10%;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.06), transparent);
+        }
+
+        .typewriter {
+            color: var(--text-color);
+            font-size: 1.8rem;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        .typewriter .dynamic {
+            display: inline-block;
+            min-width: 520px;
+            /* reserve space so layout doesn't jump */
+            max-width: calc(100% - 180px);
+            overflow: hidden;
+        }
+
+        .typewriter .dynamic .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.1em;
+            background: var(--accent);
+            margin-left: 6px;
+            animation: blink 1s steps(2, start) infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        /* Game Grid */
+        #games {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            padding: 40px 10%;
+        }
+
+        .game-card {
+            background: var(--card-color);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 25px var(--accent);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+        }
+
+        .game-card h3 {
+            margin: 15px;
+            font-family: 'Courier New', sans-serif;
+        }
+
+        .game-card button {
+            margin: 0 15px 15px 15px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            color: white;
+            font-weight: 600;
+            transition: opacity 0.2s;
+            font-family: 'Courier New', sans-serif;
+        }
+
+        .game-card button:hover {
+            opacity: 0.8;
+        }
+
+        .favorite {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            padding: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: color 0.3s, transform .12s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .favorite:active {
+            transform: scale(.95);
+        }
+
+        .favorite.active {
+            color: #ffda44;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        /* Floating Buttons (kept same) */
+        .floating-btn {
+            position: fixed;
+            right: 20px;
+            padding: 14px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            z-index: 100;
+            color: white;
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        #scrollTopBtn {
+            bottom: 110px;
+            background: var(--accent);
+            box-shadow: var(--shadow);
+        }
+
+        #whatsappBtn {
+            bottom: 60px;
+            background: #25D366;
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.5);
+        }
+
+        #panicBtn {
+            bottom: 10px;
+            background: #e63946;
+            box-shadow: 0 0 15px rgba(230, 57, 70, 0.5);
+        }
+
+        /* Loader (kept identical) */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loader-circle {
+            border: 5px solid transparent;
+            border-top: 5px solid var(--accent);
+            border-right: 5px solid var(--accent2);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive tweaks */
+        @media (max-width:720px) {
+            header {
+                padding: 14px 6%
+            }
+
+            header input#search {
+                width: 140px
+            }
+
+            .typewriter .dynamic {
+                min-width: 260px
+            }
+
+            #games {
+                padding: 20px 6%
+            }
+        }
+    </style>
+</head>
 
 <body>
-
-  <!-- ***** Preloader Start ***** -->
-  <div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+    <div id="loader">
+        <div class="loader-circle"></div>
     </div>
-  </div>
-  <!-- ***** Preloader End ***** -->
+    <style>
+        #alertBanner {
+            position: relative;
+            /* no fijo */
+            max-width: 1200px;
+            margin: 20px auto;
+            border-radius: 16px;
+            overflow: hidden;
+            font-family: "Courier New", monospace;
+            box-shadow: var(--shadow);
+        }
 
-  <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="index.html" class="logo">
-                        <img src="assets/images/logo.png" alt="">
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Search End ***** -->
-                    <div class="search-input">
-                      <form id="search" action="#">
-                        <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
-                        <i class="fa fa-search"></i>
-                      </form>
-                    </div>
-                    <!-- ***** Search End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li><a href="index.html" class="active">Home</a></li>
-                        <li><a href="browse.html">Browse</a></li>
-                        <li><a href="details.html">Details</a></li>
-                        <li><a href="streams.html">Streams</a></li>
-                        <li><a href="profile.html">Profile <img src="assets/images/profile-header.jpg" alt=""></a></li>
-                    </ul>   
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
+        .banner-message {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: #8a2be2;
+            color: #fff;
+            font-size: 1rem;
+            line-height: 1.4;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .banner-message.active {
+            opacity: 1;
+        }
+
+        .banner-message i {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .banner-text {
+            flex: 1;
+        }
+
+        .banner-text small {
+            display: block;
+            font-size: 0.75rem;
+            opacity: 0.85;
+            margin-top: 4px;
+        }
+
+        .banner-btn {
+            background: var(--accent2);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            padding: 12px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .banner-btn:hover {
+            background: var(--accent);
+            color: #000;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width:720px) {
+            .banner-message {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .banner-message i {
+                font-size: 1.5rem;
+            }
+
+            .banner-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+    <style>
+        .play-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(90deg, #6f00ff, #9b00ff);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            padding: 14px 26px;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(155, 0, 255, 0.3);
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .play-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .play-btn:hover {
+            background: linear-gradient(90deg, #9b00ff, #c200ff);
+            box-shadow: 0 0 25px rgba(155, 0, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        .play-btn:hover i:first-child {
+            transform: rotate(-20deg);
+        }
+
+        .play-btn:hover i:last-child {
+            transform: translateX(5px);
+        }
+    </style>
+    <script>
+        // Alternar banners cada 10 segundos
+        let currentBanner = 0;
+        const banners = document.querySelectorAll('#alertBanner .banner-message');
+        banners[currentBanner].classList.add('active');
+
+        setInterval(() => {
+            banners[currentBanner].classList.remove('active');
+            currentBanner = (currentBanner + 1) % banners.length;
+            banners[currentBanner].classList.add('active');
+        }, 10000);
+    </script>
+
+    <header>
+        <div class="header-logo">
+            <a href="#" class="logo"><img src="https://i.imgur.com/PPO7d2j.png" alt="Cocacolalandia logo"></a>
+        </div>
+        <div class="search-wrap">
+            <input type="text" id="search" placeholder="Buscar juegos... 🔍"> <span id="toggleTheme" title="Cambiar tema"><i class="fa-solid fa-moon"></i></span>
+        </div>
+    </header>
+    <div class="typewriter-wrap">
+        <div class="typewriter" aria-hidden="true">
+            <div class="dynamic">
+                <span id="type-dynamic"></span>
+            </div>
+            <div class="static" style="opacity:0.95; font-weight:600; margin-left:6px;">
+                Es Cocacolalandia
             </div>
         </div>
     </div>
-  </header>
-  <!-- ***** Header Area End ***** -->
-
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="page-content">
-
-          <!-- ***** Banner Start ***** -->
-          <div class="main-banner">
-            <div class="row">
-              <div class="col-lg-7">
-                <div class="header-text">
-                  <h6>Welcome To Cyborg</h6>
-                  <h4><em>Browse</em> Our Popular Games Here</h4>
-                  <div class="main-button">
-                    <a href="browse.html">Browse Now</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- ***** Banner End ***** -->
-
-          <!-- ***** Most Popular Start ***** -->
-          <div class="most-popular">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="heading-section">
-                  <h4><em>Most Popular</em> Right Now</h4>
-                </div>
-                <div class="row">
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="assets/images/popular-01.jpg" alt="">
-                      <h4>Fortnite<br><span>Sandbox</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="assets/images/popular-02.jpg" alt="">
-                      <h4>PubG<br><span>Battle S</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="assets/images/popular-03.jpg" alt="">
-                      <h4>Dota2<br><span>Steam-X</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="assets/images/popular-04.jpg" alt="">
-                      <h4>CS-GO<br><span>Legendary</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="item">
-                      <div class="row">
-                        <div class="col-lg-6 col-sm-6">
-                          <div class="item inner-item">
-                            <img src="assets/images/popular-05.jpg" alt="">
-                            <h4>Mini Craft<br><span>Legendary</span></h4>
-                            <ul>
-                              <li><i class="fa fa-star"></i> 4.8</li>
-                              <li><i class="fa fa-download"></i> 2.3M</li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6">
-                          <div class="item">
-                            <img src="assets/images/popular-06.jpg" alt="">
-                            <h4>Eagles Fly<br><span>Matrix Games</span></h4>
-                            <ul>
-                              <li><i class="fa fa-star"></i> 4.8</li>
-                              <li><i class="fa fa-download"></i> 2.3M</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="assets/images/popular-07.jpg" alt="">
-                      <h4>Warface<br><span>Max 3D</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="item">
-                      <img src="assets/images/popular-08.jpg" alt="">
-                      <h4>Warcraft<br><span>Legend</span></h4>
-                      <ul>
-                        <li><i class="fa fa-star"></i> 4.8</li>
-                        <li><i class="fa fa-download"></i> 2.3M</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-lg-12">
-                    <div class="main-button">
-                      <a href="browse.html">Discover Popular</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- ***** Most Popular End ***** -->
-
-          <!-- ***** Gaming Library Start ***** -->
-          <div class="gaming-library">
-            <div class="col-lg-12">
-              <div class="heading-section">
-                <h4><em>Your Gaming</em> Library</h4>
-              </div>
-              <div class="item">
-                <ul>
-                  <li><img src="assets/images/game-01.jpg" alt="" class="templatemo-item"></li>
-                  <li><h4>Dota 2</h4><span>Sandbox</span></li>
-                  <li><h4>Date Added</h4><span>24/08/2036</span></li>
-                  <li><h4>Hours Played</h4><span>634 H 22 Mins</span></li>
-                  <li><h4>Currently</h4><span>Downloaded</span></li>
-                  <li><div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div></li>
-                </ul>
-              </div>
-              <div class="item">
-                <ul>
-                  <li><img src="assets/images/game-02.jpg" alt="" class="templatemo-item"></li>
-                  <li><h4>Fortnite</h4><span>Sandbox</span></li>
-                  <li><h4>Date Added</h4><span>22/06/2036</span></li>
-                  <li><h4>Hours Played</h4><span>740 H 52 Mins</span></li>
-                  <li><h4>Currently</h4><span>Downloaded</span></li>
-                  <li><div class="main-border-button"><a href="#">Donwload</a></div></li>
-                </ul>
-              </div>
-              <div class="item last-item">
-                <ul>
-                  <li><img src="assets/images/game-03.jpg" alt="" class="templatemo-item"></li>
-                  <li><h4>CS-GO</h4><span>Sandbox</span></li>
-                  <li><h4>Date Added</h4><span>21/04/2036</span></li>
-                  <li><h4>Hours Played</h4><span>892 H 14 Mins</span></li>
-                  <li><h4>Currently</h4><span>Downloaded</span></li>
-                  <li><div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-lg-12">
-              <div class="main-button">
-                <a href="profile.html">View Your Library</a>
-              </div>
-            </div>
-          </div>
-          <!-- ***** Gaming Library End ***** -->
-        </div>
-      </div>
+    <!-- Botón JUEGA YA -->
+    <div style="text-align:center; margin-top:30px">
+        <a href="https://sites.google.com/view/cocacolalandia/juegos" class="play-btn" target="_blank">
+            <i class="fa-solid fa-bolt"></i>
+            <span>JUEGA YA</span>
+            <i class="fa-solid fa-angles-right"></i>
+        </a>
     </div>
-  </div>
-  
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved. 
-          
-          <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a></p>
-        </div>
-      </div>
-    </div>
-  </footer>
+
+    <section id="games"></section><button class="floating-btn" id="scrollTopBtn"><i class="fa-solid fa-arrow-up"></i> | Ir Arriba</button> <button class="floating-btn" id="whatsappBtn"><i class="fa-brands fa-whatsapp"></i> | Nuestro WhatsApp</button> <button class="floating-btn" id="panicBtn"><i class="fa-solid fa-life-ring"></i> | ¡PÁNICO!</button>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => document.getElementById("loader").style.display = "none", 1000);
+
+            const games = [{
+                    name: "1v1.lol",
+                    img: "https://images.crazygames.com/games/1v1-lol/cover-1585728351086.png",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "Slope",
+                    img: "https://img.y8.com/cloud/y8-thumbs/246/thumbnail464x348.jpg",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "Among Us (Fan Edition)",
+                    img: "https://cdn1.epicgames.com/salesEvent/salesEvent/amoguslandscape_2560x1440-3fac17e8bb45d81ec9b2c24655758075",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "12 Minibattles",
+                    img: "https://imgs.crazygames.com/games/12-minibattles/cover_16x9-1707829553932.png?metadata=none&quality=60&height=4383",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "Granny",
+                    img: "https://play-lh.googleusercontent.com/XPM8u_fQrERAQFNp1byQgCphu6_q_WSrJutTm2PF9iQBYbOhVu3ubliUxHaoZVdhyro=w526-h296-rw",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "Baldi Basics",
+                    img: "https://play-lh.googleusercontent.com/Cl3q99D2bBmKlP_lHfA1h0sw-G0GKrpuvQZ2Mk1ZiXST8Q3AjWqOepPVKzrIFoMCtzQ=w526-h296-rw",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "Crossy Road",
+                    img: "https://i.blogs.es/198eb8/crossy/450_1000.webp",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "Race Royale",
+                    img: "https://survival-race.io/data/image/play-survival-race-game2.png",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "Subway Surfers",
+                    img: "https://unity.com/_next/image?url=https%3A%2F%2Fcdn.bfldr.com%2FS5BC9Y64%2Fat%2Fmchpwh4jw8ct4nr7tnjvgnxs%2FSubwaySurfers-FeaturedImage.jpg%3Fauto%3Dwebp&w=3840&q=75",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "Steal A Brainrot",
+                    img: "https://tr.rbxcdn.com/180DAY-a5434f50e5846e446aab631fbf0a92e7/768/432/Image/Webp/noFilter",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "Moto X3M",
+                    img: "https://www.coolmathgames.com/sites/default/files/styles/mobile_game_image/public/MotoX3M_OG-logo.jpg.webp?itok=OJ_eiJSl",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "Clash Of Vikings",
+                    img: "https://imgs.crazygames.com/clash-of-vikings/20220916152040/clash-of-vikings-cover?metadata=none&quality=100&width=1200&height=630&fit=crop",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "Minecraft 1.12.2 (Eaglercraft)",
+                    img: "https://xboxwire.thesourcemediaassets.com/sites/4/15YR_Free_Cape-1-7cbcb0739e3df57534ec-9063efed017354d1b1c3.jpg",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "Geometry Dash (Lite)",
+                    img: "https://m.media-amazon.com/images/I/61CCVhzkDeL.png",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                },
+                {
+                    name: "FNAF 1",
+                    img: "https://i.imgur.com/vU9R3AN.png",
+                    link: "https://sites.google.com/view/cocacolalandia/juegos"
+                }
+            ];
+
+            const gamesContainer = document.getElementById("games");
+            let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+            function renderGames(filter = "") {
+                gamesContainer.innerHTML = "";
+
+                // Ordenar: favoritos primero (alfabético), luego el resto (alfabético)
+                const sortedGames = [...games].sort((a, b) => {
+                    const aFav = favorites.includes(a.name);
+                    const bFav = favorites.includes(b.name);
+                    if (aFav && !bFav) return -1;
+                    if (!aFav && bFav) return 1;
+                    return a.name.localeCompare(b.name);
+                });
+
+                sortedGames
+                    .filter(g => g.name.toLowerCase().includes(filter.toLowerCase()))
+                    .forEach(game => {
+                        const card = document.createElement("div");
+                        card.className = "game-card";
+                        card.innerHTML = `
+          <div class="favorite ${favorites.includes(game.name) ? "active" : ""}" title="Marcar favorito">★</div>
+          <img src="${game.img}" alt="${game.name}" loading="lazy">
+          <h3>${game.name}</h3>
+          <button class="play-btn"><i class="fa-solid fa-gamepad"></i> | Jugar</button>
+        `;
+
+                        const favEl = card.querySelector(".favorite");
+                        favEl.addEventListener("click", e => {
+                            e.stopPropagation();
+                            if (favorites.includes(game.name)) {
+                                favorites = favorites.filter(x => x !== game.name);
+                                favEl.classList.remove("active");
+                            } else {
+                                favorites.push(game.name);
+                                favEl.classList.add("active");
+                            }
+                            localStorage.setItem("favorites", JSON.stringify(favorites));
+                            renderGames(document.getElementById("search").value); // 🔁 Re-render con orden actualizado
+                        });
+
+                        card.querySelector(".play-btn").addEventListener("click", () => window.open(game.link, "_blank"));
+                        gamesContainer.appendChild(card);
+                    });
+            }
+
+            renderGames();
+            document.getElementById("search").addEventListener("input", e => renderGames(e.target.value));
+
+            document.getElementById("scrollTopBtn").onclick = () => window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+            document.getElementById("whatsappBtn").onclick = () => window.open("https://whatsapp.com/channel/0029Vb6QYRC6buMLgJKnJm3h", "_blank");
+            document.getElementById("panicBtn").onclick = () => window.open("https://classroom.google.com", "_blank");
+
+            const toggle = document.getElementById("toggleTheme");
+            toggle.addEventListener("click", () => {
+                document.body.classList.toggle("light-mode");
+                const icon = toggle.querySelector("i");
+                if (document.body.classList.contains("light-mode")) {
+                    icon.classList.remove("fa-moon");
+                    icon.classList.add("fa-sun");
+                } else {
+                    icon.classList.remove("fa-sun");
+                    icon.classList.add("fa-moon");
+                }
+            });
 
 
-  <!-- Scripts -->
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+            const phrases = [
+                "Donde quieras, en el dispositivo que quieras, desbloqueado.",
+                "Disfruta sin límites, juega sin pausas.",
+                "Accede desde cualquier red, en cualquier momento."
+            ];
 
-  <script src="assets/js/isotope.min.js"></script>
-  <script src="assets/js/owl-carousel.js"></script>
-  <script src="assets/js/tabs.js"></script>
-  <script src="assets/js/popup.js"></script>
-  <script src="assets/js/custom.js"></script>
+            const dyn = document.getElementById("type-dynamic");
+            let pIndex = 0;
+            let charIndex = 0;
+            let typing = true;
 
+            function typeCycle() {
+                const current = phrases[pIndex];
 
-  </body>
+                if (typing) {
+                    // Escribir
+                    if (charIndex < current.length) {
+                        dyn.textContent = current.substring(0, charIndex + 1);
+                        charIndex++;
+                        setTimeout(typeCycle, 45);
+                    } else {
+                        typing = false;
+                        setTimeout(typeCycle, 1500);
+                    }
+                } else {
+                    // Borrar
+                    if (charIndex > 0) {
+                        dyn.textContent = current.substring(0, charIndex - 1);
+                        charIndex--;
+                        setTimeout(typeCycle, 25);
+                    } else {
+                        // Limpiar antes de pasar a la siguiente frase (evita el bug del flash)
+                        dyn.textContent = "";
+                        pIndex = (pIndex + 1) % phrases.length;
+                        typing = true;
+                        setTimeout(typeCycle, 300);
+                    }
+                }
+            }
+
+            setTimeout(typeCycle, 600);
+
+        });
+    </script>
+    <p>Versión 26.2.1 - La web puede tener errores - El botón de <b>pantalla completa</b> no funciona. - No nos hacemos responsables de los anuncios. - © 2025 Cocacolalandia. Todos los derechos reservados. Nada que se encuentre en el sitio web https://sites.google.com/view/cocacolalandia, incluidas sus sub-páginas (por ejemplo, https://sites.google.com/view/cocacolalandia/juegos) no puede ser copiado, ni imitado; ni nunca se ha podido copiar ni imitar; ni nunca se podrá copiar ni imitar. Cualquier copia, imitación o similar será denunciado a las autoridades. - Puedes mandar una reclamación de Copyright (DMCA) <a href="https://sites.google.com/view/cocacolalandia/copyright">clickando aquí.</a></p>
+    <style>
+        .game-card button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+            pointer-events: none;
+            background: var(--card-color);
+            color: rgba(255, 255, 255, 0.5);
+            box-shadow: none;
+        }
+
+        .floating-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.4;
+            pointer-events: none;
+            background: #555;
+            box-shadow: none;
+            transform: none;
+        }
+
+        #dontShowBtn:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+            background: var(--card-color);
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: none;
+        }
+
+        #dontShowBtn:disabled:hover {
+            background: var(--card-color);
+        }
+    </style>
+</body>
 
 </html>

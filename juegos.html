@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocacolalandia - Juegos Unblocked</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Courier+New:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* VARIABLES GLOBALES */
+        :root {
+            --bg-color: #0c0e1b;
+            --card-color: #14172b;
+            --text-color: #fff;
+            --accent: #00c6ff;
+            --accent2: #bc13fe;
+            --shadow: 0 0 15px rgba(0, 198, 255, 0.2);
+            --header-bg: rgba(10, 12, 25, 0.8);
+            --footer-color: rgba(255, 255, 255, 0.7);
+            --hover-text: #fff;
+            --category-hover-bg: var(--accent);
+            --category-hover-text: #000;
+        }
+
+        body.light-mode {
+            --bg-color: #f4f6fa;
+            --card-color: #ffffff;
+            --text-color: #0c0e1b;
+            --accent: #00c6ff;
+            --accent2: #bc13fe;
+            --shadow: 0 0 15px rgba(0, 198, 255, 0.2);
+            --header-bg: rgba(244, 246, 250, 0.8);
+            --footer-color: rgba(0, 0, 0, 0.7);
+            --hover-text: #000;
+            --category-hover-bg: var(--accent2);
+            --category-hover-text: #fff;
+        }
+
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            font-family: "Courier New", Courier, monospace;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .header-logo img {
+            height: 48px;
+        }
+
+        #toggleTheme {
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--accent);
+            transition: color 0.3s;
+        }
+
+        #toggleTheme:hover {
+            color: var(--accent2);
+        }
+
+        /* SEARCH BAR */
+        #searchBox {
+            width: 100%;
+            background: var(--card-color);
+            border: none;
+            padding: 14px;
+            color: var(--text-color);
+            border-radius: 12px;
+            margin: 15px 0;
+            font-size: 1rem;
+            box-shadow: var(--shadow);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* CATEGORY BAR */
+        #categoryBar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .category-btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 10px;
+            background: var(--accent2);
+            color: var(--text-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .category-btn:hover {
+            background: var(--category-hover-bg);
+            color: var(--category-hover-text);
+        }
+
+        /* GAME BUTTONS */
+        .game-btn {
+            display: block;
+            width: 100%;
+            background: var(--card-color);
+            color: var(--text-color);
+            border: none;
+            padding: 18px 22px;
+            margin: 8px 0;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: left;
+            box-shadow: var(--shadow);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .game-btn:hover {
+            background: var(--accent);
+            color: var(--hover-text);
+        }
+
+        /* BACK BUTTON */
+        .back-btn {
+            background: var(--accent2);
+            color: var(--text-color);
+            border: none;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .back-btn:hover {
+            background: var(--accent);
+            color: var(--hover-text);
+        }
+
+        /* IFRAME */
+        iframe {
+            max-width: 800px;
+            width: 100%;
+            height: 80vh;
+            border: none;
+            border-radius: 12px;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        /* LOADER */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: background 0.3s;
+        }
+
+        .loader-circle {
+            border: 5px solid transparent;
+            border-top: 5px solid var(--accent);
+            border-right: 5px solid var(--accent2);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* FLOATING BUTTONS */
+        .floating-btn {
+            position: fixed;
+            right: 20px;
+            padding: 14px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            z-index: 100;
+            color: white;
+        }
+
+        #scrollTopBtn {
+            bottom: 110px;
+            background: var(--accent);
+        }
+
+        #whatsappBtn {
+            bottom: 60px;
+            background: #25D366;
+        }
+
+        #panicBtn {
+            bottom: 10px;
+            background: #e63946;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            background: var(--card-color);
+            color: var(--footer-color);
+            border-radius: 0 0 16px 16px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* MENU LAYOUT */
+        #launcher {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: var(--bg-color);
+            /* asegura fondo consistente */
+            transition: background 0.3s;
+            min-height: 100vh;
+            /* ocupa toda la altura */
+        }
+
+        #menuUI {
+            width: 100%;
+            max-width: 900px;
+            background: transparent;
+            /* puede ser transparente para dejar ver launcher */
+        }
+
+        .game-btn,
+        .back-btn {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            margin: 8px auto;
+        }
+
+        .new-badge {
+            background: #00c6ff;
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            margin-left: 6px;
+            font-weight: 700;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="loader">
+        <div class="loader-circle"></div>
+    </div>
+
+    <header>
+        <div class="header-logo">
+            <img src="https://i.imgur.com/PPO7d2j.png">
+        </div>
+        <div id="toggleTheme"><i class="fa-solid fa-sun"></i></div>
+    </header>
+
+    <h1 style="text-align:center">Bienvenido a los juegos de Cocacolalandia</h1>
+    <p style="text-align:center;">
+        Compatible con Chromebooks. <br><br><br>
+        <b>Guía de iconos</b><br><br><i class="fa-solid fa-rectangle-ad"></i> | El juego contiene anuncios <b>no puestos ni monetizados por Cocacolalandia</b><br><i class="fa-solid fa-circle-exclamation"></i> | El juego tiene algún error o es diferente al anunciado. Puede tener cualquier comportamiento no esperado<br><i class="fa-solid fa-star"></i> | Juego más jugado de Cocacolalandia
+    </p>
+    <h2 id="gameTitle" style="text-align:center; margin-top:20px; display:none;"></h2>
+
+    <div id="launcher">
+        <div id="menuUI">
+            <!-- Buscador -->
+            <div style="display:flex; align-items:center; gap:10px; max-width:600px; margin:auto;">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchBox" placeholder="Buscar juegos...">
+            </div>
+
+            <!-- Categorías -->
+            <div id="categoryBar">
+                <button class="category-btn" data-cat="all"><i class="fa-solid fa-layer-group"></i> Todos</button>
+                <button class="category-btn" data-cat="accion"><i class="fa-solid fa-bolt"></i> Acción</button>
+                <button class="category-btn" data-cat="multijugador"><i class="fa-solid fa-users"></i> Multijugador</button>
+                <button class="category-btn" data-cat="carreras"><i class="fa-solid fa-car-side"></i> Carreras</button>
+                <button class="category-btn" data-cat="horror"><i class="fa-solid fa-ghost"></i> Horror</button>
+                <button class="category-btn" data-cat="estrategia"><i class="fa-solid fa-chess"></i> Estrategia</button>
+                <button class="category-btn" data-cat="casual"><i class="fa-solid fa-ice-cream"></i> Casual</button>
+                <button class="category-btn" data-cat="plataformas"><i class="fa-solid fa-person-running"></i> Plataformas</button>
+                <button class="category-btn" data-cat="sinanuncios"><i class="fa-solid fa-circle-check"></i> Sin Anuncios</button>
+                <!-- AÑADIR <span class="new-badge">NUEVO</span> a los juegos nuevos para identificarlos -->
+            </div>
+
+            <!-- MENÚ ORIGINAL -->
+            <div id="menuList">
+
+                <button class="game-btn" data-cat="accion plataformas" data-src="https://lablockedgames.com/funblocked/fall-guys/index.html">
+                    Fallboys <i class="fa-solid fa-rectangle-ad"></i>
+                </button>
+
+                <button class="game-btn" data-cat="accion multijugador" data-src="https://lablockedgames.com/funblocked/1v1-lol/index.html">
+                    1v1.lol <i class="fa-solid fa-rectangle-ad"></i>
+                </button>
+
+                <button class="game-btn" data-cat="multijugador casual" data-src="https://lablockedgames.com/funblocked/among-us/index.html">
+                    Among Us Fan Edition <i class="fa-solid fa-rectangle-ad"></i>
+                </button>
+
+                <button class="game-btn" data-cat="casual" data-src="https://lablockedgames.com/funblocked/crossy-road/cr.html">
+                    Crossy Road <i class="fa-solid fa-rectangle-ad"></i>
+                </button>
+
+                <button class="game-btn" data-cat="horror" data-src="https://lablockedgames.com/funblocked/baldis-basics/index.html">
+                    Baldi Basics <i class="fa-solid fa-rectangle-ad"></i>
+                </button>
+
+                <button class="game-btn" data-cat="carreras habilidad" data-src="https://lablockedgames.com/funblocked/slope/index.html">
+                    Slope <i class="fa-solid fa-rectangle-ad"></i>
+                </button>
+
+                <button class="game-btn" data-cat="multijugador" data-src="https://lablockedgames.com/funblocked/12-minibattles/index.html">
+                    12 MiniBattles <i class="fa-solid fa-rectangle-ad"></i>
+                </button>
+
+                <button class="game-btn" data-cat="horror" data-src="https://lablockedgames.com/funblocked/granny/index.html">
+                    Granny <i class="fa-solid fa-rectangle-ad"></i>
+                </button>
+
+                <button class="game-btn" data-cat="carreras" data-src="https://rawcdn.githack.com/gatoutils/cocacolalandia/fb9b6818944fe698c2b4bbe195d39aac0384c9b3/clsubwaysurfersbarcelona.html">
+                    Subway Surfers <i class="fa-solid fa-rectangle-ad"></i>
+                </button>
+
+                <button class="game-btn" data-cat="carreras accion" data-src="https://rawcdn.githack.com/bubbls/UGS-Assets/7b5f563061836e381c07e99a5ebae38ade037a44/survival%20race%20v2/index.html">
+                    Race Royale <i class="fa-solid fa-rectangle-ad"></i> <i class="fa-solid fa-star"></i>
+                </button>
+
+                <button class="game-btn" data-cat="multijugador" data-src="https://rawcdn.githack.com/gatoutils/cocacolalandia/b1739e6024701940ff66900c6c0abf4f27c165a7/clbrainrot.html">
+                    Steal A Brainrot <i class="fa-solid fa-circle-exclamation"></i> <i class="fa-solid fa-rectangle-ad"></i>
+                </button>
+
+                <button class="game-btn" data-cat="estrategia" data-src="https://rawcdn.githack.com/Gzh0821/pvzge_web/master/docs/index.html">
+                    Plantas vs Zombies <i class="fa-solid fa-rectangle-ad"></i>
+                </button>
+
+                <button class="game-btn" data-cat="estrategia sinanuncios" data-src="https://gatoutils.github.io/cocacolalandia/clashofvikings/">
+                    Clash Of Vikings
+                </button>
+
+                <button class="game-btn" data-cat="carreras habilidad" data-src="https://raw.githack.com/gatoutils/cocacolalandia/main/clmotox3mm.html">
+                    Moto X3M <i class="fa-solid fa-rectangle-ad"></i>
+                </button>
+
+                <button class="game-btn" data-cat="multijugador casual sinanuncios" data-src="https://raw.githack.com/gatoutils/cocacolalandia/main/Eaglercraft_1.12.2_WASM_Offline_Download.html">
+                    Minecraft 1.21.2 (Eaglercraft) <i class="fa-solid fa-circle-exclamation"></i>
+                </button>
+                <button class="game-btn" data-cat="plataformas casual accion sinanuncios" data-src="https://rawcdn.githack.com/genizy/google-class/main/gdlite/index.html">Geometry Dash Lite <spam class="new-badge">¡NUEVO!</spam>
+                </button>
+                <button class="game-btn" data-cat="horror sinanuncios" data-src="https://raw.githack.com/gatoutils/cocacolalandia/main/fnaf.html">FNAF <i class="fa-solid fa-circle-exclamation"></i> <spam class="new-badge">¡NUEVO!</spam>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- FLOATING BUTTONS -->
+    <button class="floating-btn" id="scrollTopBtn">
+        <i class="fa-solid fa-arrow-up"></i> | Ir arriba
+    </button>
+
+    <button class="floating-btn" id="whatsappBtn">
+        <i class="fa-brands fa-whatsapp"></i> | Nuestro Whatsapp
+    </button>
+
+    <button class="floating-btn" id="panicBtn">
+        <i class="fa-solid fa-life-ring"></i> | PÁNICO
+    </button>
+
+    <script>
+        // LOADER
+        setTimeout(() => document.getElementById("loader").style.display = "none", 1000);
+
+        // TEMA con icono
+        const toggleThemeBtn = document.getElementById("toggleTheme");
+        const themeIcon = toggleThemeBtn.querySelector("i");
+
+        toggleThemeBtn.onclick = () => {
+            document.body.classList.toggle("light-mode");
+            themeIcon.className = document.body.classList.contains("light-mode") ?
+                "fa-solid fa-moon" :
+                "fa-solid fa-sun";
+        };
+
+        // BUSCADOR
+        document.getElementById("searchBox").oninput = e => {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll(".game-btn").forEach(btn => {
+                btn.style.display = btn.textContent.toLowerCase().includes(term) ? "block" : "none";
+            });
+        };
+
+        // FILTRO POR CATEGORÍA
+        document.querySelectorAll(".category-btn").forEach(btn => {
+            btn.onclick = () => {
+                const cat = btn.dataset.cat;
+                document.querySelectorAll(".game-btn").forEach(game => {
+                    game.style.display = (
+                        cat === "all" ||
+                        game.dataset.cat.includes(cat)
+                    ) ? "block" : "none";
+                });
+            };
+        });
+
+        const menuList = document.getElementById("menuList");
+        const menuUI = document.getElementById("menuUI");
+        const launcher = document.getElementById("launcher");
+
+        launcher.addEventListener("click", e => {
+            const targetBtn = e.target.closest(".game-btn");
+
+            if (targetBtn) {
+                const src = targetBtn.dataset.src;
+                // MOSTRAR TÍTULO DEL JUEGO
+                document.getElementById("gameTitle").textContent = targetBtn.textContent.trim();
+                document.getElementById("gameTitle").style.display = "block";
+
+
+                // Ocultar buscador y categorías y menú original
+                menuUI.style.display = "none";
+                menuList.style.display = "none";
+
+                launcher.innerHTML = `
+<button class="back-btn" id="backBtn">
+    <i class="fa-solid fa-arrow-left"></i> Volver
+</button>
+
+<button class="back-btn" id="fullscreenBtn">
+    <i class="fa-solid fa-expand"></i> Pantalla completa
+</button>
+
+<iframe id="gameFrame" src="${src}" allowfullscreen></iframe>
+`;
+
+                document.getElementById("backBtn").onclick = () => {
+                    launcher.innerHTML = "";
+                    document.getElementById("gameTitle").style.display = "none";
+
+
+                    // Mostrar buscador y categorías y menú original
+                    menuUI.style.display = "block";
+                    menuList.style.display = "block";
+
+                    // Añadirlos de nuevo al launcher
+                    launcher.appendChild(menuUI);
+                    launcher.appendChild(menuList);
+                };
+
+                document.getElementById("fullscreenBtn").onclick = () => {
+                    const iframe = document.getElementById("gameFrame");
+
+                    if (iframe.requestFullscreen) {
+                        iframe.requestFullscreen();
+                    } else if (iframe.webkitRequestFullscreen) {
+                        iframe.webkitRequestFullscreen();
+                    } else if (iframe.msRequestFullscreen) {
+                        iframe.msRequestFullscreen();
+                    }
+                };
+            }
+        });
+
+
+        // FLOATING BUTTONS
+        document.getElementById("scrollTopBtn").onclick = () =>
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        document.getElementById("whatsappBtn").onclick = () =>
+            window.open("https://whatsapp.com/channel/0029Vb6QYRC6buMLgJKnJm3h", "_blank");
+
+        document.getElementById("panicBtn").onclick = () =>
+            window.open("https://classroom.google.com", "_blank");
+    </script>
+
+</body>
+
+</html>
