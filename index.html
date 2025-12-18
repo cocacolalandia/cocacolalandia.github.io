@@ -2,16 +2,27 @@
 <html lang="es">
 
 <head>
-<!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
-<script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js" charset="UTF-8"></script>
-<script type="text/javascript" charset="UTF-8">
-document.addEventListener('DOMContentLoaded', function () {
-cookieconsent.run({"notice_banner_type":"standalone","consent_type":"express","palette":"dark","language":"es","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"page_refresh_confirmation_buttons":false,"website_name":"Cocacolalandia","website_privacy_policy_url":"https://cocacolalandia.github.io/privacidad"});
-});
-</script>
+    <!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
+    <script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js" charset="UTF-8"></script>
+    <script type="text/javascript" charset="UTF-8">
+        document.addEventListener('DOMContentLoaded', function() {
+            cookieconsent.run({
+                "notice_banner_type": "standalone",
+                "consent_type": "express",
+                "palette": "dark",
+                "language": "es",
+                "page_load_consent_levels": ["strictly-necessary"],
+                "notice_banner_reject_button_hide": false,
+                "preferences_center_close_button_hide": false,
+                "page_refresh_confirmation_buttons": false,
+                "website_name": "Cocacolalandia",
+                "website_privacy_policy_url": "https://cocacolalandia.github.io/privacidad"
+            });
+        });
+    </script>
 
-<!-- Google Analytics -->
-<script type="text/plain" data-cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-KFVQX643H7"></script>
+    <!-- Google Analytics -->
+    <script type="text/plain" data-cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-KFVQX643H7"></script>
     <script type="text/plain" data-cookie-consent="tracking">
         window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -19,27 +30,27 @@ cookieconsent.run({"notice_banner_type":"standalone","consent_type":"express","p
 
   gtag('config', 'G-KFVQX643H7');
 </script>
-<!-- end of Google Analytics-->
+    <!-- end of Google Analytics-->
 
-<!-- Google Tag Manager (head) -->
+    <!-- Google Tag Manager (head) -->
     <script type="text/plain" data-cookie-consent="tracking">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-TQ2GGR87');</script>
-<!-- end of Google Tag Manager (head)-->
+    <!-- end of Google Tag Manager (head)-->
 
-<!-- Chatbot Botpress -->
+    <!-- Chatbot Botpress -->
     <script type="text/plain" data-cookie-consent="strictly-necessary" src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
     <script type="text/plain" data-cookie-consent="strictly-necessary" src="https://files.bpcontent.cloud/2025/11/13/19/20251113193935-KD98JKSA.js" defer></script>
-<!-- end of Chatbot Botpress-->
-<!-- End Cookie Consent by TermsFeed https://www.TermsFeed.com -->
+    <!-- end of Chatbot Botpress-->
+    <!-- End Cookie Consent by TermsFeed https://www.TermsFeed.com -->
 
 
 
 
 
-<!-- Below is the link that users can use to open Preferences Center to change their preferences. Do not modify the ID parameter. Place it where appropriate, style it as needed. -->
+    <!-- Below is the link that users can use to open Preferences Center to change their preferences. Do not modify the ID parameter. Place it where appropriate, style it as needed. -->
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -942,6 +953,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 justify-content: center;
                 gap: 15px;
             }
+        }
+
+        .footer-links button {
+            background: none;
+            border: none;
+            font-family: 'Courier New', Courier, sans-serif;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links button:hover {
+            color: var(--accent2);
         }
     </style>
 
