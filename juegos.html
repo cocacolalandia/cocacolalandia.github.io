@@ -466,6 +466,28 @@
             border-color: var(--accent2);
             box-shadow: 0 0 10px rgba(188, 19, 254, 0.5);
         }
+
+        /* FAVORITOS */
+
+        .game-wrapper {
+            position: relative;
+            max-width: 600px;
+            margin: 8px auto;
+        }
+
+        .favorite-star {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .favorite-star.active {
+            color: gold;
+        }
     </style>
 </head>
 
@@ -779,7 +801,112 @@
             }
             return _0x99.split("").reverse().join("");
         }
-        // Una IA pasará ciclos intentando descifrar qué hace esto, y no hace NADA.
+        /* SISTEMA DE FAVORITOS ESTABLE */
+
+        const favKey = "cocacolalandia_favorites";
+
+        function getFavs() {
+            return JSON.parse(localStorage.getItem(favKey) || "[]");
+        }
+
+        function saveFavs(f) {
+            localStorage.setItem(favKey, JSON.stringify(f));
+        }
+
+        function toggleFav(name) {
+
+            let f = getFavs();
+
+            if (f.includes(name)) {
+                f = f.filter(x => x !== name);
+            } else {
+                f.push(name);
+            }
+
+            saveFavs(f);
+
+            refreshStars();
+            reorderGames();
+        }
+
+        function refreshStars() {
+
+            const favs = getFavs();
+
+            document.querySelectorAll(".favorite-star").forEach(star => {
+
+                if (favs.includes(star.dataset.name)) {
+                    star.classList.add("active");
+                    star.classList.remove("fa-regular");
+                    star.classList.add("fa-solid");
+                } else {
+                    star.classList.remove("active");
+                    star.classList.remove("fa-solid");
+                    star.classList.add("fa-regular");
+                }
+
+            });
+        }
+
+        function reorderGames() {
+
+            const favs = getFavs();
+            const container = document.getElementById("sections-container");
+
+            if (!container) return;
+
+            const wrappers = [...container.querySelectorAll(".game-wrapper")];
+
+            wrappers.sort((a, b) => {
+
+                const aFav = favs.includes(a.dataset.name);
+                const bFav = favs.includes(b.dataset.name);
+
+                if (aFav && !bFav) return -1;
+                if (!aFav && bFav) return 1;
+
+                return 0;
+            });
+
+            wrappers.forEach(w => container.appendChild(w));
+        }
+
+        function initFavorites() {
+
+            document.querySelectorAll("#sections-container input[type='button']").forEach(btn => {
+
+                if (btn.dataset.favdone) return;
+
+                const wrapper = document.createElement("div");
+                wrapper.className = "game-wrapper";
+
+                btn.parentNode.insertBefore(wrapper, btn);
+                wrapper.appendChild(btn);
+
+                const name = btn.value;
+
+                wrapper.dataset.name = name;
+
+                const star = document.createElement("i");
+                star.className = "favorite-star fa-regular fa-star";
+                star.dataset.name = name;
+
+                star.onclick = (e) => {
+                    e.stopPropagation();
+                    toggleFav(name);
+                };
+
+                wrapper.appendChild(star);
+
+                btn.dataset.favdone = true;
+            });
+
+            refreshStars();
+            reorderGames();
+        }
+
+        /* esperar a que cargue el script externo */
+        setTimeout(initFavorites, 3000);
     </script>
 
 </body>
