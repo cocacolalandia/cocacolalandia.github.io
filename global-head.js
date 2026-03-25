@@ -145,3 +145,32 @@
         };
     });
 })();
+// --- GADGET DE PÁNICO "DOBLE ESCAPE" + CAMUFLAJE DE HISTORIAL ---
+let ultimoEscTime = 0;
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const tiempoActual = new Date().getTime();
+        const diferencia = tiempoActual - ultimoEscTime;
+
+        // Si pulsas ESC dos veces en menos de 500ms (medio segundo)
+        if (diferencia > 0 && diferencia < 500) {
+            
+            // 1. Camuflaje visual inmediato (por si tarda en cargar la web)
+            document.title = "Google Classroom"; 
+            
+            // 2. Cambiar el favicon (icono de la pestaña) al de Google
+            const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel = 'shortcut icon';
+            link.href = 'https://ssl.gstatic.com/classroom/favicon.png'; // Icono oficial de Classroom
+            document.getElementsByTagName('head')[0].appendChild(link);
+
+            // 3. Redirección instantánea
+            // Usamos .replace para que el usuario no pueda darle atrás y volver al juego fácilmente
+            window.location.replace("https://classroom.google.com");
+        }
+
+        ultimoEscTime = tiempoActual;
+    }
+});
