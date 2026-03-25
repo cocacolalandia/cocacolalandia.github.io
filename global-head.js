@@ -174,3 +174,73 @@ document.addEventListener('keydown', (e) => {
         ultimoEscTime = tiempoActual;
     }
 });
+// --- SISTEMA DE TEMAS Y BOTÓN AUTOMÁTICO ---
+const temas = ['classic', 'matrix', 'light'];
+let indiceTema = 0;
+
+// 1. Función para cambiar el tema
+function cambiarTema() {
+    const cuerpo = document.body;
+    cuerpo.classList.remove('theme-matrix', 'light-mode');
+    
+    indiceTema = (indiceTema + 1) % temas.length;
+    const temaElegido = temas[indiceTema];
+
+    if (temaElegido === 'matrix') cuerpo.classList.add('theme-matrix');
+    if (temaElegido === 'light') cuerpo.classList.add('light-mode');
+
+    localStorage.setItem('tema-preferido', temaElegido);
+    console.log("Tema actual: " + temaElegido);
+}
+
+// 2. Función para inyectar el botón de la paleta
+function inyectarBotonPaleta() {
+    // Si ya existe el botón por alguna razón, no lo duplicamos
+    if (document.getElementById('btn-paleta-global')) return;
+
+    const btn = document.createElement('i');
+    btn.id = 'btn-paleta-global';
+    btn.className = 'fa-solid fa-palette'; // FontAwesome
+    btn.title = 'Cambiar Estilo';
+    btn.style = `
+        cursor: pointer;
+        font-size: 22px;
+        color: var(--accent);
+        transition: transform 0.3s ease, color 0.3s;
+        margin-left: 15px;
+        z-index: 9999;
+    `;
+
+    // Efecto de rotación al pasar el ratón
+    btn.onmouseover = () => btn.style.transform = 'rotate(30deg)';
+    btn.onmouseout = () => btn.style.transform = 'rotate(0deg)';
+    
+    // Al hacer clic, cambia el tema
+    btn.onclick = cambiarTema;
+
+    // Buscamos dónde meterlo (preferiblemente en el search-wrap o header)
+    const contenedor = document.querySelector('.search-wrap') || document.querySelector('header');
+    
+    if (contenedor) {
+        contenedor.appendChild(btn);
+    } else {
+        // Si no hay header, lo ponemos flotante arriba a la derecha
+        btn.style.position = 'fixed';
+        btn.style.top = '20px';
+        btn.style.right = '80px';
+        document.body.appendChild(btn);
+    }
+}
+
+// 3. Inicialización al cargar la página
+window.addEventListener('DOMContentLoaded', () => {
+    // Cargar tema guardado
+    const guardado = localStorage.getItem('tema-preferido');
+    if (guardado) {
+        while (temas[indiceTema] !== guardado) {
+            cambiarTema();
+        }
+    }
+    // Crear el botón
+    inyectarBotonPaleta();
+});
