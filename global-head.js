@@ -182,7 +182,25 @@ const listaTemas = [
     'theme-cyberpunk', 'theme-dracula'
 ];
 
-// 1. FUNCIÓN PARA CAMBIAR EL TEMA
+// 1. INYECTAR EL CSS DE LOS TEMAS AUTOMÁTICAMENTE
+const inyectarEstilosTemas = () => {
+    const css = `
+        body.theme-matrix { --bg-color: #000; --card-color: #050505; --text-color: #00ff41; --accent: #00ff41; --accent2: #008f11; --shadow: 0 0 15px rgba(0, 255, 65, 0.4); }
+        body.theme-light { --bg-color: #f4f6fa; --card-color: #ffffff; --text-color: #0c0e1b; --accent: #555; --accent2: #888; --shadow: 0 0 5px rgba(0,0,0,0.1); }
+        body.theme-vaporwave { --bg-color: #2d004d; --card-color: #4b0082; --text-color: #00f2ff; --accent: #ff00ff; --accent2: #00f2ff; --shadow: 0 0 15px #ff00ff; }
+        body.theme-blood { --bg-color: #1a0000; --card-color: #2d0000; --text-color: #ff4d4d; --accent: #ff0000; --accent2: #800000; --shadow: 0 0 15px rgba(255, 0, 0, 0.4); }
+        body.theme-golden { --bg-color: #1a1a1a; --card-color: #262626; --text-color: #f3cf7a; --accent: #ffd700; --accent2: #b8860b; --shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+        body.theme-ocean { --bg-color: #001f3f; --card-color: #003366; --text-color: #7fdbff; --accent: #39cccc; --accent2: #0074d9; --shadow: 0 0 15px #39cccc; }
+        body.theme-gameboy { --bg-color: #8bab0f; --card-color: #9bbc0f; --text-color: #0f380f; --accent: #306230; --accent2: #0f380f; --shadow: none; }
+        body.theme-cyberpunk { --bg-color: #fcee0a; --card-color: #000; --text-color: #000; --accent: #000; --accent2: #ff003c; --shadow: 0 0 10px rgba(0,0,0,0.5); }
+        body.theme-dracula { --bg-color: #282a36; --card-color: #44475a; --text-color: #f8f8f2; --accent: #bd93f9; --accent2: #ff79c6; --shadow: 0 0 15px rgba(189, 147, 249, 0.3); }
+    `;
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = css;
+    document.head.appendChild(styleSheet);
+};
+
+// 2. FUNCIÓN PARA CAMBIAR EL TEMA
 function cambiarTema() {
     const b = document.body;
     let temaActual = localStorage.getItem('cocacola-pref-theme') || 'classic';
@@ -196,47 +214,31 @@ function cambiarTema() {
     if (nuevoTema !== 'classic') b.classList.add(nuevoTema);
     
     localStorage.setItem('cocacola-pref-theme', nuevoTema);
-    console.log("Tema: " + nuevoTema);
 }
 
-// 2. FUNCIÓN PARA INSERTAR LA PALETA AUTOMÁTICAMENTE
+// 3. INSERTAR LA PALETA EN EL HEADER
 function insertarIconoPaleta() {
-    // Buscamos el contenedor donde quieres que aparezca (normalmente el search-wrap)
-    // Si no existe, lo ponemos al principio del header
     const contenedor = document.querySelector('.search-wrap') || document.querySelector('header');
-    
     if (contenedor && !document.getElementById('btn-tema-global')) {
         const btn = document.createElement('i');
         btn.id = 'btn-tema-global';
-        btn.className = 'fa-solid fa-palette'; // Icono de FontAwesome
-        btn.style.cursor = 'pointer';
-        btn.style.marginLeft = '15px';
-        btn.style.fontSize = '20px';
-        btn.style.color = 'var(--accent)';
-        btn.style.transition = '0.3s';
+        btn.className = 'fa-solid fa-palette';
+        btn.style.cssText = "cursor:pointer; margin-left:15px; font-size:20px; color:var(--accent); transition:0.3s;";
         btn.title = 'Cambiar Estilo';
-        
-        // Al hacer clic, cambia el tema
         btn.onclick = cambiarTema;
-        
-        // Efecto hover simple
         btn.onmouseover = () => btn.style.color = 'var(--accent2)';
         btn.onmouseout = () => btn.style.color = 'var(--accent)';
-        
         contenedor.appendChild(btn);
     }
 }
 
-// 3. CARGA INICIAL (TEMA + ICONO)
+// 4. INICIALIZACIÓN
 (function iniciarCocacolaGlobal() {
     const ejecutar = () => {
-        if (document.body) {
-            // Aplicar tema guardado
+        if (document.body && document.head) {
+            inyectarEstilosTemas(); // Inyecta el CSS de los 10 temas
             const guardado = localStorage.getItem('cocacola-pref-theme');
-            if (guardado && guardado !== 'classic') {
-                document.body.classList.add(guardado);
-            }
-            // Insertar el botón
+            if (guardado && guardado !== 'classic') document.body.classList.add(guardado);
             insertarIconoPaleta();
         } else {
             setTimeout(ejecutar, 10);
