@@ -174,7 +174,7 @@ document.addEventListener('keydown', (e) => {
         ultimoEscTime = tiempoActual;
     }
 });
-// --- CONFIGURACIÓN MAESTRA DE TEMAS COCACOLALANDIA ---
+// --- CONFIGURACIÓN MAESTRA DE TEMAS Y EVENTOS COCACOLALANDIA ---
 
 const listaTemas = [
     'classic', 'theme-matrix', 'theme-light', 'theme-vaporwave', 
@@ -182,9 +182,10 @@ const listaTemas = [
     'theme-cyberpunk', 'theme-dracula'
 ];
 
-// 1. INYECTAR EL CSS DE LOS TEMAS AUTOMÁTICAMENTE
+// 1. INYECTAR CSS (Incluyendo temas de eventos especiales)
 const inyectarEstilosTemas = () => {
     const css = `
+        /* TEMAS NORMALES */
         body.theme-matrix { --bg-color: #000; --card-color: #050505; --text-color: #00ff41; --accent: #00ff41; --accent2: #008f11; --shadow: 0 0 15px rgba(0, 255, 65, 0.4); }
         body.theme-light { --bg-color: #f4f6fa; --card-color: #ffffff; --text-color: #0c0e1b; --accent: #555; --accent2: #888; --shadow: 0 0 5px rgba(0,0,0,0.1); }
         body.theme-vaporwave { --bg-color: #2d004d; --card-color: #4b0082; --text-color: #00f2ff; --accent: #ff00ff; --accent2: #00f2ff; --shadow: 0 0 15px #ff00ff; }
@@ -194,14 +195,42 @@ const inyectarEstilosTemas = () => {
         body.theme-gameboy { --bg-color: #8bab0f; --card-color: #9bbc0f; --text-color: #0f380f; --accent: #306230; --accent2: #0f380f; --shadow: none; }
         body.theme-cyberpunk { --bg-color: #fcee0a; --card-color: #000; --text-color: #000; --accent: #000; --accent2: #ff003c; --shadow: 0 0 10px rgba(0,0,0,0.5); }
         body.theme-dracula { --bg-color: #282a36; --card-color: #44475a; --text-color: #f8f8f2; --accent: #bd93f9; --accent2: #ff79c6; --shadow: 0 0 15px rgba(189, 147, 249, 0.3); }
+
+        /* TEMAS DE EVENTOS (OBLIGATORIOS) */
+        body.event-halloween { --bg-color: #0f0f0f; --card-color: #1a1a1a; --text-color: #ff6600; --accent: #ff6600; --accent2: #9d00ff; --shadow: 0 0 20px #ff6600; }
+        body.event-navidad { --bg-color: #0a2e1a; --card-color: #14452f; --text-color: #ffffff; --accent: #ff0000; --accent2: #ffd700; --shadow: 0 0 15px #ff0000; }
+        body.event-8m { --bg-color: #2e003e; --card-color: #4b0062; --text-color: #ffffff; --accent: #bc13fe; --accent2: #ffffff; --shadow: 0 0 20px #bc13fe; }
     `;
     const styleSheet = document.createElement("style");
     styleSheet.innerText = css;
     document.head.appendChild(styleSheet);
 };
 
-// 2. FUNCIÓN PARA CAMBIAR EL TEMA
+// 2. LÓGICA DE FECHAS (EVENTOS)
+function obtenerEventoActual() {
+    const hoy = new Date();
+    const dia = hoy.getDate();
+    const mes = hoy.getMonth() + 1; // Enero es 0
+
+    // Halloween: 31 de Octubre
+    if (mes === 10 && dia === 31) return 'event-halloween';
+
+    // Navidad: Del 10 de Dic al 15 de Ene
+    if ((mes === 12 && dia >= 10) || (mes === 1 && dia <= 15)) return 'event-navidad';
+
+    // 8M: 8 de Marzo
+    if (mes === 3 && dia === 8) return 'event-8m';
+
+    return null;
+}
+
+// 3. CAMBIAR TEMA (Bloqueado si hay evento)
 function cambiarTema() {
+    if (obtenerEventoActual()) {
+        alert("¡Estamos en un evento especial! El tema es obligatorio hoy.");
+        return;
+    }
+
     const b = document.body;
     let temaActual = localStorage.getItem('cocacola-pref-theme') || 'classic';
     let idx = listaTemas.indexOf(temaActual);
@@ -212,12 +241,13 @@ function cambiarTema() {
     const nuevoTema = listaTemas[idx];
     
     if (nuevoTema !== 'classic') b.classList.add(nuevoTema);
-    
     localStorage.setItem('cocacola-pref-theme', nuevoTema);
 }
 
-// 3. INSERTAR LA PALETA EN EL HEADER
+// 4. INSERTAR ICONO (Oculto si hay evento)
 function insertarIconoPaleta() {
+    if (obtenerEventoActual()) return; // No creamos el botón si hay evento
+
     const contenedor = document.querySelector('.search-wrap') || document.querySelector('header');
     if (contenedor && !document.getElementById('btn-tema-global')) {
         const btn = document.createElement('i');
@@ -232,14 +262,23 @@ function insertarIconoPaleta() {
     }
 }
 
-// 4. INICIALIZACIÓN
+// 5. INICIALIZACIÓN
 (function iniciarCocacolaGlobal() {
     const ejecutar = () => {
         if (document.body && document.head) {
-            inyectarEstilosTemas(); // Inyecta el CSS de los 10 temas
-            const guardado = localStorage.getItem('cocacola-pref-theme');
-            if (guardado && guardado !== 'classic') document.body.classList.add(guardado);
-            insertarIconoPaleta();
+            inyectarEstilosTemas();
+            
+            const evento = obtenerEventoActual();
+            if (evento) {
+                // Forzar evento
+                document.body.classList.add(evento);
+                console.log("Evento especial activo: " + evento);
+            } else {
+                // Cargar tema normal
+                const guardado = localStorage.getItem('cocacola-pref-theme');
+                if (guardado && guardado !== 'classic') document.body.classList.add(guardado);
+                insertarIconoPaleta();
+            }
         } else {
             setTimeout(ejecutar, 10);
         }
