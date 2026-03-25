@@ -174,73 +174,73 @@ document.addEventListener('keydown', (e) => {
         ultimoEscTime = tiempoActual;
     }
 });
-// --- SISTEMA DE TEMAS Y BOTÓN AUTOMÁTICO ---
-const temas = ['classic', 'matrix', 'light'];
-let indiceTema = 0;
+// --- CONFIGURACIÓN MAESTRA DE TEMAS COCACOLALANDIA ---
 
-// 1. Función para cambiar el tema
+const listaTemas = [
+    'classic', 'theme-matrix', 'theme-light', 'theme-vaporwave', 
+    'theme-blood', 'theme-golden', 'theme-ocean', 'theme-gameboy', 
+    'theme-cyberpunk', 'theme-dracula'
+];
+
+// 1. FUNCIÓN PARA CAMBIAR EL TEMA
 function cambiarTema() {
-    const cuerpo = document.body;
-    cuerpo.classList.remove('theme-matrix', 'light-mode');
+    const b = document.body;
+    let temaActual = localStorage.getItem('cocacola-pref-theme') || 'classic';
+    let idx = listaTemas.indexOf(temaActual);
     
-    indiceTema = (indiceTema + 1) % temas.length;
-    const temaElegido = temas[indiceTema];
-
-    if (temaElegido === 'matrix') cuerpo.classList.add('theme-matrix');
-    if (temaElegido === 'light') cuerpo.classList.add('light-mode');
-
-    localStorage.setItem('tema-preferido', temaElegido);
-    console.log("Tema actual: " + temaElegido);
+    if (temaActual !== 'classic') b.classList.remove(temaActual);
+    
+    idx = (idx + 1) % listaTemas.length;
+    const nuevoTema = listaTemas[idx];
+    
+    if (nuevoTema !== 'classic') b.classList.add(nuevoTema);
+    
+    localStorage.setItem('cocacola-pref-theme', nuevoTema);
+    console.log("Tema: " + nuevoTema);
 }
 
-// 2. Función para inyectar el botón de la paleta
-function inyectarBotonPaleta() {
-    // Si ya existe el botón por alguna razón, no lo duplicamos
-    if (document.getElementById('btn-paleta-global')) return;
-
-    const btn = document.createElement('i');
-    btn.id = 'btn-paleta-global';
-    btn.className = 'fa-solid fa-palette'; // FontAwesome
-    btn.title = 'Cambiar Estilo';
-    btn.style = `
-        cursor: pointer;
-        font-size: 22px;
-        color: var(--accent);
-        transition: transform 0.3s ease, color 0.3s;
-        margin-left: 15px;
-        z-index: 9999;
-    `;
-
-    // Efecto de rotación al pasar el ratón
-    btn.onmouseover = () => btn.style.transform = 'rotate(30deg)';
-    btn.onmouseout = () => btn.style.transform = 'rotate(0deg)';
-    
-    // Al hacer clic, cambia el tema
-    btn.onclick = cambiarTema;
-
-    // Buscamos dónde meterlo (preferiblemente en el search-wrap o header)
+// 2. FUNCIÓN PARA INSERTAR LA PALETA AUTOMÁTICAMENTE
+function insertarIconoPaleta() {
+    // Buscamos el contenedor donde quieres que aparezca (normalmente el search-wrap)
+    // Si no existe, lo ponemos al principio del header
     const contenedor = document.querySelector('.search-wrap') || document.querySelector('header');
     
-    if (contenedor) {
+    if (contenedor && !document.getElementById('btn-tema-global')) {
+        const btn = document.createElement('i');
+        btn.id = 'btn-tema-global';
+        btn.className = 'fa-solid fa-palette'; // Icono de FontAwesome
+        btn.style.cursor = 'pointer';
+        btn.style.marginLeft = '15px';
+        btn.style.fontSize = '20px';
+        btn.style.color = 'var(--accent)';
+        btn.style.transition = '0.3s';
+        btn.title = 'Cambiar Estilo';
+        
+        // Al hacer clic, cambia el tema
+        btn.onclick = cambiarTema;
+        
+        // Efecto hover simple
+        btn.onmouseover = () => btn.style.color = 'var(--accent2)';
+        btn.onmouseout = () => btn.style.color = 'var(--accent)';
+        
         contenedor.appendChild(btn);
-    } else {
-        // Si no hay header, lo ponemos flotante arriba a la derecha
-        btn.style.position = 'fixed';
-        btn.style.top = '20px';
-        btn.style.right = '80px';
-        document.body.appendChild(btn);
     }
 }
 
-// 3. Inicialización al cargar la página
-window.addEventListener('DOMContentLoaded', () => {
-    // Cargar tema guardado
-    const guardado = localStorage.getItem('tema-preferido');
-    if (guardado) {
-        while (temas[indiceTema] !== guardado) {
-            cambiarTema();
+// 3. CARGA INICIAL (TEMA + ICONO)
+(function iniciarCocacolaGlobal() {
+    const ejecutar = () => {
+        if (document.body) {
+            // Aplicar tema guardado
+            const guardado = localStorage.getItem('cocacola-pref-theme');
+            if (guardado && guardado !== 'classic') {
+                document.body.classList.add(guardado);
+            }
+            // Insertar el botón
+            insertarIconoPaleta();
+        } else {
+            setTimeout(ejecutar, 10);
         }
-    }
-    // Crear el botón
-    inyectarBotonPaleta();
-});
+    };
+    ejecutar();
+})();
