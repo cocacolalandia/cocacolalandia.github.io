@@ -7,6 +7,7 @@
     <title>Chat Realtime - Cocacolalandia</title>
     <link href="https://fonts.googleapis.com/css2?family=Courier+New:wght@400;600;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet">
+    
     <style>
         :root {
             --bg: #0c0e1b;
@@ -23,57 +24,44 @@
             font-family: var(--font); overflow: hidden;
         }
 
-        /* VERIFICACIÓN DE EDAD Y CONFIGURACIÓN DE PERFIL */
-        .overlay {
-            position: fixed; inset: 0; background: rgba(12, 14, 27, 0.95);
-            z-index: 10000; display: flex; align-items: center; justify-content: center;
-            padding: 20px;
+        #app { 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            border-left: 1px solid rgba(0,198,255,0.1);
+            border-right: 1px solid rgba(0,198,255,0.1);
         }
 
-        .modal {
-            background: var(--card); padding: 25px; border-radius: 15px;
-            border: 2px solid var(--accent); max-width: 400px; width: 100%;
-            text-align: center; box-shadow: 0 0 20px var(--accent);
-        }
+        /* OVERLAYS */
+        .overlay { position: fixed; inset: 0; background: rgba(12,14,27,0.98); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(10px); }
+        .modal { background: var(--card); padding: 30px; border-radius: 20px; border: 2px solid var(--accent); max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 30px var(--accent); }
 
-        /* APP ESTRUCTURA */
-        #app { display: flex; flex-direction: column; height: 100vh; max-width: 900px; margin: 0 auto; }
+        /* CABECERA */
+        header { padding: 15px; background: var(--card); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--accent); }
+        .user-info-bar { display:flex; align-items:center; gap:10px; }
+        #my-pfp { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
 
-        header {
-            padding: 10px 20px; background: var(--card);
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--accent);
-        }
-
-        #chat-box {
-            flex: 1; overflow-y: auto; padding: 15px;
-            display: flex; flex-direction: column; gap: 10px;
-            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-        }
-
-        /* BURBUJAS DE MENSAJE */
-        .msg { display: flex; gap: 10px; align-items: flex-start; max-width: 90%; }
-        .msg-img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--accent); }
-        .msg-body { background: rgba(255,255,255,0.08); padding: 8px 12px; border-radius: 12px; }
-        .msg-user { color: var(--accent); font-weight: 800; font-size: 0.8rem; display: block; }
+        /* CHAT BOX */
+        #chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .msg { display: flex; gap: 12px; align-items: flex-start; animation: slideUp 0.2s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .msg-img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--accent); object-fit: cover; }
+        .msg-body { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 12px; border-bottom-left-radius: 2px; position: relative; }
+        .msg-user { color: var(--accent); font-weight: 800; font-size: 0.8rem; display: block; margin-bottom: 3px; }
 
         /* INPUT */
-        .input-wrap {
-            padding: 15px; background: var(--card); display: flex; gap: 10px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+        .input-wrap { padding: 20px; background: var(--card); display: flex; gap: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+        input[type="text"] { flex: 1; background: #000; border: 1px solid var(--accent); color: white; padding: 12px; border-radius: 8px; font-family: var(--font); outline: none; }
+        
+        button { 
+            background: linear-gradient(45deg, var(--accent), var(--accent2)); 
+            color: white; border: none; padding: 10px 20px; border-radius: 8px; 
+            cursor: pointer; font-weight: bold; font-family: var(--font); 
         }
 
-        input[type="text"] {
-            flex: 1; background: #000; border: 1px solid var(--accent);
-            color: white; padding: 12px; border-radius: 8px; font-family: var(--font);
-        }
-
-        button {
-            background: linear-gradient(45deg, var(--accent), var(--accent2));
-            color: white; border: none; padding: 10px 15px; border-radius: 8px;
-            cursor: pointer; font-weight: bold; font-family: var(--font);
-        }
-
+        .verified-icon { color: var(--accent); font-size: 10px; margin-left: 4px; }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -81,43 +69,55 @@
 
     <div id="step-age" class="overlay">
         <div class="modal">
-            <h2>¿ERES MAYOR?</h2>
-            <p>Para entrar al chat de Cocacolalandia debes tener al menos 14 años.</p>
-            <button onclick="confirmAge()">SÍ, TENGO +14</button>
+            <i class="fa-solid fa-user-shield" style="font-size: 3rem; color: var(--accent2); margin-bottom: 15px;"></i>
+            <h2>MAYORES DE 14 AÑOS</h2>
+            <p>Debido a la LOPD (Ley Orgánica de Protección de Datos) y el RGPD (Reglamento General de Protección de Datos) de la Unión europea, para acceder al chat de Cocacolalandia debes confirmar que tienes al menos 14 años.</p>
+            <button onclick="confirmAge()">TENGO +14 AÑOS</button>
+        </div>
+    </div>
+
+    <div id="step-guest-name" class="overlay hidden">
+        <div class="modal">
+            <h3>¿CÓMO TE LLAMAS?</h3>
+            <p>Escribe tu nombre para participar como invitado:</p>
+            <input type="text" id="guest-input-name" placeholder="Tu apodo..." style="width:80%; margin-bottom:10px;">
+            <p id="error-name" style="color: #ff4b4b; font-size: 0.8rem;" class="hidden">Ese nombre está reservado por un usuario verificado.</p>
+            <button onclick="saveGuestName()">ENTRAR AL CHAT</button>
         </div>
     </div>
 
     <div id="step-profile" class="overlay hidden">
         <div class="modal">
-            <h3>CONFIGURA TU PERFIL</h3>
-            <p>Elige cómo te verán los demás:</p>
-            <input type="text" id="custom-name" placeholder="Tu nombre..." style="width:80%; margin-bottom:10px;"><br>
-            <input type="text" id="custom-img" placeholder="URL de tu foto (opcional)" style="width:80%; margin-bottom:10px;">
-            <button onclick="saveProfile()">GUARDAR Y ENTRAR</button>
+            <h3>PERFIL DE USUARIO</h3>
+            <p>Personaliza cómo te verán los demás:</p>
+            <input type="text" id="custom-name" placeholder="Nombre de usuario..." style="width:80%; margin-bottom:10px;">
+            <input type="text" id="custom-img" placeholder="URL de tu foto..." style="width:80%; margin-bottom:10px;">
+            <button onclick="saveProfile()">GUARDAR PERFIL</button>
         </div>
     </div>
 
     <div id="app">
         <header>
-            <div style="display:flex; align-items:center; gap:10px;">
-                <img id="my-pfp" src="https://i.imgur.com/PPO7d2j.png" style="width:30px; border-radius:50%">
-                <span id="my-name" style="font-size:0.9rem">Invitado</span>
+            <div class="user-info-bar">
+                <img id="my-pfp" src="https://i.imgur.com/PPO7d2j.png">
+                <span id="my-name">Invitado</span>
             </div>
             <button id="login-btn" onclick="startGoogle()"><i class="fab fa-google"></i> ENTRAR</button>
+            <button id="logout-btn" class="hidden" onclick="closeSession()">SALIR</button>
         </header>
 
         <div id="chat-box"></div>
 
         <div class="input-wrap">
             <input type="text" id="msg-input" placeholder="Escribe un mensaje..." maxlength="150">
-            <button onclick="sendMsg()"><i class="fa-solid fa-paper-plane"></i></button>
+            <button onclick="trySend()"><i class="fa-solid fa-paper-plane"></i></button>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp, getDocs, deleteDoc, doc, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDLaicFQIw-h7FLXXVi93jLQD4HggwejzI",
@@ -135,73 +135,95 @@
 
         let userData = { name: "Invitado", pfp: "https://i.imgur.com/PPO7d2j.png", isGoogle: false };
 
-        // --- CONTROL DE FLUJO ---
-        window.confirmAge = () => {
-            document.getElementById('step-age').classList.add('hidden');
-            localStorage.setItem('cocacola-age', 'ok');
-        };
-        if(localStorage.getItem('cocacola-age')) document.getElementById('step-age').classList.add('hidden');
+        // --- MANEJO DE SESIÓN ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const saved = JSON.parse(localStorage.getItem('cc_profile_v2'));
+                userData = {
+                    name: saved?.name || user.displayName,
+                    pfp: saved?.pfp || user.photoURL,
+                    isGoogle: true
+                };
+                document.getElementById('login-btn').classList.add('hidden');
+                document.getElementById('logout-btn').classList.remove('hidden');
+            }
+            updateUI();
+        });
 
-        // --- GOOGLE AUTH ---
+        function updateUI() {
+            document.getElementById('my-name').innerText = userData.name;
+            document.getElementById('my-pfp').src = userData.pfp;
+        }
+
+        // --- FUNCIONES DE AUTH ---
         window.startGoogle = async () => {
-            const result = await signInWithPopup(auth, provider);
-            // Al loguear, abrimos el modal de configuración de perfil
-            document.getElementById('custom-name').value = result.user.displayName;
-            document.getElementById('custom-img').value = result.user.photoURL;
+            await setPersistence(auth, browserLocalPersistence);
+            const res = await signInWithPopup(auth, provider);
+            document.getElementById('custom-name').value = res.user.displayName;
+            document.getElementById('custom-img').value = res.user.photoURL;
             document.getElementById('step-profile').classList.remove('hidden');
         };
 
         window.saveProfile = () => {
             const n = document.getElementById('custom-name').value.trim();
             const i = document.getElementById('custom-img').value.trim();
-            if(!n) return alert("Ponte un nombre");
-            
-            userData.name = n;
-            userData.pfp = i || "https://i.imgur.com/PPO7d2j.png";
-            userData.isGoogle = true;
-
-            document.getElementById('my-name').innerText = n;
-            document.getElementById('my-pfp').src = userData.pfp;
+            if(!n) return;
+            userData = { name: n, pfp: i || userData.pfp, isGoogle: true };
+            localStorage.setItem('cc_profile_v2', JSON.stringify(userData));
+            updateUI();
             document.getElementById('step-profile').classList.add('hidden');
-            document.getElementById('login-btn').classList.add('hidden');
+        };
+
+        window.closeSession = () => {
+            signOut(auth);
+            localStorage.removeItem('cc_profile_v2');
+            location.reload();
         };
 
         // --- LÓGICA DEL CHAT ---
-        window.sendMsg = async () => {
-            const input = document.getElementById('msg-input');
-            const text = input.value.trim();
-            if(!text) return;
-
-            // Si es invitado, comprobar si el nombre está "pillado"
-            if(!userData.isGoogle) {
-                const nombreElegido = prompt("Dinos tu nombre para este mensaje:", "Invitado");
-                if(!nombreElegido) return;
-                
-                // Comprobamos si ese nombre lo tiene alguien de Google en los mensajes
-                const qUser = query(collection(db, "messages"), where("user", "==", nombreElegido), where("isGoogle", "==", true), limit(1));
-                const check = await getDocs(qUser);
-                
-                if(!check.empty) {
-                    alert("Este nombre pertenece a un usuario registrado. Elige otro o entra con Google.");
-                    return;
-                }
-                userData.name = nombreElegido;
+        window.trySend = () => {
+            const val = document.getElementById('msg-input').value.trim();
+            if(!val) return;
+            if(!userData.isGoogle && userData.name === "Invitado") {
+                document.getElementById('step-guest-name').classList.remove('hidden');
+            } else {
+                executeSend(val);
             }
+        };
 
+        window.saveGuestName = async () => {
+            const name = document.getElementById('guest-input-name').value.trim();
+            if(!name) return;
+            
+            // Verificamos si el nombre lo tiene un usuario registrado
+            const q = query(collection(db, "messages"), where("user", "==", name), where("isGoogle", "==", true), limit(1));
+            const snap = await getDocs(q);
+            
+            if(!snap.empty) {
+                document.getElementById('error-name').classList.remove('hidden');
+            } else {
+                userData.name = name;
+                updateUI();
+                document.getElementById('step-guest-name').classList.add('hidden');
+                executeSend(document.getElementById('msg-input').value);
+            }
+        };
+
+        async function executeSend(text) {
             await addDoc(collection(db, "messages"), {
-                text,
+                text: text,
                 user: userData.name,
                 pfp: userData.pfp,
                 isGoogle: userData.isGoogle,
                 time: serverTimestamp()
             });
-            input.value = "";
-            cleanOldies();
-        };
+            document.getElementById('msg-input').value = "";
+            doClean();
+        }
 
-        // --- ESCUCHAR MENSAJES (Los 20 anteriores) ---
-        const qChat = query(collection(db, "messages"), orderBy("time", "desc"), limit(20));
-        onSnapshot(qChat, (snap) => {
+        // --- ESCUCHA TIEMPO REAL ---
+        const qC = query(collection(db, "messages"), orderBy("time", "desc"), limit(20));
+        onSnapshot(qC, (snap) => {
             const box = document.getElementById('chat-box');
             box.innerHTML = "";
             snap.docs.reverse().forEach(d => {
@@ -210,7 +232,7 @@
                     <div class="msg">
                         <img src="${m.pfp}" class="msg-img">
                         <div class="msg-body">
-                            <span class="msg-user">${m.user} ${m.isGoogle ? '<i class="fas fa-check-circle" style="font-size:10px"></i>' : ''}</span>
+                            <span class="msg-user">${m.user} ${m.isGoogle ? '<i class="fas fa-check-circle verified-icon"></i>' : ''}</span>
                             <span>${m.text}</span>
                         </div>
                     </div>`;
@@ -218,14 +240,19 @@
             box.scrollTop = box.scrollHeight;
         });
 
-        async function cleanOldies() {
-            const snap = await getDocs(query(collection(db, "messages"), orderBy("time", "desc")));
-            if(snap.size > 50) {
-                snap.docs.slice(20).forEach(async (d) => await deleteDoc(doc(db, "messages", d.id)));
-            }
+        // --- UTILIDADES ---
+        window.confirmAge = () => {
+            document.getElementById('step-age').classList.add('hidden');
+            localStorage.setItem('cc_age_ok', '1');
+        };
+        if(localStorage.getItem('cc_age_ok')) document.getElementById('step-age').classList.add('hidden');
+
+        async function doClean() {
+            const s = await getDocs(query(collection(db, "messages"), orderBy("time", "desc")));
+            if(s.size > 50) s.docs.slice(20).forEach(async d => await deleteDoc(doc(db, "messages", d.id)));
         }
 
-        document.getElementById('msg-input').onkeypress = (e) => { if(e.key==='Enter') sendMsg(); };
+        document.getElementById('msg-input').onkeypress = (e) => { if(e.key==='Enter') trySend(); };
     </script>
 </body>
 </html>
