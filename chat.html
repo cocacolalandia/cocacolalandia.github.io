@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <script src="/global-head.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no">
-    <title>Chat Realtime - Cocacolalandia</title>
+    <title>Chat Oficial - Cocacolalandia 26</title>
     <link href="https://fonts.googleapis.com/css2?family=Courier+New:wght@400;600;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet">
-    
+
     <style>
         :root {
             --bg: #0c0e1b;
@@ -18,81 +19,285 @@
             --font: 'Courier New', Courier, sans-serif;
         }
 
-        body, html {
-            height: 100%; margin: 0; padding: 0;
-            background-color: var(--bg); color: var(--text);
-            font-family: var(--font); overflow: hidden;
+        body,
+        html {
+            min-height: 100%;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            flex-direction: column;
+            display: flex;
         }
 
-        #app { 
-            display: flex; 
-            flex-direction: column; 
-            height: 100vh; 
-            max-width: 1000px; 
-            margin: 0 auto; 
-            border-left: 1px solid rgba(0,198,255,0.1);
-            border-right: 1px solid rgba(0,198,255,0.1);
+        #app {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            flex: 1;
+            /* Esto es la clave para que el footer se vaya al final */
+            border-left: 1px solid rgba(0, 198, 255, 0.1);
+            border-right: 1px solid rgba(0, 198, 255, 0.1);
+            background: var(--bg);
         }
 
         /* OVERLAYS */
-        .overlay { position: fixed; inset: 0; background: rgba(12,14,27,0.98); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(10px); }
-        .modal { background: var(--card); padding: 30px; border-radius: 20px; border: 2px solid var(--accent); max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 30px var(--accent); }
-
-        /* CABECERA */
-        header { padding: 15px; background: var(--card); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--accent); }
-        .user-info-bar { display:flex; align-items:center; gap:10px; }
-        #my-pfp { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
-
-        /* CHAT BOX */
-        #chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-        .msg { display: flex; gap: 12px; align-items: flex-start; animation: slideUp 0.2s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .msg-img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--accent); object-fit: cover; }
-        .msg-body { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 12px; border-bottom-left-radius: 2px; position: relative; }
-        .msg-user { color: var(--accent); font-weight: 800; font-size: 0.8rem; display: block; margin-bottom: 3px; }
-
-        /* INPUT */
-        .input-wrap { padding: 20px; background: var(--card); display: flex; gap: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
-        input[type="text"] { flex: 1; background: #000; border: 1px solid var(--accent); color: white; padding: 12px; border-radius: 8px; font-family: var(--font); outline: none; }
-        
-        button { 
-            background: linear-gradient(45deg, var(--accent), var(--accent2)); 
-            color: white; border: none; padding: 10px 20px; border-radius: 8px; 
-            cursor: pointer; font-weight: bold; font-family: var(--font); 
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(12, 14, 27, 0.98);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(10px);
         }
 
-        .verified-icon { color: var(--accent); font-size: 10px; margin-left: 4px; }
-        .hidden { display: none !important; }
+        .modal {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid var(--accent);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 30px var(--accent);
+        }
+
+        /* CABECERA */
+        header {
+            padding: 15px;
+            background: var(--card);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .user-info-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #my-pfp {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            object-fit: cover;
+        }
+
+        /* Botones de Login y Logout en la cabecera */
+        #login-btn,
+        #logout-btn {
+            background: linear-gradient(45deg, var(--accent), var(--accent2));
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: var(--font);
+            font-size: 0.8rem;
+            transition: transform 0.2s ease;
+        }
+
+        #login-btn:hover,
+        #logout-btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        /* El botón Logout (por si quieres diferenciarlo un poco) */
+        #logout-btn {
+            background: #222;
+            border: 1px solid #444;
+        }
+
+        /* CHAT BOX */
+        #chat-box {
+            height: 70vh;
+            /* Ajusta este valor (70% de la pantalla) a tu gusto */
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scroll-behavior: smooth;
+        }
+
+        .msg {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            animation: slideUp 0.2s ease;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .msg-img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 1px solid var(--accent);
+            object-fit: cover;
+        }
+
+        .msg-body {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 12px;
+            border-bottom-left-radius: 2px;
+            position: relative;
+            min-width: 120px;
+        }
+
+        .msg-user {
+            font-weight: 800;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        /* ESTILOS DE DUEÑO */
+        .is-owner-text {
+            color: #ff3333 !important;
+            text-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
+        }
+
+        .badge-owner {
+            background: #ff3333;
+            color: white;
+            font-size: 9px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            margin-left: 5px;
+            font-weight: 800;
+            vertical-align: middle;
+        }
+
+        .owner-icon {
+            color: #ffcc00;
+            margin-left: 3px;
+        }
+
+        /* HERRAMIENTAS ADMIN (Botones laterales) */
+        .admin-tools {
+            position: absolute;
+            right: -90px;
+            top: 5px;
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 5;
+        }
+
+        .msg:hover .admin-tools {
+            display: flex;
+        }
+
+        .btn-admin {
+            background: #222;
+            color: white;
+            border: 1px solid #444;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-admin:hover {
+            background: #ff4444;
+            border-color: white;
+        }
+
+        /* INPUT AREA */
+        .input-wrap {
+            padding: 20px;
+            background: var(--card);
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        input[type="text"] {
+            flex: 1;
+            background: #000;
+            border: 1px solid var(--accent);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: var(--font);
+            outline: none;
+        }
+
+        button.send-v {
+            background: linear-gradient(45deg, var(--accent), var(--accent2));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: var(--font);
+        }
+
+        .verified-icon {
+            color: var(--accent);
+            font-size: 10px;
+            margin-left: 4px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
+
 <body>
 
     <div id="step-age" class="overlay">
         <div class="modal">
             <i class="fa-solid fa-user-shield" style="font-size: 3rem; color: var(--accent2); margin-bottom: 15px;"></i>
-            <h2>MAYORES DE 14 AÑOS</h2>
-            <p>Debido a la LOPD (Ley Orgánica de Protección de Datos) y el RGPD (Reglamento General de Protección de Datos) de la Unión europea, para acceder al chat de Cocacolalandia debes confirmar que tienes al menos 14 años.</p>
-            <button onclick="confirmAge()">TENGO +14 AÑOS</button>
+            <h2>ACCESO +14 AÑOS</h2>
+            <p>Confirma que tienes al menos 14 años para entrar al chat oficial de Cocacolalandia 26.</p>
+            <button class="send-v" onclick="confirmAge()">SÍ, TENGO +14</button>
         </div>
     </div>
 
     <div id="step-guest-name" class="overlay hidden">
         <div class="modal">
             <h3>¿CÓMO TE LLAMAS?</h3>
-            <p>Escribe tu nombre para participar como invitado:</p>
-            <input type="text" id="guest-input-name" placeholder="Tu apodo..." style="width:80%; margin-bottom:10px;">
-            <p id="error-name" style="color: #ff4b4b; font-size: 0.8rem;" class="hidden">Ese nombre está reservado por un usuario verificado.</p>
-            <button onclick="saveGuestName()">ENTRAR AL CHAT</button>
+            <p>Elige un apodo para chatear como invitado:</p>
+            <input type="text" id="guest-input-name" placeholder="Escribe aquí..." style="width:80%; margin-bottom:10px;">
+            <p id="error-name" style="color: #ff4b4b; font-size: 0.8rem;" class="hidden">Ese nombre está reservado por el DUEÑO.</p>
+            <button class="send-v" onclick="saveGuestName()">ENTRAR AL CHAT</button>
         </div>
     </div>
 
     <div id="step-profile" class="overlay hidden">
         <div class="modal">
-            <h3>PERFIL DE USUARIO</h3>
-            <p>Personaliza cómo te verán los demás:</p>
-            <input type="text" id="custom-name" placeholder="Nombre de usuario..." style="width:80%; margin-bottom:10px;">
+            <h3>PERFIL VERIFICADO</h3>
+            <p>Ajusta tu nombre y foto:</p>
+            <input type="text" id="custom-name" placeholder="Tu nombre..." style="width:80%; margin-bottom:10px;">
             <input type="text" id="custom-img" placeholder="URL de tu foto..." style="width:80%; margin-bottom:10px;">
-            <button onclick="saveProfile()">GUARDAR PERFIL</button>
+            <button class="send-v" onclick="saveProfile()">GUARDAR Y ENTRAR</button>
         </div>
     </div>
 
@@ -100,24 +305,51 @@
         <header>
             <div class="user-info-bar">
                 <img id="my-pfp" src="https://i.imgur.com/PPO7d2j.png">
-                <span id="my-name">Invitado</span>
+                <span id="my-name">Cargando...</span>
             </div>
-            <button id="login-btn" onclick="startGoogle()"><i class="fab fa-google"></i> ENTRAR</button>
-            <button id="logout-btn" class="hidden" onclick="closeSession()">SALIR</button>
+            <div style="display: flex; gap: 10px;">
+                <button id="login-btn" onclick="startGoogle()"><i class="fab fa-google"></i> ENTRAR</button>
+                <button id="logout-btn" class="hidden" onclick="closeSession()">SALIR</button>
+            </div>
         </header>
 
         <div id="chat-box"></div>
 
         <div class="input-wrap">
             <input type="text" id="msg-input" placeholder="Escribe un mensaje..." maxlength="150">
-            <button onclick="trySend()"><i class="fa-solid fa-paper-plane"></i></button>
+            <button class="send-v" onclick="trySend()"><i class="fa-solid fa-paper-plane"></i></button>
         </div>
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp, getDocs, deleteDoc, doc, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import {
+            getFirestore,
+            collection,
+            addDoc,
+            query,
+            orderBy,
+            limit,
+            onSnapshot,
+            serverTimestamp,
+            getDocs,
+            getDoc,
+            deleteDoc,
+            doc,
+            setDoc,
+            where
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import {
+            getAuth,
+            signInWithPopup,
+            GoogleAuthProvider,
+            onAuthStateChanged,
+            signOut,
+            setPersistence,
+            browserLocalPersistence
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDLaicFQIw-h7FLXXVi93jLQD4HggwejzI",
@@ -133,17 +365,33 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        let userData = { name: "Invitado", pfp: "https://i.imgur.com/PPO7d2j.png", isGoogle: false };
+        let myIp = "0.0.0.0";
+        fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => myIp = d.ip).catch(() => {});
 
-        // --- MANEJO DE SESIÓN ---
-        onAuthStateChanged(auth, (user) => {
+        let userData = {
+            name: "Invitado",
+            pfp: "https://i.imgur.com/PPO7d2j.png",
+            isGoogle: false,
+            isAdmin: false
+        };
+
+        // --- SISTEMA DE SESIÓN Y ADMIN ---
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                const saved = JSON.parse(localStorage.getItem('cc_profile_v2'));
-                userData = {
-                    name: saved?.name || user.displayName,
-                    pfp: saved?.pfp || user.photoURL,
-                    isGoogle: true
-                };
+                // Comprobamos si el usuario está en la colección admins
+                try {
+                    const adminRef = doc(db, "admins", user.email);
+                    const adminSnap = await getDoc(adminRef);
+                    userData.isAdmin = adminSnap.exists();
+                } catch (e) {
+                    userData.isAdmin = false;
+                }
+
+                const saved = JSON.parse(localStorage.getItem('cc_profile_v3'));
+                userData.name = saved?.name || user.displayName;
+                userData.pfp = saved?.pfp || user.photoURL;
+                userData.isGoogle = true;
+
                 document.getElementById('login-btn').classList.add('hidden');
                 document.getElementById('logout-btn').classList.remove('hidden');
             }
@@ -155,7 +403,6 @@
             document.getElementById('my-pfp').src = userData.pfp;
         }
 
-        // --- FUNCIONES DE AUTH ---
         window.startGoogle = async () => {
             await setPersistence(auth, browserLocalPersistence);
             const res = await signInWithPopup(auth, provider);
@@ -165,26 +412,27 @@
         };
 
         window.saveProfile = () => {
-            const n = document.getElementById('custom-name').value.trim();
-            const i = document.getElementById('custom-img').value.trim();
-            if(!n) return;
-            userData = { name: n, pfp: i || userData.pfp, isGoogle: true };
-            localStorage.setItem('cc_profile_v2', JSON.stringify(userData));
+            userData.name = document.getElementById('custom-name').value.trim();
+            userData.pfp = document.getElementById('custom-img').value.trim();
+            localStorage.setItem('cc_profile_v3', JSON.stringify({
+                name: userData.name,
+                pfp: userData.pfp
+            }));
             updateUI();
             document.getElementById('step-profile').classList.add('hidden');
         };
 
         window.closeSession = () => {
             signOut(auth);
-            localStorage.removeItem('cc_profile_v2');
+            localStorage.removeItem('cc_profile_v3');
             location.reload();
         };
 
-        // --- LÓGICA DEL CHAT ---
+        // --- ENVIAR MENSAJE ---
         window.trySend = () => {
             const val = document.getElementById('msg-input').value.trim();
-            if(!val) return;
-            if(!userData.isGoogle && userData.name === "Invitado") {
+            if (!val) return;
+            if (!userData.isGoogle && userData.name === "Invitado") {
                 document.getElementById('step-guest-name').classList.remove('hidden');
             } else {
                 executeSend(val);
@@ -192,17 +440,15 @@
         };
 
         window.saveGuestName = async () => {
-            const name = document.getElementById('guest-input-name').value.trim();
-            if(!name) return;
-            
-            // Verificamos si el nombre lo tiene un usuario registrado
-            const q = query(collection(db, "messages"), where("user", "==", name), where("isGoogle", "==", true), limit(1));
+            const n = document.getElementById('guest-input-name').value.trim();
+            if (!n) return;
+            // Evitar que un invitado se ponga "Dueño" o nombres de admin
+            const q = query(collection(db, "messages"), where("user", "==", n), where("isAdmin", "==", true), limit(1));
             const snap = await getDocs(q);
-            
-            if(!snap.empty) {
+            if (!snap.empty) {
                 document.getElementById('error-name').classList.remove('hidden');
             } else {
-                userData.name = name;
+                userData.name = n;
                 updateUI();
                 document.getElementById('step-guest-name').classList.add('hidden');
                 executeSend(document.getElementById('msg-input').value);
@@ -210,16 +456,40 @@
         };
 
         async function executeSend(text) {
-            await addDoc(collection(db, "messages"), {
-                text: text,
-                user: userData.name,
-                pfp: userData.pfp,
-                isGoogle: userData.isGoogle,
-                time: serverTimestamp()
-            });
-            document.getElementById('msg-input').value = "";
-            doClean();
+            try {
+                await addDoc(collection(db, "messages"), {
+                    text,
+                    user: userData.name,
+                    pfp: userData.pfp,
+                    isGoogle: userData.isGoogle,
+                    isAdmin: userData.isAdmin,
+                    uid: auth.currentUser ? auth.currentUser.uid : "guest",
+                    ip: myIp,
+                    time: serverTimestamp()
+                });
+                document.getElementById('msg-input').value = "";
+                cleanUp();
+            } catch (e) {
+                alert("Acceso denegado. Podrías estar bloqueado.");
+            }
         }
+
+        // --- HERRAMIENTAS ADMIN ---
+        window.delMsg = async (id) => {
+            if (confirm("¿Borrar mensaje?")) await deleteDoc(doc(db, "messages", id));
+        };
+        window.banUser = async (uid, ip) => {
+            if (confirm("¿Bloquear IP y Usuario?")) {
+                if (uid !== "guest") await setDoc(doc(db, "banned", uid), {
+                    banned: true
+                });
+                await setDoc(doc(db, "banned", ip.replace(/\./g, '_')), {
+                    banned: true,
+                    ip
+                });
+                alert("Baneado.");
+            }
+        };
 
         // --- ESCUCHA TIEMPO REAL ---
         const qC = query(collection(db, "messages"), orderBy("time", "desc"), limit(20));
@@ -228,31 +498,43 @@
             box.innerHTML = "";
             snap.docs.reverse().forEach(d => {
                 const m = d.data();
+                const isOwner = m.isAdmin === true;
                 box.innerHTML += `
                     <div class="msg">
-                        <img src="${m.pfp}" class="msg-img">
+                        <img src="${m.pfp}" class="msg-img" style="${isOwner ? 'border: 2px solid #ff3333' : ''}">
                         <div class="msg-body">
-                            <span class="msg-user">${m.user} ${m.isGoogle ? '<i class="fas fa-check-circle verified-icon"></i>' : ''}</span>
+                            <span class="msg-user ${isOwner ? 'is-owner-text' : ''}">
+                                ${m.user} ${isOwner ? '<i class="fas fa-crown owner-icon"></i> <span class="badge-owner">DUEÑO</span>' : ''}
+                                ${m.isGoogle && !isOwner ? '<i class="fas fa-check-circle verified-icon"></i>' : ''}
+                            </span>
                             <span>${m.text}</span>
                         </div>
+                        ${userData.isAdmin ? `
+                            <div class="admin-tools">
+                                <button class="btn-admin" onclick="delMsg('${d.id}')">Borrar</button>
+                                <button class="btn-admin" onclick="banUser('${m.uid}', '${m.ip}')">Banear</button>
+                            </div>
+                        ` : ''}
                     </div>`;
             });
             box.scrollTop = box.scrollHeight;
         });
 
-        // --- UTILIDADES ---
         window.confirmAge = () => {
             document.getElementById('step-age').classList.add('hidden');
-            localStorage.setItem('cc_age_ok', '1');
+            localStorage.setItem('age_ok_cc', '1');
         };
-        if(localStorage.getItem('cc_age_ok')) document.getElementById('step-age').classList.add('hidden');
+        if (localStorage.getItem('age_ok_cc')) document.getElementById('step-age').classList.add('hidden');
 
-        async function doClean() {
+        async function cleanUp() {
             const s = await getDocs(query(collection(db, "messages"), orderBy("time", "desc")));
-            if(s.size > 50) s.docs.slice(20).forEach(async d => await deleteDoc(doc(db, "messages", d.id)));
+            if (s.size > 50) s.docs.slice(20).forEach(async d => await deleteDoc(doc(db, "messages", d.id)));
         }
 
-        document.getElementById('msg-input').onkeypress = (e) => { if(e.key==='Enter') trySend(); };
+        document.getElementById('msg-input').onkeypress = (e) => {
+            if (e.key === 'Enter') trySend();
+        };
     </script>
 </body>
+
 </html>
