@@ -507,16 +507,26 @@
 </head>
 
 <body>
-    <script type="text/plain" data-cookie-consent="strictly-necessary">
-        (function() {
-            const dominioOficial = "cocacolalandia.github.io";
-            if (!window.location.hostname.includes(dominioOficial)) {
-                // Detener la carga del DOM
-                window.stop();
-                document.documentElement.innerHTML = "";
-                window.location.replace("https://cocacolalandia.github.io/juegos");
-            }
-        })();
+    <script>
+(function() {
+    // 1. Especifica aquí tu URL
+    const urlCorrecta = "https://cocacolalandia.github.io/juegos";
+
+    if (window.location.href !== urlCorrecta) {
+        // 2. Detenemos la carga de la página
+        window.stop(); 
+
+        // 3. Reemplazamos todo el contenido del body
+        document.documentElement.innerHTML = `
+            <body style="margin:0; padding:0; display:flex; justify-content:center; align-items:center; height:100vh; background-color: #f8f9fa; font-family: sans-serif;">
+                <h1 style="font-size: 5rem; color: red; text-align: center; font-weight: bold; text-transform: uppercase;">
+                    ESTE NO ES EL LINK CORRECTO
+                </h1>
+            </body>
+        `;
+    }
+})();
+    
     </script>
     <script type="text/plain" data-cookie-consent="strictly-necessary">
         /**
