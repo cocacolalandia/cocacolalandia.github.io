@@ -430,8 +430,21 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
+        let myIp = "0.0.0.0";
+        fetch('https://api.ipify.org?format=json')
+            .then(r => r.json())
+            .then(d => {
+                myIp = d.ip;
+                checkBanStatus();
+            })
+            .catch(err => {
+                console.warn("ipify bloqueado por AdBlock. Usando 'oculta' como IP.");
+                myIp = "oculta"; // Valor seguro que no sea 0.0.0.0
+                checkBanStatus();
+            });
         // --- FUNCIÓN DE BLOQUEO POR BANEO ---
         async function checkBanStatus() {
+            if (myIp === "0.0.0.0") return;
             const uid = auth.currentUser ? auth.currentUser.uid : "guest";
             const ipId = myIp.replace(/\./g, '_');
             let isBanned = false;
@@ -508,10 +521,6 @@
             closeConfirm();
         };
 
-        let myIp = "0.0.0.0";
-        fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => myIp = d.ip).catch(() => {
-            checkBanStatus();
-        });
 
         let userData = {
             name: "Invitado",
@@ -607,8 +616,14 @@
 
         async function executeSend(text) {
             try {
+                if (myIp === "0.0.0.0") {
+                    const r = await fetch('https://api.ipify.org?format=json');
+                    const d = await r.json();
+                    myIp = d.ip;
+                }
+
                 await addDoc(collection(db, "messages"), {
-                    text,
+                    text: text,
                     user: userData.name,
                     pfp: userData.pfp,
                     isGoogle: userData.isGoogle,
@@ -617,10 +632,21 @@
                     ip: myIp,
                     time: serverTimestamp()
                 });
+
                 document.getElementById('msg-input').value = "";
+                // Si el envío es exitoso, nos aseguramos de limpiar cualquier error previo
                 cleanUp();
+
             } catch (e) {
-                alert("Acceso denegado. Podrías estar bloqueado.");
+                console.error("Error al enviar:", e);
+
+                // Solo muestra el Toast de baneo si el error es de falta de permisos (Firebase lo bloquea)
+                if (e.code === 'permission-denied') {
+                    showPermanentBanToast("🚫 Acceso denegado: Estás baneado del chat.");
+                } else {
+                    // Si es otro error (como falta de internet), usa un alert normal que desaparece
+                    alert("⚠️ Error al enviar el mensaje. Revisa tu conexión.");
+                }
             }
         }
 
@@ -631,17 +657,27 @@
                 alert("Mensaje eliminado");
             });
         };
-        window.banUser = (uid, ip) => {
-            openConfirm("BANEAR", "¿Bloquear acceso a este usuario e IP?", async () => {
-                if (uid !== "guest") await setDoc(doc(db, "banned", uid), {
-                    banned: true
-                });
-                await setDoc(doc(db, "banned", ip.replace(/\./g, '_')), {
+        window.banUser = async (uid, ip) => {
+            if (confirm("¿Seguro que quieres banear a este usuario?")) {
+                // SI LA IP DEL MENSAJE ES 0.0.0.0, USA LA TUYA (myIp) QUE YA CARGÓ AL INICIO
+                let targetIp = (ip === "0.0.0.0" || !ip) ? myIp : ip;
+
+                // Baneo por UID
+                if (uid && uid !== "guest") {
+                    await setDoc(doc(db, "banned", uid), {
+                        banned: true
+                    });
+                }
+
+                // Baneo por IP (Cambiando puntos por guiones para Firebase)
+                const ipId = targetIp.replace(/\./g, '_');
+                await setDoc(doc(db, "banned", ipId), {
                     banned: true,
-                    ip
+                    ip: targetIp
                 });
-                alert("Usuario bloqueado");
-            });
+
+                alert("Usuario e IP (" + targetIp + ") baneados correctamente.");
+            }
         };
 
         // --- ESCUCHA TIEMPO REAL ---
