@@ -303,6 +303,25 @@
                 opacity: 0;
             }
         }
+
+        /* Botón de enviar cuando está bloqueado */
+        button.send-v:disabled {
+            background: #222 !important;
+            color: #555 !important;
+            cursor: not-allowed !important;
+            /* Icono de prohibido */
+            box-shadow: none !important;
+            transform: none !important;
+            filter: grayscale(1);
+        }
+
+        /* Variante para el Toast permanente de baneo */
+        .toast-ban {
+            border-left: 4px solid #ff3333 !important;
+            box-shadow: 0 0 20px #ff3333 !important;
+            animation: slideUpToast 0.4s ease forwards !important;
+            /* Quitamos la animación de salida */
+        }
     </style>
 </head>
 
@@ -411,7 +430,51 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
+        // --- FUNCIÓN DE BLOQUEO POR BANEO ---
+        async function checkBanStatus() {
+            const uid = auth.currentUser ? auth.currentUser.uid : "guest";
+            const ipId = myIp.replace(/\./g, '_');
+            let isBanned = false;
 
+            try {
+                // Comprobar UID
+                if (uid !== "guest") {
+                    const banSnap = await getDoc(doc(db, "banned", uid));
+                    if (banSnap.exists()) isBanned = true;
+                }
+                // Comprobar IP
+                const ipSnap = await getDoc(doc(db, "banned", ipId));
+                if (ipSnap.exists()) isBanned = true;
+
+                if (isBanned) {
+                    // 1. Bloquear el input y el botón
+                    const input = document.getElementById('msg-input');
+                    const btn = document.querySelector('button.send-v');
+
+                    input.disabled = true;
+                    input.placeholder = "ACCESO RESTRINGIDO";
+                    btn.disabled = true;
+
+                    // 2. Lanzar Toast Permanente (sin el setTimeout de borrado)
+                    showPermanentBanToast("🚫 ESTÁS BANEADO. No puedes enviar mensajes.");
+                }
+            } catch (e) {
+                console.error("Error verificando baneo:", e);
+            }
+        }
+
+        // Función especial para el aviso de baneo que no se quita
+        function showPermanentBanToast(message) {
+            const container = document.getElementById('toast-container') || createToastContainer();
+            // Evitar duplicados
+            if (document.querySelector('.toast-ban')) return;
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-msg toast-ban';
+            toast.innerText = message;
+            container.appendChild(toast);
+            // NOTA: No hay setTimeout, por lo que se queda ahí para siempre
+        }
         // --- OVERRIDE DE ALERT A TOAST ---
         window.alert = function(message) {
             const container = document.getElementById('toast-container') || createToastContainer();
@@ -446,7 +509,9 @@
         };
 
         let myIp = "0.0.0.0";
-        fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => myIp = d.ip).catch(() => {});
+        fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => myIp = d.ip).catch(() => {
+            checkBanStatus();
+        });
 
         let userData = {
             name: "Invitado",
@@ -481,6 +546,7 @@
             } else {
                 userData.isAdmin = false;
             }
+            checkBanStatus();
             updateUI();
         });
 
