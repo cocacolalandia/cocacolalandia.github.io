@@ -508,26 +508,40 @@
 
 <body>
     <script>
-(function() {
-    // 1. Especifica aquí tu URL
-    const urlCorrecta = "https://cocacolalandia.github.io/juegos";
+  (function() {
+    const urlOficial = "https://cocacolalandia.github.io/juegos";
 
-    if (window.location.href !== urlCorrecta) {
-        // 2. Detenemos la carga de la página
-        window.stop(); 
+    // 1. Detectar si estamos en un iframe o en un entorno oculto (como about:blank)
+    // window.top es la ventana de más arriba. Si no es igual a window.self, estamos atrapados.
+    if (window.self !== window.top || !window.location.href.includes("cocacolalandia.github.io")) {
+      
+      // Matamos la carga de la página inmediatamente
+      window.stop();
 
-        // 3. Reemplazamos todo el contenido del body
-        document.documentElement.innerHTML = `
-            <body style="margin:0; padding:0; display:flex; justify-content:center; align-items:center; height:100vh; background-color: #f8f9fa; font-family: sans-serif;">
-                <h1 style="font-size: 5rem; color: red; text-align: center; font-weight: bold; text-transform: uppercase;">
-                    ESTE NO ES EL LINK CORRECTO
-                </h1>
-            </body>
-        `;
+      // 2. Bloqueo visual total
+      document.documentElement.innerHTML = `
+        <body style="margin:0; background-color:#000; color:red; display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; font-family:Arial, sans-serif; overflow:hidden;">
+          <h1 style="font-size:8vw; text-align:center; margin:0; font-weight:900;">
+            ESTE NO ES EL LINK CORRECTO
+          </h1>
+          <p style="font-size:2vw; color:white; margin-top:20px;">Cargando versión oficial de Cocacolalandia...</p>
+        </body>
+      `;
+
+      // 3. ROMPER EL ENCIERRO (Frame Buster)
+      // Intentamos forzar a la ventana de arriba (Google Sites) a ir a tu link.
+      try {
+        setTimeout(function() {
+          window.top.location.href = urlOficial;
+        }, 2500);
+      } catch (e) {
+        // Si Google Sites bloquea el cambio de URL (por seguridad), 
+        // el usuario se quedará viendo el mensaje de error "ESTE NO ES EL LINK CORRECTO".
+      }
     }
-})();
-    
+  })();
     </script>
+    
     <script type="text/plain" data-cookie-consent="strictly-necessary">
         /**
          * [PRIVATE PROPERTY NOTICE]
