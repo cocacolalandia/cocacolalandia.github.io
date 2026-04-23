@@ -530,14 +530,8 @@
 
       // 3. ROMPER EL ENCIERRO (Frame Buster)
       // Intentamos forzar a la ventana de arriba (Google Sites) a ir a tu link.
-      try {
-        setTimeout(function() {
-          window.top.location.href = urlOficial;
-        }, 2500);
-      } catch (e) {
         // Si Google Sites bloquea el cambio de URL (por seguridad), 
         // el usuario se quedará viendo el mensaje de error "ESTE NO ES EL LINK CORRECTO".
-      }
     }
   })();
     </script>
