@@ -524,7 +524,6 @@
           <h1 style="font-size:8vw; text-align:center; margin:0; font-weight:900;">
             ESTE NO ES EL LINK CORRECTO
           </h1>
-          <p style="font-size:2vw; color:white; margin-top:20px;">Cargando versión oficial de Cocacolalandia...</p>
         </body>
       `;
 
@@ -686,14 +685,19 @@
         };
 
         // BUSCADOR ACTUALIZADO
-        document.getElementById("searchBox").oninput = e => {
-            const term = e.target.value.toLowerCase();
-            // Ahora busca tanto en tus botones como en los nuevos inputs
-            document.querySelectorAll(".game-btn, #sections-container input").forEach(btn => {
-                const text = btn.value || btn.textContent; // Detecta texto en ambos tipos de botón
-                btn.style.display = text.toLowerCase().includes(term) ? "block" : "none";
-            });
-        };
+document.getElementById("searchBox").oninput = e => {
+    const term = e.target.value.toLowerCase();
+    
+    // Buscamos todos los contenedores de juegos
+    document.querySelectorAll(".game-wrapper").forEach(wrapper => {
+        const btn = wrapper.querySelector("input, .game-btn");
+        if (btn) {
+            const text = btn.value || btn.textContent;
+            // Si el texto coincide, mostramos el WRAPPER entero (botón + estrella)
+            wrapper.style.display = text.toLowerCase().includes(term) ? "block" : "none";
+        }
+    });
+};
 
         // FILTRO POR CATEGORÍA
         document.querySelectorAll(".category-btn").forEach(btn => {
