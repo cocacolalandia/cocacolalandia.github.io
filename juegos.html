@@ -944,28 +944,34 @@ document.getElementById("searchBox").oninput = e => {
 
         /* esperar a que cargue el script externo */
         setTimeout(initFavorites, 3000);
-        window.addEventListener('load', () => {
-    // 1. Obtener el parámetro 'search' de la URL (ej: ?search=mario)
-    const urlParams = new URLSearchParams(window.location.search);
-    const query = urlParams.get('search');
+        // --- FUNCIÓN INDEPENDIENTE DE BÚSQUEDA POR URL ---
+        function realizarBusquedaPorURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('search');
 
-    if (query) {
-        const searchBox = document.getElementById("searchBox");
-        
-        // 2. Poner el texto en el input
-        searchBox.value = query;
+            if (query) {
+                const searchBox = document.getElementById("searchBox");
+                if (searchBox) {
+                    searchBox.value = query;
+                    // Forzamos el evento 'input' para que el buscador reaccione
+                    searchBox.dispatchEvent(new Event('input'));
+                }
 
-        // 3. Ejecutar el filtrado (reutilizando tu lógica actual)
-        const term = query.toLowerCase();
-        document.querySelectorAll(".game-wrapper").forEach(wrapper => {
-            const btn = wrapper.querySelector("input, .game-btn");
-            if (btn) {
-                const text = btn.value || btn.textContent;
-                wrapper.style.display = text.toLowerCase().includes(term) ? "block" : "none";
+                const term = query.toLowerCase();
+                // Buscamos en los wrappers creados por tu sistema de favoritos
+                document.querySelectorAll(".game-wrapper").forEach(wrapper => {
+                    const btn = wrapper.querySelector("input, .game-btn");
+                    if (btn) {
+                        const text = (btn.value || btn.textContent).toLowerCase();
+                        wrapper.style.display = text.includes(term) ? "block" : "none";
+                    }
+                });
             }
-        });
-    }
-});
+        }
+
+        // Se ejecuta un poco después de los favoritos (3000ms) para no chocar
+        setTimeout(realizarBusquedaPorURL, 3500);
+        
         
     </script>
 
