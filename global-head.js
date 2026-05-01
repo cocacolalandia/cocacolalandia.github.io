@@ -1,12 +1,12 @@
 /**
- * COCACOLALANDIA CORE SYSTEM v4.0
- * Gestión Global de Temas, Seguridad y Cumplimiento Legal
+ * COCACOLALANDIA CORE SYSTEM v4.2
+ * Gestión Global de Temas, Seguridad, UI de Cookies y Cumplimiento Legal
  */
 
 (function() {
     const head = document.head;
 
-    // --- 1. MOTOR DE ESTILOS GLOBALES (CSS VARIABLE INJECTION) ---
+    // --- 1. MOTOR DE ESTILOS GLOBALES E INYECCIÓN DE UI ---
     const style = document.createElement('style');
     style.innerHTML = `
         :root {
@@ -16,6 +16,7 @@
             --surface: #121212;
             --border: rgba(255, 255, 255, 0.1);
             --font: 'Space Grotesk', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         /* --- TEMAS DINÁMICOS --- */
@@ -24,9 +25,58 @@
         body.theme-cyberpunk { --primary: #fcee0a; --primary-rgb: 252, 238, 10; --bg: #000; }
         body.theme-blood { --primary: #ff4d4d; --primary-rgb: 255, 77, 77; --bg: #1a0000; }
         
-        /* --- EVENTOS OBLIGATORIOS --- */
-        body.event-halloween { --primary: #ff6600; --bg: #0f0f0f; }
-        body.event-8m { --primary: #bc13fe; --bg: #2e003e; }
+        /* --- REDISEÑO TOTAL TERMSFEED (COOKIES UI) --- */
+        #termsfeed-com---nb {
+            background: rgba(10, 10, 10, 0.96) !important;
+            backdrop-filter: blur(15px) !important;
+            border-top: 2px solid var(--primary) !important;
+            padding: 25px 5% !important;
+            font-family: var(--font) !important;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.8) !important;
+        }
+
+        #termsfeed-com---nb p, #termsfeed-com---nb a, .cc-nb-title {
+            font-family: var(--font) !important;
+            color: #eee !important;
+        }
+
+        #termsfeed-com---nb a { color: var(--primary) !important; text-decoration: underline !important; }
+
+        /* Botones del Banner */
+        .cc-nb-okagree {
+            background: var(--primary) !important;
+            color: white !important;
+            border-radius: 12px !important;
+            padding: 12px 30px !important;
+            font-family: var(--font) !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: var(--transition) !important;
+        }
+
+        .cc-nb-okagree:hover { transform: translateY(-2px) !important; box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.4) !important; }
+
+        .cc-nb-reject, .cc-nb-changep {
+            background: rgba(255,255,255,0.05) !important;
+            color: #ccc !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            padding: 12px 25px !important;
+            font-family: var(--font) !important;
+            cursor: pointer !important;
+            transition: var(--transition) !important;
+        }
+
+        /* Modal de Preferencias */
+        #termsfeed-com---pc {
+            background: rgba(15, 15, 15, 0.98) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 25px !important;
+            font-family: var(--font) !important;
+        }
 
         /* --- FOOTER REDISEÑADO --- */
         .coca-footer {
@@ -77,7 +127,6 @@
             });
         };
 
-        // Google Analytics (Solo se activa con consentimiento)
         const gaID = 'G-KFVQX643H7';
         const gaScript = document.createElement('script');
         gaScript.type = "text/plain";
@@ -93,23 +142,16 @@
     };
 
     // --- 3. LÓGICA DE EVENTOS Y TEMAS ---
-    const checkEvents = () => {
+    const applyTheme = () => {
         const hoy = new Date();
         const d = hoy.getDate();
         const m = hoy.getMonth() + 1;
-        if (m === 10 && d === 31) return 'event-halloween';
-        if (m === 3 && d === 8) return 'event-8m';
-        return null;
-    };
-
-    const applyTheme = () => {
-        const event = checkEvents();
-        if (event) {
-            document.body.classList.add(event);
-            return;
+        if (m === 10 && d === 31) document.body.classList.add('event-halloween');
+        else if (m === 3 && d === 8) document.body.classList.add('event-8m');
+        else {
+            const saved = localStorage.getItem('cocacola-pref-theme');
+            if (saved && saved !== 'classic') document.body.classList.add(saved);
         }
-        const saved = localStorage.getItem('cocacola-pref-theme');
-        if (saved && saved !== 'classic') document.body.classList.add(saved);
     };
 
     // --- 4. GADGET DE SEGURIDAD "DOUBLE ESCAPE" ---
@@ -147,7 +189,6 @@
                     <h4>LEGAL</h4>
                     <a href="/privacidad">Privacidad</a>
                     <a href="/condiciones">Términos de Uso</a>
-                    <a href="/copyright">DMCA Policy</a>
                     <button id="open_preferences_center">Ajustes de Cookies</button>
                 </div>
                 <div class="footer-col" style="grid-column: span 2;">
@@ -156,12 +197,11 @@
                 </div>
             </div>
             <div class="legal-box">
-                <strong>Disclaimer:</strong> Cocacolalandia es un repositorio educativo de juegos. No estamos afiliados con The Coca-Cola Company. Todas las marcas pertenecen a sus respectivos dueños bajo Fair Use.
+                <strong>Disclaimer:</strong> Cocacolalandia es un repositorio educativo. No estamos afiliados con The Coca-Cola Company. Todas las marcas pertenecen a sus respectivos dueños.
             </div>
         `;
         document.body.appendChild(footer);
 
-        // Bind Cookies Button
         const cookBtn = document.getElementById('open_preferences_center');
         if (cookBtn) {
             cookBtn.onclick = () => {
@@ -169,5 +209,4 @@
             };
         }
     });
-
 })();
