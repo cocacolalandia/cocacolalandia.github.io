@@ -631,6 +631,32 @@
         #searchBox::placeholder {
             color: rgba(255, 255, 255, 0.2);
         }
+
+        /* ARREGLO PARA EL FOOTER DEL GLOBAL-HEAD.JS */
+        footer {
+            position: relative;
+            width: 100%;
+            clear: both;
+            margin-top: auto;
+            /* Empuja el footer al fondo si hay poco contenido */
+        }
+
+        /* Forzamos que el footer se comporte como si estuviera dentro de main-content 
+   aunque el script lo inyecte fuera */
+        body>footer {
+            margin-left: 80px;
+            /* La misma anchura que tu barra lateral */
+            width: calc(100% - 80px);
+            box-sizing: border-box;
+        }
+
+        /* Si en móvil quitas la barra lateral, recuerda resetear esto */
+        @media (max-width: 768px) {
+            body>footer {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
