@@ -685,6 +685,37 @@
             padding-bottom: 100px;
             /* Ajusta este valor según el alto del footer */
         }
+
+        /* 1. FIJAR LA BARRA LATERAL PARA QUE NO SE MUEVA AL HACER SCROLL */
+        nav {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 1000;
+        }
+
+        /* 2. AJUSTAR EL CONTENIDO PARA QUE RESPETE LA BARRA */
+        .main-content {
+            margin-left: 80px;
+            /* Deja el espacio para la barra fija */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 3. ARREGLAR EL FOOTER INYECTADO POR EL SCRIPT EXTERNO */
+        footer,
+        body>footer {
+            position: relative !important;
+            /* Lo obliga a ir al final del contenido, no de la pantalla */
+            margin-left: 80px !important;
+            /* Lo empuja a la derecha de la nav */
+            width: calc(100% - 80px) !important;
+            display: block !important;
+            clear: both;
+        }
     </style>
 </head>
 
