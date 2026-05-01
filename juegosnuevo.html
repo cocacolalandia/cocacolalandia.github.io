@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <script src="/global-head.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocacolalandia - Juegos Unblocked</title>
+
+    <!-- FUENTES Y LIBRERÍAS DEL INDEX -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #ff003c;
+            --bg: #0a0a0a;
+            --surface: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #ffffff;
+            --font: 'Space Grotesk', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            /* Variables originales adaptadas */
+            --bg-color: var(--bg);
+            --card-color: var(--surface);
+            --text-color: var(--text);
+            --accent: var(--primary);
+            --accent2: #bc13fe;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font) !important;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* LAYOUT (Misma que Index) */
+        .app-container {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            height: 100vh;
+        }
+
+        /* BARRA DE NAVEGACIÓN (Misma que Index) */
+        nav {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 0;
+            gap: 25px;
+            z-index: 1000;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .brand-logo {
+            width: 65px;
+            filter: drop-shadow(0 0 8px rgba(255, 0, 60, 0.4));
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+            background: rgba(255, 0, 60, 0.1);
+        }
+
+        /* CONTENIDO PRINCIPAL */
+        main {
+            padding: 40px 60px;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        /* BUSCADOR (Estilo Index) */
+        .search-container {
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-box-wrapper {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 15px 25px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--transition);
+        }
+
+        .search-box-wrapper:focus-within {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .search-box-wrapper input {
+            background: none;
+            border: none;
+            color: white;
+            outline: none;
+            font-size: 1.1rem;
+            width: 100%;
+        }
+
+        /* BOTONES DE JUEGOS ORIGINALES ACTUALIZADOS[cite: 2] */
+        #sections-container input[type="button"] {
+            display: block;
+            width: 100%;
+            max-width: 600px;
+            margin: 12px auto;
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 20px 25px;
+            border-radius: 18px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            text-align: left;
+            transition: var(--transition);
+        }
+
+        #sections-container input[type="button"]:hover {
+            background: rgba(255, 0, 60, 0.1);
+            border-color: var(--primary);
+            transform: translateX(8px);
+        }
+
+        .game-wrapper {
+            position: relative;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .favorite-star {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .favorite-star.active {
+            color: #ffcc00;
+            filter: drop-shadow(0 0 5px rgba(255, 204, 0, 0.4));
+        }
+
+        /* IFRAME Y LOADER[cite: 2] */
+        iframe {
+            width: 100%;
+            height: 80vh;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: #000;
+            margin-top: 20px;
+        }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loader-circle {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .back-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                flex-direction: row;
+                width: 100%;
+                height: 70px;
+                position: fixed;
+                bottom: 0;
+                top: auto;
+                padding: 0;
+                justify-content: space-around;
+                border-right: none;
+                border-top: 1px solid var(--border);
+            }
+
+            .brand-logo {
+                display: none;
+            }
+
+            main {
+                padding: 20px 20px 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- BLOQUEO DE FRAME ORIGINAL[cite: 2] -->
+    <script>
+        if (window.self !== window.top || !window.location.href.includes("cocacolalandia.github.io")) {
+            window.stop();
+            document.documentElement.innerHTML = '<body style="background:#000;color:red;display:flex;justify-content:center;align-items:center;height:100vh;"><h1>ACCESO DENEGADO</h1></body>';
+        }
+    </script>
+
+    <div id="loader">
+        <div class="loader-circle"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- BARRA DE NAVEGACIÓN (INDEX) -->
+        <nav>
+            <img src="https://i.imgur.com/PPO7d2j.png" class="brand-logo" onclick="location.href='/'">
+            <div class="nav-link" title="Inicio" onclick="location.href='/'"><i class="bi bi-house-door"></i></div>
+            <div class="nav-link active" title="Juegos"><i class="bi bi-controller"></i></div>
+            <div class="nav-link" title="Chat" onclick="window.location.href='/chat'"><i class="bi bi-chat-dots"></i></div>
+            <div class="nav-link" title="Pánico" onclick="window.open('https://classroom.google.com')"><i class="bi bi-radioactive"></i></div>
+        </nav>
+
+        <main>
+            <h1 style="text-align:center; font-size: 2.5rem; margin-bottom: 10px;">Juegos Unblocked</h1>
+            <p style="text-align:center; color: rgba(255,255,255,0.5); margin-bottom: 40px;">Catálogo automático de Cocacolalandia</p>
+
+            <div id="launcher">
+                <div id="menuUI">
+                    <!-- BUSCADOR (INDEX) -->
+                    <div class="search-container">
+                        <div class="search-box-wrapper">
+                            <i class="bi bi-search" style="color: var(--primary)"></i>
+                            <input type="text" id="searchBox" placeholder="Buscar entre cientos de juegos...">
+                        </div>
+                    </div>
+
+                    <!-- CONTENEDOR DE JUEGOS ORIGINAL[cite: 2] -->
+                    <div id="anuncios">
+                        <div id="sections-container"></div>
+                        <!-- SCRIPT EXTERNO ORIGINAL[cite: 2] -->
+                        <script>
+                            (function() {
+                                const s = document.createElement("script");
+                                s.src = "https://cdn.jsdelivr.net/gh/bubbles/ugs-singlefile@main/games.js";
+                                document.body.appendChild(s);
+                            })();
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SCRIPTS ORIGINALES SIN CAMBIOS DE LÓGICA[cite: 2] -->
+    <script>
+        // LOADER ORIGINAL[cite: 2]
+        setTimeout(() => document.getElementById("loader").style.display = "none", 1000);
+
+        // IA DE LIMPIEZA ORIGINAL[cite: 2]
+        (function() {
+            function cleanText(txt) {
+                if (!txt || typeof txt !== 'string') return txt;
+                let s = txt.replace(/^(cl|gh|v)\-?/gi, '').replace(/[\-_.]/g, ' ');
+                s = s.replace(/([a-zA-Z])(\d)/g, '$1 $2').replace(/(\d)([a-zA-Z])/g, '$1 $2').replace(/([a-z])([A-Z])/g, '$1 $2');
+                return s.trim().toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+            }
+            const originalSetAttribute = HTMLInputElement.prototype.setAttribute;
+            HTMLInputElement.prototype.setAttribute = function(name, value) {
+                if (name === 'value' && this.type === 'button') {
+                    return originalSetAttribute.call(this, name, cleanText(value));
+                }
+                return originalSetAttribute.call(this, name, value);
+            };
+        })();
+
+        // BUSCADOR ORIGINAL[cite: 2]
+        document.getElementById("searchBox").oninput = e => {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll(".game-wrapper").forEach(wrapper => {
+                const btn = wrapper.querySelector("input");
+                if (btn) wrapper.style.display = btn.value.toLowerCase().includes(term) ? "block" : "none";
+            });
+        };
+
+        // LÓGICA DE LANZAMIENTO ORIGINAL[cite: 2]
+        const launcher = document.getElementById("launcher");
+        const menuUI = document.getElementById("menuUI");
+
+        launcher.addEventListener("click", e => {
+            const targetBtn = e.target.closest("input[type='button']");
+            if (targetBtn && !e.target.classList.contains('favorite-star')) {
+                const src = targetBtn.getAttribute('onclick').match(/'([^']+)'/)[1];
+                menuUI.style.display = "none";
+                launcher.innerHTML = `
+                    <button class="back-btn" onclick="location.reload()"><i class="bi bi-arrow-left"></i> VOLVER AL MENÚ</button>
+                    <iframe src="${src}" allowfullscreen></iframe>
+                `;
+            }
+        });
+
+        // SISTEMA DE FAVORITOS ORIGINAL[cite: 2]
+        const favKey = "cocacolalandia_favorites";
+
+        function getFavs() {
+            return JSON.parse(localStorage.getItem(favKey) || "[]");
+        }
+
+        function toggleFav(name) {
+            let f = getFavs();
+            f = f.includes(name) ? f.filter(x => x !== name) : [...f, name];
+            localStorage.setItem(favKey, JSON.stringify(f));
+            refreshStars();
+            reorderGames();
+        }
+
+        function refreshStars() {
+            const favs = getFavs();
+            document.querySelectorAll(".favorite-star").forEach(star => {
+                const isFav = favs.includes(star.dataset.name);
+                star.className = `favorite-star fa-${isFav ? 'solid' : 'regular'} fa-star ${isFav ? 'active' : ''}`;
+            });
+        }
+
+        function reorderGames() {
+            const favs = getFavs();
+            const container = document.getElementById("sections-container");
+            if (!container) return;
+            const wrappers = [...container.querySelectorAll(".game-wrapper")];
+            wrappers.sort((a, b) => (favs.includes(b.dataset.name) ? 1 : 0) - (favs.includes(a.dataset.name) ? 1 : 0));
+            wrappers.forEach(w => container.appendChild(w));
+        }
+
+        function initFavorites() {
+            document.querySelectorAll("#sections-container input[type='button']").forEach(btn => {
+                if (btn.dataset.favdone) return;
+                const wrapper = document.createElement("div");
+                wrapper.className = "game-wrapper";
+                btn.parentNode.insertBefore(wrapper, btn);
+                wrapper.appendChild(btn);
+                wrapper.dataset.name = btn.value;
+                const star = document.createElement("i");
+                star.className = "favorite-star fa-regular fa-star";
+                star.dataset.name = btn.value;
+                star.onclick = (e) => {
+                    e.stopPropagation();
+                    toggleFav(btn.value);
+                };
+                wrapper.appendChild(star);
+                btn.dataset.favdone = true;
+            });
+            refreshStars();
+            reorderGames();
+        }
+        setTimeout(initFavorites, 3000);
+
+        // Bloqueos de seguridad originales[cite: 2]
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.onkeydown = e => {
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && [73, 74, 67].includes(e.keyCode)) || (e.ctrlKey && e.keyCode == 85)) return false;
+        };
+    </script>
+</body>
+
+</html>
