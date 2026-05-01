@@ -1,502 +1,178 @@
-
 <!DOCTYPE html>
-<html lang='en' class=''>
-
+<html lang="es">
 <head>
-  <script src="/global-head.js"></script>
-  <meta charset='UTF-8'>
-  <title>No encontrado - Error 404 | Cocacolalandia</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Página no encontrada | Cocacolalandia</title>
+    <!-- Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Tu tipografía Space Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* TUS VARIABLES EXACTAS */
+        :root {
+            --primary: #ff003c;
+            --bg: #0a0a0a;
+            --surface: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #ffffff;
+            --font: 'Space Grotesk', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
 
-  <meta name="robots" content="noindex">
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            /* CRÍTICO: Para que el footer de global-head no se ponga al lado */
+            display: block !important; 
+            overflow-x: hidden;
+        }
 
+        /* BARRA LATERAL FIJA */
+        nav {
+            position: fixed !important;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 0;
+            z-index: 1000;
+        }
 
-  <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
-  
+        .brand-logo {
+            width: 50px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 10px var(--primary));
+            cursor: pointer;
+            transition: var(--transition);
+        }
 
-  <style id="INLINE_PEN_STYLESHEET_ID">
-    body {
-  background-color: #FF7F2E;
-  font-family: "Concert One", cursive;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-}
+        .brand-logo:hover {
+            transform: scale(1.1);
+        }
 
-/*/////////////////// rules */
-/*/////////////////// scene */
-.text {
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  color: rgba(19, 36, 44, 0.1);
-  font-size: 30em;
-  text-align: center;
-  top: 40%;
-}
+        .nav-link {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
 
-.container {
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  height: 300px;
-  width: 500px;
-}
-.container:after {
-  position: absolute;
-  content: "";
-  background-color: rgba(19, 36, 44, 0.1);
-  border-radius: 12px;
-  bottom: 40px;
-  height: 12px;
-  left: 80px;
-  width: 350px;
-  z-index: -1;
-}
+        .nav-link:hover {
+            color: var(--primary);
+            background: rgba(255, 0, 60, 0.1);
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.1);
+        }
 
-/*/////////////////// caveman */
-.caveman {
-  height: 300px;
-  position: absolute;
-  width: 250px;
-}
+        /* CONTENIDO 404 */
+        .main-content {
+            margin-left: 80px; /* Espacio para la nav */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            box-sizing: border-box;
+        }
 
-.caveman:nth-child(1) {
-  right: 20px;
-}
+        .error-num {
+            font-size: clamp(8rem, 20vw, 15rem);
+            font-weight: 700;
+            line-height: 0.8;
+            margin: 0;
+            background: linear-gradient(to bottom, var(--primary), #bc13fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(255, 0, 60, 0.4));
+        }
 
-.caveman:nth-child(2) {
-  left: 20px;
-  transform: rotateY(180deg);
-}
+        .error-text {
+            font-size: 2rem;
+            font-weight: 500;
+            margin: 20px 0 10px 0;
+            letter-spacing: 1px;
+        }
 
-.head {
-  position: absolute;
-  background-color: #13242C;
-  border-radius: 50px;
-  height: 140px;
-  left: 60px;
-  top: 25px;
-  width: 65px;
-}
-.head:after, .head:before {
-  content: "";
-  position: absolute;
-  background-color: #13242C;
-  border-radius: 10px;
-  height: 20px;
-  width: 7px;
-}
-.head:after {
-  left: 35px;
-  top: -8px;
-  transform: rotate(20deg);
-}
-.head:before {
-  left: 30px;
-  top: -8px;
-  transform: rotate(-20deg);
-}
-.head .eye {
-  left: 50%;
-  position: absolute;
-  transform: translateX(-50%);
-  background-color: #EAB08C;
-  border-radius: 50px;
-  height: 16px;
-  left: 45%;
-  top: 40px;
-  width: 48px;
-}
-.head .eye:after, .head .eye:before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #13242C;
-  border-radius: 50%;
-  height: 5px;
-  width: 5px;
-}
-.head .eye:after {
-  left: 5px;
-}
-.head .eye:before {
-  right: 9px;
-}
-.head .eye .nose {
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #D9766C;
-  border-left: 8px solid rgba(19, 36, 44, 0.1);
-  border-radius: 10px;
-  box-sizing: border-box;
-  height: 35px;
-  left: 45%;
-  top: 12px;
-  width: 15px;
-}
+        .error-desc {
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 500px;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
 
-.shape {
-  left: 50%;
-  position: absolute;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  height: 140px;
-  overflow: hidden;
-  top: 70px;
-  width: 140px;
-}
-.shape .circle {
-  position: absolute;
-  border-radius: 50%;
-  height: 60px;
-  width: 60px;
-}
-.shape .circle:after, .shape .circle:before {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  height: 20px;
-  width: 20px;
-}
-.shape .circle:after {
-  left: 50px;
-  top: 10px;
-}
-.shape .circle:before {
-  left: 60px;
-  top: 45px;
-}
-.shape .circle:nth-child(1) {
-  left: -12px;
-  top: 80px;
-}
-.shape .circle:nth-child(2) {
-  right: 10px;
-  top: 0px;
-  transform: rotate(90deg);
-}
-.shape .circle:nth-child(2):after {
-  left: 65px;
-  top: 10px;
-}
-.shape .circle:nth-child(2):before {
-  display: none;
-}
+        .btn-glow {
+            padding: 18px 40px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(255, 0, 60, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-.caveman:nth-child(1) .shape {
-  background-color: #D13433;
-}
-.caveman:nth-child(1) .shape .circle {
-  background-color: #932422;
-}
-.caveman:nth-child(1) .shape .circle:after, .caveman:nth-child(1) .shape .circle:before {
-  background-color: #932422;
-}
+        .btn-glow:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 0, 60, 0.5);
+            filter: brightness(1.2);
+        }
 
-.caveman:nth-child(2) .shape {
-  background-color: #932422;
-}
-.caveman:nth-child(2) .shape .circle {
-  background-color: #D13433;
-}
-.caveman:nth-child(2) .shape .circle:after, .caveman:nth-child(2) .shape .circle:before {
-  background-color: #D13433;
-}
-
-.arm-right {
-  position: absolute;
-  background-color: #EAB08C;
-  border-left: 8px solid rgba(19, 36, 44, 0.1);
-  border-radius: 50px;
-  box-sizing: border-box;
-  height: 180px;
-  left: 135px;
-  top: 80px;
-  transform-origin: 30px 30px;
-  width: 60px;
-  z-index: 1;
-}
-.arm-right .club {
-  position: absolute;
-  border-bottom: 110px solid #601513;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  height: 0;
-  left: -60px;
-  top: 120px;
-  transform: rotate(70deg);
-  width: 20px;
-}
-.arm-right .club:after, .arm-right .club:before {
-  position: absolute;
-  content: "";
-  background-color: #601513;
-  border-radius: 50%;
-  left: 0;
-}
-.arm-right .club:after {
-  height: 20px;
-  width: 20px;
-  top: -10px;
-}
-.arm-right .club:before {
-  height: 40px;
-  width: 40px;
-  left: -10px;
-  top: 90px;
-}
-
-.leg {
-  position: absolute;
-  border-radius: 10px;
-  height: 55px;
-  top: 200px;
-  width: 10px;
-}
-.leg:after {
-  position: absolute;
-  content: "";
-  border-radius: 50%;
-  height: 10px;
-  left: -5px;
-  top: 15px;
-  width: 10px;
-}
-.leg .foot {
-  position: absolute;
-  border-radius: 25px 25px 0 0;
-  height: 25px;
-  left: -38px;
-  top: 30px;
-  width: 50px;
-}
-.leg .foot:after, .leg .foot:before, .leg .foot .fingers, .leg .foot .fingers:after {
-  position: absolute;
-  background-color: #EAB08C;
-  border-radius: 50%;
-  bottom: 0px;
-  height: 15px;
-  transform-origin: bottom;
-  width: 15px;
-}
-.leg .foot:after {
-  left: -6px;
-  content: "";
-}
-.leg .foot:before {
-  left: 8px;
-  transform: scale(0.6);
-  content: "";
-}
-.leg .foot .fingers {
-  left: 15px;
-  transform: scale(0.6);
-}
-.leg .foot .fingers:after {
-  left: 11px;
-  content: "";
-}
-
-.leg:nth-child(1) {
-  background-color: #B2524D;
-  left: 95px;
-}
-.leg:nth-child(1):after {
-  background-color: #B2524D;
-}
-.leg:nth-child(1) .foot {
-  background-color: #B2524D;
-}
-.leg:nth-child(1) .foot:after {
-  background-color: #B2524D;
-}
-.leg:nth-child(1) .foot:before {
-  display: none;
-}
-
-.leg:nth-child(2) {
-  background-color: #D9766C;
-  left: 115px;
-}
-.leg:nth-child(2):after {
-  background-color: #D9766C;
-}
-.leg:nth-child(2) .foot {
-  background-color: #D9766C;
-}
-
-/*/////////////////// animation */
-.caveman:nth-child(1) .arm-right {
-  animation: arm-anima 1.2s infinite cubic-bezier(0.55, 0.01, 0.16, 1.34);
-}
-
-.caveman:nth-child(2) .arm-right {
-  animation: arm-anima 1.2s infinite cubic-bezier(0.55, 0.01, 0.16, 1.34);
-  animation-delay: 0.6s;
-}
-
-@keyframes arm-anima {
-  0% {
-    transform: rotate(0);
-  }
-  100% {
-    transform: rotate(-360deg);
-  }
-}
-.caveman:nth-child(2) .head {
-  animation: head-anima 1.2s infinite cubic-bezier(0.55, 0.01, 0.16, 1.34);
-}
-
-.caveman:nth-child(1) .head {
-  animation: head-anima 1.2s infinite cubic-bezier(0.55, 0.01, 0.16, 1.34);
-  animation-delay: 0.6s;
-}
-
-@keyframes head-anima {
-  0% {
-    top: 25px;
-  }
-  42% {
-    top: 25px;
-  }
-  45% {
-    top: 50px;
-  }
-  100% {
-    top: 25px;
-  }
-}
-.caveman:nth-child(2) .eye:after,
-.caveman:nth-child(2) .eye:before {
-  animation: eye-anima 1.2s infinite cubic-bezier(0.55, 0.01, 0.16, 1.34);
-}
-
-.caveman:nth-child(1) .eye:after,
-.caveman:nth-child(1) .eye:before {
-  animation: eye-anima 1.2s infinite cubic-bezier(0.55, 0.01, 0.16, 1.34);
-  animation-delay: 0.6s;
-}
-
-@keyframes eye-anima {
-  0% {
-    height: 5px;
-  }
-  42% {
-    height: 5px;
-  }
-  45% {
-    height: 1px;
-  }
-  100% {
-    height: 5px;
-  }
-}
-.container:after {
-  animation: shadow-anima 1.2s infinite cubic-bezier(0.55, 0.01, 0.16, 1.34);
-  animation-delay: 0.1s;
-}
-
-@keyframes shadow-anima {
-  0% {
-    width: 350px;
-    left: 80px;
-  }
-  25% {
-    width: 450px;
-    left: 80px;
-  }
-  50% {
-    width: 350px;
-    left: 80px;
-  }
-  75% {
-    width: 450px;
-    left: 0px;
-  }
-  100% {
-    width: 350px;
-    left: 80px;
-  }
-}
-/*/////////////////////// credit ////*/
-#link {
-  bottom: 20px;
-  color: #000;
-  opacity: 0.2;
-  display: flex;
-  align-items: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-#link p {
-  margin: 0;
-  margin-left: 5px;
-}
-
-#link:hover {
-  opacity: 1;
-}
-  </style>
-
-  
-<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
-<script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeConsoleRunner-6d8bf8b4b479137260842506acbb12717dace0823c023e08b96360e60b0840d9.js"></script>
-<script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRefreshCSS-44fe83e49b63affec96918c9af88c0d80b209a862cf87ac46bc933074b8c557d.js"></script>
-<script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRuntimeErrors-4f205f2c14e769b448bcf477de2938c681660d5038bc464e3700256713ebe261.js"></script>
+        /* AJUSTE PARA EL FOOTER INYECTADO POR GLOBAL-HEAD.JS */
+        footer, body > footer {
+            display: block !important;
+            position: relative !important; /* Lo manda al final del contenido */
+            margin-left: 80px !important; /* Lo separa de la nav lateral */
+            width: calc(100% - 80px) !important;
+            background: var(--surface) !important;
+            padding: 60px 20px !important;
+            border-top: 1px solid var(--border);
+            box-sizing: border-box !important;
+            text-align: center;
+        }
+    </style>
 </head>
-
 <body>
-  
-<div class="text"><p>404</p></div>
-<div class="container">
-  <!-- caveman left -->
-  <div class="caveman">
-    <div class="leg">
-      <div class="foot"><div class="fingers"></div></div>      
-    </div>
-    <div class="leg">
-      <div class="foot"><div class="fingers"></div></div>      
-    </div>
-    <div class="shape">
-      <div class="circle"></div>
-      <div class="circle"></div>
-    </div>
-    <div class="head">
-      <div class="eye"><div class="nose"></div></div>
-      <div class="mouth"></div>
-    </div>
-    <div class="arm-right"><div class="club"></div></div>    
-  </div>
-  <!-- caveman right -->
-  <div class="caveman">
-    <div class="leg">
-      <div class="foot"><div class="fingers"></div></div>      
-    </div>
-    <div class="leg">
-      <div class="foot"><div class="fingers"></div></div>      
-    </div>
-    <div class="shape">
-      <div class="circle"></div>
-      <div class="circle"></div>
-    </div>
-    <div class="head">
-      <div class="eye"><div class="nose"></div></div>
-      <div class="mouth"></div>
-    </div>
-    <div class="arm-right"><div class="club"></div></div>    
-  </div>
-</div>
 
-  
-<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-  <script  src="https://cdpn.io/cpe/boomboom/pen.js?key=pen.js-7ed971c2-e77e-1403-7e22-9bd124bc3f6a" crossorigin></script>
+    <!-- TU SCRIPT GLOBAL -->
+    <script src="/global-head.js"></script>
+
+    <nav>
+        <img src="https://i.imgur.com/PPO7d2j.png" class="brand-logo" onclick="location.href='/juegos'">
+        <div class="nav-link" title="Inicio" onclick="location.href='/juegos'"><i class="fa-solid fa-house"></i></div>
+        <div class="nav-link" title="Chat" onclick="window.open('https://cocacolalandia.github.io/chat')"><i class="fa-solid fa-comment-dots"></i></div>
+        <div class="nav-link" title="Pánico" onclick="window.location.href='https://classroom.google.com'"><i class="fa-solid fa-radiation"></i></div>
+    </nav>
+
+    <div class="main-content">
+        <h1 class="error-num">404</h1>
+        <div class="error-text">¿TE HAS PERDIDO?</div>
+        <p class="error-desc">
+            Esta página no existe o ha sido eliminada. 
+        </p>
+        <a href="/juegos" class="btn-glow">Volver a los juegos</a>
+    </div>
+
 </body>
-
 </html>

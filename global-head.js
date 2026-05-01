@@ -189,6 +189,9 @@
                     <h4>LEGAL</h4>
                     <a href="/privacidad">Privacidad</a>
                     <a href="/condiciones">Términos de Uso</a>
+                    <a href="/aviso-legal">Aviso Legal</a>
+                    <a href="/copyright">Reclamaciones de Copyright</a>
+                    
                     <button id="open_preferences_center">Ajustes de Cookies</button>
                 </div>
                 <div class="footer-col" style="grid-column: span 2;">
