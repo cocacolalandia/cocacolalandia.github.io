@@ -191,16 +191,15 @@
                     <a href="/condiciones">Términos de Uso</a>
                     <a href="/aviso-legal">Aviso Legal</a>
                     <a href="/copyright">Reclamaciones de Copyright</a>
-                    
                     <button id="open_preferences_center">Ajustes de Cookies</button>
                 </div>
                 <div class="footer-col" style="grid-column: span 2;">
-                    <h4>COCACOLALANDIA SYSTEM</h4>
-                    <p style="color:#555; font-size:0.9rem;">Versión 26.4.0 Rebirth. Desarrollado para la libertad digital. <br>© 2026 Cocacolalandia Network.</p>
+                    <h4>COCACOLALANDIA</h4>
+                    <p style="color:#555; font-size:0.9rem;">Versión 26.4.0. <br>© 2026 Cocacolalandia. Todos los derechos reservados. Según la Ley de Propiedad Intelectual Española, este sitio web está protegido por derechos de autor.</p>
                 </div>
             </div>
             <div class="legal-box">
-                <strong>Disclaimer:</strong> Cocacolalandia es un repositorio educativo. No estamos afiliados con The Coca-Cola Company. Todas las marcas pertenecen a sus respectivos dueños.
+                <strong>Disclaimer:</strong> Cocacolalandia es un sitio web proveedor de juegos. Sin embargo, esos juegos no son almacenados por Cocacolalandia, ni son programados por Cocacolalandia. En el momento en el que un usuario haga click en un botón para acceder a un juego, estará saliendo de la propiedad de Cocacolalandia y, por tanto, fuera de los efectos de la Política de Privacidad, Condiciones de Uso, Copyright y del Aviso Legal. No estamos afiliados con The Coca-Cola Company. Todas las marcas pertenecen a sus respectivos dueños.
             </div>
         `;
         document.body.appendChild(footer);
