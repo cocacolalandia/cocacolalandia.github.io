@@ -716,6 +716,46 @@
             display: block !important;
             clear: both;
         }
+
+        /* ARREGLO DEFINITIVO PARA EL FOOTER */
+
+        /* 1. Quitamos el comportamiento de 'columna' del body */
+        body {
+            display: block !important;
+            /* Anula el flex que lo pone de lado */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 2. El contenido principal debe tener margen para no chocar con la nav */
+        .main-content {
+            margin-left: 80px !important;
+            width: calc(100% - 80px) !important;
+            display: block !important;
+        }
+
+        /* 3. El footer debe ser un bloque independiente que ocupe todo el ancho restante */
+        footer,
+        body>footer {
+            display: block !important;
+            position: relative !important;
+            /* Lo obliga a ir abajo del todo del scroll */
+            clear: both !important;
+            margin-left: 80px !important;
+            /* Lo empuja a la derecha de la nav fija */
+            width: calc(100% - 80px) !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 4. La barra lateral debe estar "anclada" para que no flote como una columna */
+        nav {
+            position: fixed !important;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 9999;
+        }
     </style>
 </head>
 
