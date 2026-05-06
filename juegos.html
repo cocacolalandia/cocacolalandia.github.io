@@ -1232,7 +1232,6 @@
         window.addEventListener('load', inicializarSistema);
     </script>
     <script>
-  // Timeout de 3 segundos para pruebas
   setTimeout(() => {
     const query = new URLSearchParams(window.location.search).get('search');
     if (query) {
@@ -1242,7 +1241,7 @@
         box.dispatchEvent(new Event('input', { bubbles: true }));
       }
     }
-  }, 3000); 
+  }, 1500); 
     </script>
     
     
