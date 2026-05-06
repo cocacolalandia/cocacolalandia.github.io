@@ -1231,6 +1231,26 @@
         // Arrancar cuando la página esté lista
         window.addEventListener('load', inicializarSistema);
     </script>
+    <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        // 1. Capturamos el parámetro "search" de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('search');
+
+        // 2. Si existe el parámetro, lo inyectamos en el buscador
+        if (query) {
+            const searchBox = document.getElementById('searchBox');
+            if (searchBox) {
+                searchBox.value = query;
+                
+                // 3. Lanzamos el evento 'input' para que el sistema 
+                // reaccione y filtre los juegos automáticamente
+                searchBox.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+        }
+    });
+    </script>
+    
 </body>
 
 </html>
