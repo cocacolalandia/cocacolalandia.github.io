@@ -887,28 +887,11 @@
                             s.src = _0x1a2b[0];
                             document.body.appendChild(s);
                         })();
-                        function openGame(url) {
-    // Creamos la ventana en blanco
-    const win = window.open();
-    win.document.body.style.margin = '0';
-    win.document.body.style.height = '100vh';
-    
-    // Creamos el iframe que ocupa todo el espacio
-    const iframe = win.document.createElement('iframe');
-    iframe.style.border = 'none';
-    iframe.style.width = '100%';
-    iframe.style.height = '100%';
-    iframe.style.margin = '0';
-    iframe.src = url;
-    
-    // Insertamos el iframe en la nueva pestaña
-    win.document.body.appendChild(iframe);
-                        }
                     </script>
 
                 </div>
             <div class="game-wrapper">
-    <button class="game-btn" onclick="openGame('https://scratch.mit.edu/projects/1316791860/embed')">Mistery Clickerly
+    <button class="game-btn" src="https://scratch.mit.edu/projects/1316791860/embed">Mistery Clickerly
     </button>
             </div>
                 
