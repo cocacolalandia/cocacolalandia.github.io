@@ -1252,6 +1252,23 @@
   }, 50); 
     </script>
     
+    <script>
+    // Convierte el botón manual de Scratch en un input compatible con el sistema de favoritos
+    document.querySelectorAll('button.game-btn').forEach(btn => {
+        const input = document.createElement('input');
+        input.type = 'button';
+        input.value = btn.textContent.trim();
+        input.className = 'game-btn';
+        input.dataset.src = btn.getAttribute('data-src');
+        
+        // Lo movemos a sections-container para que reciba la estrella
+        const container = document.getElementById('sections-container');
+        if (container) {
+            container.appendChild(input);
+            btn.remove();
+        }
+    });
+    </script>
     
 </body>
 
