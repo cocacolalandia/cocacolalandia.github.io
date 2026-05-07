@@ -1251,32 +1251,35 @@
     }
   }, 50); 
     </script>
-    
     <script>
-    // Convierte el botón manual de Scratch en un input compatible con el sistema de favoritos
+    // 1. Convertimos el botón en input para que tenga estrella
     document.querySelectorAll('button.game-btn').forEach(btn => {
         const input = document.createElement('input');
         input.type = 'button';
-        input.value = btn.textContent.trim();
         input.className = 'game-btn';
+        // IMPORTANTE: Ponemos el nombre en el texto interno para que el launcher original lo lea
+        input.innerText = btn.textContent.trim(); 
+        // Y en el value para que el sistema de favoritos no falle
+        input.value = btn.textContent.trim();
         input.dataset.src = btn.getAttribute('data-src');
         
-        // Lo movemos a sections-container para que reciba la estrella
         const container = document.getElementById('sections-container');
         if (container) {
             container.appendChild(input);
             btn.remove();
         }
     });
-    <script>
-    // Corrige el launcher para que lea el título tanto de inputs (value) como de botones (textContent)
-    document.getElementById("launcher").addEventListener("click", e => {
-        const targetBtn = e.target.closest("input, .game-btn");
-        if (targetBtn && targetBtn.dataset.src) {
-            document.getElementById("gameTitle").textContent = targetBtn.value || targetBtn.textContent.trim();
+
+    // 2. "Parcheamos" el comportamiento para que el launcher original vea el texto
+    // Esto hace que para el sistema, el input se comporte como el botón antiguo
+    const descriptor = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'textContent');
+    Object.defineProperty(HTMLInputElement.prototype, 'textContent', {
+        get: function() { 
+            return this.type === 'button' ? this.value : descriptor.get.call(this); 
         }
-    }, true);
-</script>
+    });
+    </script>
+    
     
     
 </body>
