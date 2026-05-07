@@ -1268,7 +1268,16 @@
             btn.remove();
         }
     });
-    </script>
+    <script>
+    // Corrige el launcher para que lea el título tanto de inputs (value) como de botones (textContent)
+    document.getElementById("launcher").addEventListener("click", e => {
+        const targetBtn = e.target.closest("input, .game-btn");
+        if (targetBtn && targetBtn.dataset.src) {
+            document.getElementById("gameTitle").textContent = targetBtn.value || targetBtn.textContent.trim();
+        }
+    }, true);
+</script>
+    
     
 </body>
 
