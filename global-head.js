@@ -123,7 +123,7 @@
                 "palette": "dark",
                 "language": "es",
                 "website_name": "Cocacolalandia",
-                "website_privacy_policy_url": "https://cocacolalandia.github.io/privacidad"
+                "website_privacy_policy_url": "https://cocacolalandia1.github.io/privacidad"
             });
         };
 
