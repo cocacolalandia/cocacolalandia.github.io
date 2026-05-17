@@ -1,24 +1,22 @@
 /**
  * COCACOLALANDIA CORE SYSTEM v4.3
- * Rediseño Premium del Centro de Preferencias y Fusión Alfabética de Juegos
+ * Gestión Global de Temas, Seguridad, UI de Cookies Limpia y Cumplimiento Legal
  */
 
 (function() {
     const head = document.head;
 
-    // --- 1. MOTOR DE ESTILOS GLOBALES E INYECCIÓN DE UI (REDiseño PREMIUM) ---
+    // --- 1. MOTOR DE ESTILOS GLOBALES E INYECCIÓN DE UI ---
     const style = document.createElement('style');
     style.innerHTML = `
         :root {
-            --primary: #ff003c; /* Rojo Cocacola vibrante */
+            --primary: #ff003c;
             --primary-rgb: 255, 0, 60;
-            --bg: #0d0d0d; /* Fondo ultra oscuro */
-            --surface: #1a1a1a; /* Superficie ligeramente más clara */
-            --border: rgba(255, 255, 255, 0.08);
-            --font: 'Space Grotesk', sans-serif; /* Tu tipografía oficial unificada */
-            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            --radius-main: 20px;
-            --radius-sub: 10px;
+            --bg: #080808;
+            --surface: #121212;
+            --border: rgba(255, 255, 255, 0.1);
+            --font: 'Space Grotesk', sans-serif;
+            --transition: all 0.3s ease;
         }
 
         body {
@@ -28,134 +26,125 @@
             color: #eee;
         }
 
-        /* --- REDISEÑO TOTAL TERMSFEED (CENTRO DE PREFERENCIAS) --- */
+        /* --- REDISEÑO DEL CENTRO DE PREFERENCIAS (UI MINIMALISTA Y FUNCIONAL) --- */
         
-        /* Capa externa translúcida */
+        /* Fondo de la capa superpuesta */
         .termsfeed-com---pc-dialog {
-            background: rgba(0, 0, 0, 0.92) !important;
-            backdrop-filter: blur(8px) !important;
-            animation: fadeIn 0.4s ease-out;
+            background: rgba(0, 0, 0, 0.85) !important;
+            backdrop-filter: blur(12px) !important;
         }
 
-        /* Contenedor principal */
+        /* Caja contenedora principal */
         .cc-pc-container {
-            background: #141414 !important; /* Fondo interior sólido y oscuro */
-            border: 2px solid var(--primary) !important;
-            border-radius: var(--radius-main) !important;
+            background: #111111 !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 16px !important;
             font-family: var(--font) !important;
-            box-shadow: 0 10px 60px rgba(var(--primary-rgb), 0.3) !important;
-            max-width: 900px !important;
-            width: 90% !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+            color: #ffffff !important;
             overflow: hidden !important;
-            display: flex !important;
-            flex-direction: column !important;
+            max-width: 850px !important;
         }
 
-        /* Cabecera */
+        /* Cabecera del modal */
         .cc-pc-head {
-            background: #1a1a1a !important; /* Cabecera ligeramente diferente */
+            background: #161616 !important;
             border-bottom: 1px solid var(--border) !important;
-            padding: 20px 30px !important;
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: center !important;
+            padding: 20px 25px !important;
         }
         .cc-pc-head-title-text {
             color: var(--primary) !important;
             font-family: var(--font) !important;
             font-weight: 700 !important;
             text-transform: uppercase !important;
-            font-size: 1.3rem !important;
-            letter-spacing: 2px !important;
+            letter-spacing: 1.5px !important;
+            font-size: 1.2rem !important;
+            margin: 0 0 5px 0 !important;
         }
         #cc-pc-head-title-headline {
-            color: #ffffff !important;
+            color: #888888 !important;
             font-family: var(--font) !important;
-            font-weight: 600 !important;
-            font-size: 1rem !important;
+            font-weight: 400 !important;
+            font-size: 0.95rem !important;
+            margin: 0 !important;
         }
         .cc-pc-head-close {
-            color: #888888 !important;
-            font-size: 1.4rem !important;
-            transition: var(--transition) !important;
             background: none !important;
             border: none !important;
+            color: #666666 !important;
+            font-size: 1.2rem !important;
             cursor: pointer !important;
+            transition: var(--transition) !important;
         }
         .cc-pc-head-close:hover {
             color: var(--primary) !important;
-            transform: scale(1.1) rotate(90deg) !important;
         }
         .cc-pc-head-lang-select {
-            background: #262626 !important;
+            background: #1c1c1c !important;
             color: #ffffff !important;
             border: 1px solid var(--border) !important;
-            border-radius: var(--radius-sub) !important;
+            border-radius: 6px !important;
             font-family: var(--font) !important;
-            font-size: 0.9rem !important;
-            padding: 6px 12px !important;
+            padding: 4px 8px !important;
+            outline: none !important;
         }
 
-        /* Cuerpo (Columnas) */
+        /* Estructura del cuerpo */
         .cc-cp-body {
-            display: flex !important;
-            flex: 1 !important;
-            background: #141414 !important;
+            background: transparent !important;
         }
 
-        /* Columna Izquierda (Pestañas) */
+        /* Lista de Pestañas (Columna Izquierda) */
         .cc-cp-body-tabs {
+            background: #161616 !important;
             border-right: 1px solid var(--border) !important;
-            background: #1a1a1a !important; /* Mismo tono que la cabecera */
-            padding: 20px !important;
-            width: 300px !important;
-            flex-shrink: 0 !important;
+            padding: 15px !important;
+        }
+        .cc-cp-body-tabs-item {
+            margin-bottom: 5px !important;
         }
         .cc-cp-body-tabs-item-link {
-            border: none !important;
             background: transparent !important;
-            color: #888888 !important;
+            color: #aaaaaa !important;
+            border: none !important;
+            border-radius: 8px !important;
             font-family: var(--font) !important;
-            font-size: 0.95rem !important;
-            font-weight: 600 !important;
-            padding: 15px 20px !important;
-            border-radius: var(--radius-sub) !important;
-            width: 100% !important;
+            font-weight: 500 !important;
+            padding: 12px 15px !important;
             text-align: left !important;
+            width: 100% !important;
             cursor: pointer !important;
             transition: var(--transition) !important;
-            display: block !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.5px !important;
         }
         .cc-cp-body-tabs-item-link:hover {
-            background: rgba(var(--primary-rgb), 0.05) !important;
+            background: rgba(255, 255, 255, 0.03) !important;
             color: #ffffff !important;
-            padding-left: 25px !important; /* Desplazamiento lateral en hover */
         }
+        /* Pestaña seleccionada activa */
         .cc-cp-body-tabs-item[active="true"] .cc-cp-body-tabs-item-link {
-            background: var(--primary) !important;
-            color: #ffffff !important;
-            box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3) !important;
+            background: rgba(var(--primary-rgb), 0.1) !important;
+            color: var(--primary) !important;
+            font-weight: 600 !important;
         }
 
-        /* Columna Derecha (Contenido) */
+        /* Contenido de las secciones (Columna Derecha) */
         .cc-cp-body-content {
-            padding: 30px !important;
+            padding: 25px 30px !important;
             background: transparent !important;
         }
         .cc-cp-body-content-entry-title {
             font-family: var(--font) !important;
             color: #ffffff !important;
-            font-weight: 700 !important;
-            font-size: 1.3rem !important;
-            margin-bottom: 20px !important;
+            font-weight: 600 !important;
+            font-size: 1.15rem !important;
+            margin-top: 0 !important;
+            margin-bottom: 15px !important;
         }
         .cc-cp-body-content-entry-text {
             font-family: var(--font) !important;
-            color: #aaaaaa !important;
-            font-size: 0.95rem !important;
-            line-height: 1.7 !important;
+            color: #999999 !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
             margin-bottom: 15px !important;
         }
         .cc-cp-body-content-entry-text a {
@@ -166,68 +155,102 @@
             text-decoration: underline !important;
         }
 
-        /* Interruptores (Checkboxes) */
+        /* Toggles / Checkboxes de configuración */
         .cc-custom-checkbox {
-            background: rgba(255, 255, 255, 0.03) !important;
+            background: #161616 !important;
             border: 1px solid var(--border) !important;
             padding: 12px 20px !important;
-            border-radius: var(--radius-sub) !important;
+            border-radius: 8px !important;
             display: flex !important;
             align-items: center !important;
-            gap: 15px !important;
-            margin-top: 25px !important;
+            gap: 12px !important;
+            margin-top: 20px !important;
         }
         .cc-custom-checkbox label {
             font-family: var(--font) !important;
             font-weight: 600 !important;
             color: var(--primary) !important;
             font-size: 0.9rem !important;
+            cursor: pointer !important;
         }
         .cc-custom-checkbox label.is-inactive {
-            color: #777777 !important;
+            color: #555555 !important;
         }
         .cc-custom-checkbox input[type="checkbox"] {
             accent-color: var(--primary) !important;
-            transform: scale(1.2) !important;
+            transform: scale(1.1) !important;
             cursor: pointer !important;
         }
 
         /* Pie del modal */
         .cc-cp-foot {
+            background: #161616 !important;
             border-top: 1px solid var(--border) !important;
-            background: #1a1a1a !important; /* Tono de cabecera/menú */
-            padding: 20px 30px !important;
+            padding: 15px 25px !important;
             display: flex !important;
-            justify-content: flex-end !important; /* Solo el botón a la derecha */
+            justify-content: flex-end !important;
         }
         
-        /* ELIMINAR MARCA DE AGUA (Firma de TermsFeed) */
+        /* OCULTAR COMPLETAMENTE LA MARCA DE AGUA DE TERMSFEED */
         .cc-cp-foot-byline {
-            display: none !important; /* ¡DESAPARECE! */
+            display: none !important;
         }
         
-        /* Botón Guardar */
+        /* Botón de Guardar */
         .cc-cp-foot-save {
             background: var(--primary) !important;
             color: #ffffff !important;
             border: none !important;
-            border-radius: var(--radius-sub) !important;
-            padding: 14px 40px !important;
+            border-radius: 8px !important;
+            padding: 12px 30px !important;
             font-family: var(--font) !important;
-            font-weight: 700 !important;
+            font-weight: 600 !important;
             text-transform: uppercase !important;
+            font-size: 0.85rem !important;
+            letter-spacing: 0.5px !important;
             cursor: pointer !important;
             transition: var(--transition) !important;
-            box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3) !important;
-            letter-spacing: 1px !important;
-            font-size: 0.9rem !important;
         }
         .cc-cp-foot-save:hover {
-            transform: translateY(-3px) !important;
-            box-shadow: 0 7px 25px rgba(var(--primary-rgb), 0.5) !important;
+            background: #e00034 !important;
+            box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.2) !important;
         }
 
-        /* --- FOOTER DE COCACOLALANDIA --- */
+        /* --- REDISEÑO TOTAL TERMSFEED (BANER INFERIOR DE ENTRADA) --- */
+        #termsfeed-com---nb {
+            background: #111111 !important;
+            border-top: 2px solid var(--primary) !important;
+            padding: 20px 5% !important;
+            font-family: var(--font) !important;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.5) !important;
+        }
+        #termsfeed-com---nb p, #termsfeed-com---nb a, .cc-nb-title {
+            font-family: var(--font) !important;
+            color: #ccc !important;
+            font-size: 0.9rem !important;
+        }
+        #termsfeed-com---nb a { color: var(--primary) !important; }
+        .cc-nb-okagree {
+            background: var(--primary) !important;
+            color: white !important;
+            border-radius: 8px !important;
+            padding: 10px 24px !important;
+            font-family: var(--font) !important;
+            font-weight: 600 !important;
+            border: none !important;
+            cursor: pointer !important;
+        }
+        .cc-nb-reject, .cc-nb-changep {
+            background: rgba(255,255,255,0.05) !important;
+            color: #aaa !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 8px !important;
+            padding: 10px 20px !important;
+            font-family: var(--font) !important;
+            cursor: pointer !important;
+        }
+
+        /* --- FOOTER UNIFICADO DE COCACOLALANDIA --- */
         .coca-footer {
             background: var(--surface);
             border-top: 1px solid var(--border);
@@ -246,7 +269,6 @@
         }
         .footer-col h4 { color: var(--primary); margin-bottom: 20px; font-weight: 700; }
         
-        /* Estilos unificados para enlaces y el botón de ajustes */
         .footer-col a, #open_preferences_center {
             display: block; 
             color: #888; 
@@ -263,7 +285,6 @@
             text-align: center;
         }
         
-        /* Efecto Hover unificado (Desplazamiento e iluminación) */
         .footer-col a:hover, #open_preferences_center:hover { 
             color: var(--primary); 
             transform: translateX(5px); 
@@ -273,11 +294,6 @@
             background: rgba(255,255,255,0.02);
             padding: 20px; border-radius: 15px; border: 1px solid var(--border);
             font-size: 0.8rem; color: #555; text-align: left; margin-top: 30px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
     `;
     head.appendChild(style);
