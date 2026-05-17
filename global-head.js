@@ -1,192 +1,162 @@
 /**
- * COCACOLALANDIA CORE SYSTEM v4.2
- * Gestión Global de Temas, Seguridad, UI de Cookies y Cumplimiento Legal
+ * COCACOLALANDIA CORE SYSTEM v4.3
+ * Rediseño Premium del Centro de Preferencias y Fusión Alfabética de Juegos
  */
 
 (function() {
     const head = document.head;
 
-    // --- 1. MOTOR DE ESTILOS GLOBALES E INYECCIÓN DE UI ---
+    // --- 1. MOTOR DE ESTILOS GLOBALES E INYECCIÓN DE UI (REDiseño PREMIUM) ---
     const style = document.createElement('style');
     style.innerHTML = `
         :root {
-            --primary: #ff003c;
+            --primary: #ff003c; /* Rojo Cocacola vibrante */
             --primary-rgb: 255, 0, 60;
-            --bg: #080808;
-            --surface: #121212;
-            --border: rgba(255, 255, 255, 0.1);
-            --font: 'Space Grotesk', sans-serif;
+            --bg: #0d0d0d; /* Fondo ultra oscuro */
+            --surface: #1a1a1a; /* Superficie ligeramente más clara */
+            --border: rgba(255, 255, 255, 0.08);
+            --font: 'Space Grotesk', sans-serif; /* Tu tipografía oficial unificada */
             --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            --radius-main: 20px;
+            --radius-sub: 10px;
         }
 
-        /* --- TEMAS DINÁMICOS --- */
-        body.theme-matrix { --primary: #00ff41; --primary-rgb: 0, 255, 65; --bg: #000; }
-        body.theme-vaporwave { --primary: #ff00ff; --primary-rgb: 255, 0, 255; --bg: #2d004d; }
-        body.theme-cyberpunk { --primary: #fcee0a; --primary-rgb: 252, 238, 10; --bg: #000; }
-        body.theme-blood { --primary: #ff4d4d; --primary-rgb: 255, 77, 77; --bg: #1a0000; }
+        body {
+            font-family: var(--font);
+            margin: 0;
+            background: var(--bg);
+            color: #eee;
+        }
+
+        /* --- REDISEÑO TOTAL TERMSFEED (CENTRO DE PREFERENCIAS) --- */
         
-        /* --- REDISEÑO TOTAL TERMSFEED (COOKIES UI - BANNER INFERIOR) --- */
-        #termsfeed-com---nb {
-            background: rgba(10, 10, 10, 0.96) !important;
-            backdrop-filter: blur(15px) !important;
-            border-top: 2px solid var(--primary) !important;
-            padding: 25px 5% !important;
-            font-family: var(--font) !important;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.8) !important;
-        }
-
-        #termsfeed-com---nb p, #termsfeed-com---nb a, .cc-nb-title {
-            font-family: var(--font) !important;
-            color: #eee !important;
-        }
-
-        #termsfeed-com---nb a { color: var(--primary) !important; text-decoration: underline !important; }
-
-        /* Botones del Banner */
-        .cc-nb-okagree {
-            background: var(--primary) !important;
-            color: white !important;
-            border-radius: 12px !important;
-            padding: 12px 30px !important;
-            font-family: var(--font) !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            border: none !important;
-            cursor: pointer !important;
-            transition: var(--transition) !important;
-        }
-
-        .cc-nb-okagree:hover { transform: translateY(-2px) !important; box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.4) !important; }
-
-        .cc-nb-reject, .cc-nb-changep {
-            background: rgba(255,255,255,0.05) !important;
-            color: #ccc !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 12px !important;
-            padding: 12px 25px !important;
-            font-family: var(--font) !important;
-            cursor: pointer !important;
-            transition: var(--transition) !important;
-        }
-
-        /* --- REDISEÑO DEL CENTRO DE PREFERENCIAS (MODAL GRANDE SEGÚN TU ESTRUCTURA REAL) --- */
-        
-        /* 1. Capa externa translúcida de fondo */
+        /* Capa externa translúcida */
         .termsfeed-com---pc-dialog {
-            background: rgba(0, 0, 0, 0.85) !important;
-            backdrop-filter: blur(10px) !important;
+            background: rgba(0, 0, 0, 0.92) !important;
+            backdrop-filter: blur(8px) !important;
+            animation: fadeIn 0.4s ease-out;
         }
 
-        /* 2. Caja principal del modal */
+        /* Contenedor principal */
         .cc-pc-container {
-            background: rgba(10, 10, 10, 0.98) !important;
-            backdrop-filter: blur(20px) !important;
+            background: #141414 !important; /* Fondo interior sólido y oscuro */
             border: 2px solid var(--primary) !important;
-            border-radius: 24px !important;
+            border-radius: var(--radius-main) !important;
             font-family: var(--font) !important;
-            box-shadow: 0 0 50px rgba(var(--primary-rgb), 0.25) !important;
-            color: #ffffff !important;
+            box-shadow: 0 10px 60px rgba(var(--primary-rgb), 0.3) !important;
+            max-width: 900px !important;
+            width: 90% !important;
             overflow: hidden !important;
+            display: flex !important;
+            flex-direction: column !important;
         }
 
-        /* 3. Cabecera (Header) */
+        /* Cabecera */
         .cc-pc-head {
-            background: rgba(255, 255, 255, 0.02) !important;
+            background: #1a1a1a !important; /* Cabecera ligeramente diferente */
             border-bottom: 1px solid var(--border) !important;
             padding: 20px 30px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
         }
         .cc-pc-head-title-text {
             color: var(--primary) !important;
             font-family: var(--font) !important;
             font-weight: 700 !important;
             text-transform: uppercase !important;
+            font-size: 1.3rem !important;
             letter-spacing: 2px !important;
         }
         #cc-pc-head-title-headline {
             color: #ffffff !important;
             font-family: var(--font) !important;
             font-weight: 600 !important;
+            font-size: 1rem !important;
         }
         .cc-pc-head-close {
+            color: #888888 !important;
+            font-size: 1.4rem !important;
+            transition: var(--transition) !important;
             background: none !important;
             border: none !important;
-            color: #888888 !important;
-            font-size: 1.2rem !important;
             cursor: pointer !important;
-            transition: var(--transition) !important;
         }
         .cc-pc-head-close:hover {
             color: var(--primary) !important;
             transform: scale(1.1) rotate(90deg) !important;
         }
         .cc-pc-head-lang-select {
-            background: var(--surface) !important;
+            background: #262626 !important;
             color: #ffffff !important;
             border: 1px solid var(--border) !important;
-            border-radius: 8px !important;
+            border-radius: var(--radius-sub) !important;
             font-family: var(--font) !important;
-            padding: 4px 8px !important;
+            font-size: 0.9rem !important;
+            padding: 6px 12px !important;
         }
 
-        /* 4. Columnas Internas (Cuerpo) */
+        /* Cuerpo (Columnas) */
         .cc-cp-body {
-            background: transparent !important;
+            display: flex !important;
+            flex: 1 !important;
+            background: #141414 !important;
         }
 
-        /* Columna Izquierda: Botones de las pestañas */
+        /* Columna Izquierda (Pestañas) */
         .cc-cp-body-tabs {
             border-right: 1px solid var(--border) !important;
-            background: rgba(0, 0, 0, 0.2) !important;
-            padding: 15px !important;
-        }
-        .cc-cp-body-tabs-item {
-            margin-bottom: 8px !important;
-            background: transparent !important;
+            background: #1a1a1a !important; /* Mismo tono que la cabecera */
+            padding: 20px !important;
+            width: 300px !important;
+            flex-shrink: 0 !important;
         }
         .cc-cp-body-tabs-item-link {
-            background: rgba(255, 255, 255, 0.02) !important;
-            color: #bbbbbb !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 10px !important;
+            border: none !important;
+            background: transparent !important;
+            color: #888888 !important;
             font-family: var(--font) !important;
-            padding: 12px 15px !important;
-            text-align: left !important;
+            font-size: 0.95rem !important;
+            font-weight: 600 !important;
+            padding: 15px 20px !important;
+            border-radius: var(--radius-sub) !important;
             width: 100% !important;
+            text-align: left !important;
             cursor: pointer !important;
             transition: var(--transition) !important;
+            display: block !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
         }
         .cc-cp-body-tabs-item-link:hover {
             background: rgba(var(--primary-rgb), 0.05) !important;
-            border-color: var(--primary) !important;
             color: #ffffff !important;
+            padding-left: 25px !important; /* Desplazamiento lateral en hover */
         }
-        /* Cuando la pestaña está activa */
         .cc-cp-body-tabs-item[active="true"] .cc-cp-body-tabs-item-link {
             background: var(--primary) !important;
-            border-color: var(--primary) !important;
             color: #ffffff !important;
-            font-weight: 600 !important;
-            box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3) !important;
+            box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3) !important;
         }
 
-        /* Columna Derecha: Textos y descripciones */
+        /* Columna Derecha (Contenido) */
         .cc-cp-body-content {
-            background: transparent !important;
             padding: 30px !important;
+            background: transparent !important;
         }
         .cc-cp-body-content-entry-title {
             font-family: var(--font) !important;
             color: #ffffff !important;
             font-weight: 700 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.5px !important;
-            margin-bottom: 15px !important;
+            font-size: 1.3rem !important;
+            margin-bottom: 20px !important;
         }
         .cc-cp-body-content-entry-text {
             font-family: var(--font) !important;
             color: #aaaaaa !important;
-            line-height: 1.6 !important;
-            margin-bottom: 12px !important;
+            font-size: 0.95rem !important;
+            line-height: 1.7 !important;
+            margin-bottom: 15px !important;
         }
         .cc-cp-body-content-entry-text a {
             color: var(--primary) !important;
@@ -196,24 +166,25 @@
             text-decoration: underline !important;
         }
 
-        /* 5. Interruptores de Activación (Checkboxes / Toggles) */
+        /* Interruptores (Checkboxes) */
         .cc-custom-checkbox {
-            background: rgba(255, 255, 255, 0.02) !important;
+            background: rgba(255, 255, 255, 0.03) !important;
             border: 1px solid var(--border) !important;
             padding: 12px 20px !important;
-            border-radius: 12px !important;
+            border-radius: var(--radius-sub) !important;
             display: flex !important;
             align-items: center !important;
-            gap: 12px !important;
-            margin-top: 20px !important;
+            gap: 15px !important;
+            margin-top: 25px !important;
         }
         .cc-custom-checkbox label {
             font-family: var(--font) !important;
             font-weight: 600 !important;
             color: var(--primary) !important;
+            font-size: 0.9rem !important;
         }
         .cc-custom-checkbox label.is-inactive {
-            color: #666666 !important;
+            color: #777777 !important;
         }
         .cc-custom-checkbox input[type="checkbox"] {
             accent-color: var(--primary) !important;
@@ -221,40 +192,42 @@
             cursor: pointer !important;
         }
 
-        /* 6. Pie del modal (Footer interno) */
+        /* Pie del modal */
         .cc-cp-foot {
-            background: rgba(0, 0, 0, 0.4) !important;
             border-top: 1px solid var(--border) !important;
+            background: #1a1a1a !important; /* Tono de cabecera/menú */
             padding: 20px 30px !important;
+            display: flex !important;
+            justify-content: flex-end !important; /* Solo el botón a la derecha */
         }
         
-        /* Ocultar por completo la firma de TermsFeed */
+        /* ELIMINAR MARCA DE AGUA (Firma de TermsFeed) */
         .cc-cp-foot-byline {
-            display: none !important;
+            display: none !important; /* ¡DESAPARECE! */
         }
         
-        /* Botón de Guardar Preferencias */
+        /* Botón Guardar */
         .cc-cp-foot-save {
             background: var(--primary) !important;
             color: #ffffff !important;
             border: none !important;
-            border-radius: 12px !important;
-            padding: 14px 35px !important;
+            border-radius: var(--radius-sub) !important;
+            padding: 14px 40px !important;
             font-family: var(--font) !important;
             font-weight: 700 !important;
             text-transform: uppercase !important;
             cursor: pointer !important;
             transition: var(--transition) !important;
             box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3) !important;
+            letter-spacing: 1px !important;
+            font-size: 0.9rem !important;
         }
         .cc-cp-foot-save:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 25px rgba(var(--primary-rgb), 0.5) !important;
-            background-color: #ffffff !important;
-            color: #000000 !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 7px 25px rgba(var(--primary-rgb), 0.5) !important;
         }
 
-        /* --- FOOTER REDISEÑADO DE COCACOLALANDIA --- */
+        /* --- FOOTER DE COCACOLALANDIA --- */
         .coca-footer {
             background: var(--surface);
             border-top: 1px solid var(--border);
@@ -300,6 +273,11 @@
             background: rgba(255,255,255,0.02);
             padding: 20px; border-radius: 15px; border: 1px solid var(--border);
             font-size: 0.8rem; color: #555; text-align: left; margin-top: 30px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     `;
     head.appendChild(style);
