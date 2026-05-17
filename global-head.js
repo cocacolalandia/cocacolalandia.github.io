@@ -69,13 +69,109 @@
             transition: var(--transition) !important;
         }
 
-        /* Modal de Preferencias */
+        /* --- REDISEÑO AVANZADO DEL CENTRO DE PREFERENCIAS (MODAL DETALLADO TERMSFEED) --- */
         #termsfeed-com---pc {
-            background: rgba(15, 15, 15, 0.98) !important;
+            background: rgba(10, 10, 10, 0.98) !important;
             backdrop-filter: blur(20px) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 25px !important;
+            border: 2px solid var(--primary) !important;
+            border-radius: 24px !important;
             font-family: var(--font) !important;
+            box-shadow: 0 0 50px rgba(var(--primary-rgb), 0.25) !important;
+            padding: 30px !important;
+        }
+
+        /* Títulos principales dentro del modal */
+        #termsfeed-com---pc h2, 
+        #termsfeed-com---pc h3,
+        #termsfeed-com---pc .cc-pc-title {
+            font-family: var(--font) !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+        }
+
+        /* Descripciones y textos informativos */
+        #termsfeed-com---pc p,
+        #termsfeed-com---pc span,
+        #termsfeed-com---pc div {
+            font-family: var(--font) !important;
+            color: #bbbbbb !important;
+        }
+
+        /* Enlaces internos del texto legal */
+        #termsfeed-com---pc a {
+            color: var(--primary) !important;
+            text-decoration: none !important;
+            transition: var(--transition) !important;
+        }
+        #termsfeed-com---pc a:hover {
+            text-decoration: underline !important;
+            text-shadow: 0 0 8px rgba(var(--primary-rgb), 0.6) !important;
+        }
+
+        /* Botón principal de guardar preferencias */
+        #termsfeed-com---pc .cc-pc-save {
+            background: var(--primary) !important;
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 12px !important;
+            padding: 14px 35px !important;
+            font-family: var(--font) !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            cursor: pointer !important;
+            transition: var(--transition) !important;
+            box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3) !important;
+        }
+        #termsfeed-com---pc .cc-pc-save:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 25px rgba(var(--primary-rgb), 0.5) !important;
+            background-color: #ffffff !important;
+            color: #000000 !important;
+        }
+
+        /* Pestañas / Secciones laterales de categorías */
+        #termsfeed-com---pc .cc-pc-menu-item {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 10px !important;
+            margin-bottom: 8px !important;
+            transition: var(--transition) !important;
+        }
+        #termsfeed-com---pc .cc-pc-menu-item:hover {
+            background: rgba(var(--primary-rgb), 0.05) !important;
+            border-color: var(--primary) !important;
+        }
+        /* Categoría seleccionada activa */
+        #termsfeed-com---pc .cc-pc-menu-item-active {
+            background: var(--primary) !important;
+            border-color: var(--primary) !important;
+        }
+        #termsfeed-com---pc .cc-pc-menu-item-active span {
+            color: #ffffff !important;
+            font-weight: 600 !important;
+        }
+
+        /* Interruptores de activación (Switches) */
+        #termsfeed-com---pc .cc-pc-toggle input:checked + .cc-pc-toggle-slider {
+            background-color: var(--primary) !important;
+            box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5) !important;
+        }
+        #termsfeed-com---pc .cc-pc-toggle-slider {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 20px !important;
+        }
+
+        /* Botón de cerrar (X) del modal */
+        #termsfeed-com---pc .cc-pc-close {
+            color: #888888 !important;
+            transition: var(--transition) !important;
+        }
+        #termsfeed-com---pc .cc-pc-close:hover {
+            color: var(--primary) !important;
+            transform: scale(1.1) rotate(90deg) !important;
         }
 
         /* --- FOOTER REDISEÑADO --- */
@@ -96,11 +192,29 @@
             margin: 0 auto 40px;
         }
         .footer-col h4 { color: var(--primary); margin-bottom: 20px; font-weight: 700; }
+        
+        /* Estilos unificados para enlaces y el botón de ajustes */
         .footer-col a, #open_preferences_center {
-            display: block; color: #888; text-decoration: none; margin-bottom: 10px;
-            transition: 0.3s; background: none; border: none; font-family: inherit; font-size: 0.95rem; cursor: pointer;
+            display: block; 
+            color: #888; 
+            text-decoration: none; 
+            margin-bottom: 10px;
+            transition: 0.3s; 
+            background: none; 
+            border: none; 
+            font-family: inherit; 
+            font-size: 0.95rem; 
+            cursor: pointer;
+            padding: 0;
+            width: 100%;
+            text-align: center;
         }
-        .footer-col a:hover { color: var(--primary); transform: translateX(5px); }
+        
+        /* Efecto Hover unificado (Desplazamiento e iluminación) */
+        .footer-col a:hover, #open_preferences_center:hover { 
+            color: var(--primary); 
+            transform: translateX(5px); 
+        }
         
         .legal-box {
             background: rgba(255,255,255,0.02);
@@ -199,7 +313,7 @@
                 </div>
             </div>
             <div class="legal-box">
-                <strong>Disclaimer:</strong> Cocacolalandia es un sitio web proveedor de juegos. Sin embargo, esos juegos no son almacenados por Cocacolalandia, ni son programados por Cocacolalandia. En el momento en el que un usuario haga click en un botón para acceder a un juego, estará saliendo de la propiedad de Cocacolalandia y, por tanto, fuera de los efectos de la Política de Privacidad, Condiciones de Uso, Copyright y del Aviso Legal. No estamos afiliados con The Coca-Cola Company. Todas las marcas pertenecen a sus respectivos dueños.
+                <strong>Disclaimer:</strong> Cocacolalandia es un sitio web proveedor de juegos. Sin embargo, esos juegos no son almacenados por Cocacolalandia, ni son programados por Cocacolalandia. En el momento en el que un usuario haga click en un botón para acceder a un juego, estará saliendo de la propiedad de Cocacolalandia and, por tanto, fuera de los efectos de la Política de Privacidad, Condiciones de Uso, Copyright y del Aviso Legal. No estamos afiliados con The Coca-Cola Company. Todas las marcas pertenecen a sus respectivos dueños.
             </div>
         `;
         document.body.appendChild(footer);
