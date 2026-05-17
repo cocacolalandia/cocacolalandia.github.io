@@ -767,7 +767,7 @@
 
     // 1. Detectar si estamos en un iframe o en un entorno oculto (como about:blank)
     // window.top es la ventana de más arriba. Si no es igual a window.self, estamos atrapados.
-    if (window.self !== window.top || !window.location.href.includes("cocacolalandia.github.io") || !window.location.href.includes("sites.google.com/view/cocacolalandia)) {
+    if (window.self !== window.top || !window.location.href.includes("cocacolalandia.github.io") && !window.location.href.includes("sites.google.com/view/cocacolalandia")) {
       
       // Matamos la carga de la página inmediatamente
       window.stop();
