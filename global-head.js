@@ -1,6 +1,6 @@
 /**
- * COCACOLALANDIA CORE SYSTEM v4.3
- * Gestión Global de Temas, Seguridad, UI de Cookies Limpia y Cumplimiento Legal
+ * COCACOLALANDIA CORE SYSTEM v4.2
+ * Gestión Global de Temas, Seguridad, UI de Cookies y Cumplimiento Legal
  */
 
 (function() {
@@ -16,241 +16,266 @@
             --surface: #121212;
             --border: rgba(255, 255, 255, 0.1);
             --font: 'Space Grotesk', sans-serif;
-            --transition: all 0.3s ease;
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        body {
-            font-family: var(--font);
-            margin: 0;
-            background: var(--bg);
-            color: #eee;
-        }
-
-        /* --- REDISEÑO DEL CENTRO DE PREFERENCIAS (UI MINIMALISTA Y FUNCIONAL) --- */
+        /* --- TEMAS DINÁMICOS --- */
+        body.theme-matrix { --primary: #00ff41; --primary-rgb: 0, 255, 65; --bg: #000; }
+        body.theme-vaporwave { --primary: #ff00ff; --primary-rgb: 255, 0, 255; --bg: #2d004d; }
+        body.theme-cyberpunk { --primary: #fcee0a; --primary-rgb: 252, 238, 10; --bg: #000; }
+        body.theme-blood { --primary: #ff4d4d; --primary-rgb: 255, 77, 77; --bg: #1a0000; }
         
-        /* Fondo de la capa superpuesta */
-        .termsfeed-com---pc-dialog {
-            background: rgba(0, 0, 0, 0.85) !important;
-            backdrop-filter: blur(12px) !important;
-        }
-
-        /* Caja contenedora principal */
-        .cc-pc-container {
-            background: #111111 !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 16px !important;
+        /* --- REDISEÑO TOTAL TERMSFEED (COOKIES UI - BANNER INFERIOR) --- */
+        #termsfeed-com---nb {
+            background: rgba(10, 10, 10, 0.96) !important;
+            backdrop-filter: blur(15px) !important;
+            border-top: 2px solid var(--primary) !important;
+            padding: 25px 5% !important;
             font-family: var(--font) !important;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
-            color: #ffffff !important;
-            overflow: hidden !important;
-            max-width: 850px !important;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.8) !important;
         }
 
-        /* Cabecera del modal */
+        #termsfeed-com---nb p, #termsfeed-com---nb a, .cc-nb-title {
+            font-family: var(--font) !important;
+            color: #eee !important;
+        }
+
+        #termsfeed-com---nb a { color: var(--primary) !important; text-decoration: underline !important; }
+
+        /* Botones del Banner */
+        .cc-nb-okagree {
+            background: var(--primary) !important;
+            color: white !important;
+            border-radius: 12px !important;
+            padding: 12px 30px !important;
+            font-family: var(--font) !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: var(--transition) !important;
+        }
+
+        .cc-nb-okagree:hover { transform: translateY(-2px) !important; box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.4) !important; }
+
+        .cc-nb-reject, .cc-nb-changep {
+            background: rgba(255,255,255,0.05) !important;
+            color: #ccc !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            padding: 12px 25px !important;
+            font-family: var(--font) !important;
+            cursor: pointer !important;
+            transition: var(--transition) !important;
+        }
+
+        /* --- INTERFACE REESCRITA 100% PARA O CENTRO DE PREFERENCIAS (MODAL GRANDE) --- */
+        
+        /* Fondo externo do modal */
+        .termsfeed-com---pc-dialog {
+            background: rgba(4, 4, 4, 0.9) !important;
+            backdrop-filter: blur(16px) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        /* Estrutura base nova */
+        .cc-pc-container {
+            background: #0f0f0f !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 20px !important;
+            font-family: var(--font) !important;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 50px rgba(var(--primary-rgb), 0.05) !important;
+            color: #ffffff !important;
+            max-width: 880px !important;
+            width: 92% !important;
+            overflow: hidden !important;
+        }
+
+        /* Cabecera limpa sen bloques grises */
         .cc-pc-head {
-            background: #161616 !important;
-            border-bottom: 1px solid var(--border) !important;
-            padding: 20px 25px !important;
+            background: transparent !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+            padding: 25px 35px !important;
         }
         .cc-pc-head-title-text {
             color: var(--primary) !important;
             font-family: var(--font) !important;
             font-weight: 700 !important;
             text-transform: uppercase !important;
-            letter-spacing: 1.5px !important;
-            font-size: 1.2rem !important;
-            margin: 0 0 5px 0 !important;
+            letter-spacing: 2px !important;
+            font-size: 1.1rem !important;
+            margin-bottom: 4px !important;
         }
         #cc-pc-head-title-headline {
-            color: #888888 !important;
+            color: #ffffff !important;
             font-family: var(--font) !important;
-            font-weight: 400 !important;
-            font-size: 0.95rem !important;
-            margin: 0 !important;
+            font-weight: 500 !important;
+            font-size: 1.4rem !important;
         }
         .cc-pc-head-close {
-            background: none !important;
-            border: none !important;
-            color: #666666 !important;
-            font-size: 1.2rem !important;
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            color: #ffffff !important;
+            border-radius: 50% !important;
+            width: 36px !important;
+            height: 36px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
             cursor: pointer !important;
             transition: var(--transition) !important;
         }
         .cc-pc-head-close:hover {
-            color: var(--primary) !important;
+            background: var(--primary) !important;
+            border-color: var(--primary) !important;
+            transform: scale(1.05) !important;
         }
         .cc-pc-head-lang-select {
-            background: #1c1c1c !important;
+            background: #161616 !important;
             color: #ffffff !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 6px !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 8px !important;
             font-family: var(--font) !important;
-            padding: 4px 8px !important;
+            padding: 6px 12px !important;
             outline: none !important;
         }
 
-        /* Estructura del cuerpo */
+        /* Bloque de distribución interna */
         .cc-cp-body {
             background: transparent !important;
         }
 
-        /* Lista de Pestañas (Columna Izquierda) */
+        /* Menú lateral (Lista de seccións) */
         .cc-cp-body-tabs {
-            background: #161616 !important;
-            border-right: 1px solid var(--border) !important;
-            padding: 15px !important;
+            background: #131313 !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.03) !important;
+            padding: 25px 20px !important;
         }
         .cc-cp-body-tabs-item {
-            margin-bottom: 5px !important;
+            margin-bottom: 6px !important;
         }
         .cc-cp-body-tabs-item-link {
             background: transparent !important;
-            color: #aaaaaa !important;
+            color: #777777 !important;
             border: none !important;
-            border-radius: 8px !important;
+            border-radius: 10px !important;
             font-family: var(--font) !important;
             font-weight: 500 !important;
-            padding: 12px 15px !important;
+            padding: 14px 18px !important;
             text-align: left !important;
             width: 100% !important;
             cursor: pointer !important;
             transition: var(--transition) !important;
+            font-size: 0.95rem !important;
         }
         .cc-cp-body-tabs-item-link:hover {
-            background: rgba(255, 255, 255, 0.03) !important;
             color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.02) !important;
         }
-        /* Pestaña seleccionada activa */
+        /* Cando a sección está activa */
         .cc-cp-body-tabs-item[active="true"] .cc-cp-body-tabs-item-link {
-            background: rgba(var(--primary-rgb), 0.1) !important;
-            color: var(--primary) !important;
+            background: rgba(255, 255, 255, 0.04) !important;
+            color: #ffffff !important;
             font-weight: 600 !important;
+            border-left: 3px solid var(--primary) !important;
+            border-radius: 4px 10px 10px 4px !important;
         }
 
-        /* Contenido de las secciones (Columna Derecha) */
+        /* Panel de contidos á dereita */
         .cc-cp-body-content {
-            padding: 25px 30px !important;
+            padding: 40px !important;
             background: transparent !important;
         }
         .cc-cp-body-content-entry-title {
             font-family: var(--font) !important;
             color: #ffffff !important;
             font-weight: 600 !important;
-            font-size: 1.15rem !important;
-            margin-top: 0 !important;
-            margin-bottom: 15px !important;
+            font-size: 1.5rem !important;
+            margin-bottom: 20px !important;
         }
         .cc-cp-body-content-entry-text {
             font-family: var(--font) !important;
-            color: #999999 !important;
-            font-size: 0.9rem !important;
-            line-height: 1.6 !important;
-            margin-bottom: 15px !important;
+            color: #a0a0a0 !important;
+            font-size: 0.95rem !important;
+            line-height: 1.7 !important;
+            margin-bottom: 16px !important;
         }
         .cc-cp-body-content-entry-text a {
             color: var(--primary) !important;
             text-decoration: none !important;
+            font-weight: 500 !important;
         }
         .cc-cp-body-content-entry-text a:hover {
             text-decoration: underline !important;
         }
 
-        /* Toggles / Checkboxes de configuración */
+        /* Checkboxes integrados como interruptores elegantes */
         .cc-custom-checkbox {
-            background: #161616 !important;
-            border: 1px solid var(--border) !important;
-            padding: 12px 20px !important;
-            border-radius: 8px !important;
+            background: #141414 !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            padding: 16px 24px !important;
+            border-radius: 12px !important;
             display: flex !important;
             align-items: center !important;
-            gap: 12px !important;
-            margin-top: 20px !important;
+            gap: 16px !important;
+            margin-top: 30px !important;
+            width: fit-content !important;
         }
         .cc-custom-checkbox label {
             font-family: var(--font) !important;
             font-weight: 600 !important;
             color: var(--primary) !important;
             font-size: 0.9rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
             cursor: pointer !important;
         }
         .cc-custom-checkbox label.is-inactive {
-            color: #555555 !important;
+            color: #444444 !important;
         }
         .cc-custom-checkbox input[type="checkbox"] {
             accent-color: var(--primary) !important;
-            transform: scale(1.1) !important;
+            transform: scale(1.2) !important;
             cursor: pointer !important;
         }
 
-        /* Pie del modal */
+        /* Pe do modal */
         .cc-cp-foot {
-            background: #161616 !important;
-            border-top: 1px solid var(--border) !important;
-            padding: 15px 25px !important;
+            background: transparent !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+            padding: 25px 35px !important;
             display: flex !important;
             justify-content: flex-end !important;
         }
         
-        /* OCULTAR COMPLETAMENTE LA MARCA DE AGUA DE TERMSFEED */
+        /* OCULTAR COMPLETAMENTE TODO RASTRO DE TERMSFEED */
         .cc-cp-foot-byline {
             display: none !important;
         }
         
-        /* Botón de Guardar */
+        /* Botón de gardar as preferencias */
         .cc-cp-foot-save {
             background: var(--primary) !important;
             color: #ffffff !important;
             border: none !important;
-            border-radius: 8px !important;
-            padding: 12px 30px !important;
+            border-radius: 10px !important;
+            padding: 14px 35px !important;
             font-family: var(--font) !important;
-            font-weight: 600 !important;
+            font-weight: 700 !important;
             text-transform: uppercase !important;
             font-size: 0.85rem !important;
-            letter-spacing: 0.5px !important;
+            letter-spacing: 1px !important;
             cursor: pointer !important;
             transition: var(--transition) !important;
         }
         .cc-cp-foot-save:hover {
-            background: #e00034 !important;
-            box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.2) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(var(--primary-rgb), 0.4) !important;
         }
 
-        /* --- REDISEÑO TOTAL TERMSFEED (BANER INFERIOR DE ENTRADA) --- */
-        #termsfeed-com---nb {
-            background: #111111 !important;
-            border-top: 2px solid var(--primary) !important;
-            padding: 20px 5% !important;
-            font-family: var(--font) !important;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.5) !important;
-        }
-        #termsfeed-com---nb p, #termsfeed-com---nb a, .cc-nb-title {
-            font-family: var(--font) !important;
-            color: #ccc !important;
-            font-size: 0.9rem !important;
-        }
-        #termsfeed-com---nb a { color: var(--primary) !important; }
-        .cc-nb-okagree {
-            background: var(--primary) !important;
-            color: white !important;
-            border-radius: 8px !important;
-            padding: 10px 24px !important;
-            font-family: var(--font) !important;
-            font-weight: 600 !important;
-            border: none !important;
-            cursor: pointer !important;
-        }
-        .cc-nb-reject, .cc-nb-changep {
-            background: rgba(255,255,255,0.05) !important;
-            color: #aaa !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 8px !important;
-            padding: 10px 20px !important;
-            font-family: var(--font) !important;
-            cursor: pointer !important;
-        }
-
-        /* --- FOOTER UNIFICADO DE COCACOLALANDIA --- */
+        /* --- FOOTER REDISEÑADO DE COCACOLALANDIA --- */
         .coca-footer {
             background: var(--surface);
             border-top: 1px solid var(--border);
@@ -269,6 +294,7 @@
         }
         .footer-col h4 { color: var(--primary); margin-bottom: 20px; font-weight: 700; }
         
+        /* Estilos unificados para enlaces y el botón de ajustes */
         .footer-col a, #open_preferences_center {
             display: block; 
             color: #888; 
@@ -285,6 +311,7 @@
             text-align: center;
         }
         
+        /* Efecto Hover unificado (Desplazamiento e iluminación) */
         .footer-col a:hover, #open_preferences_center:hover { 
             color: var(--primary); 
             transform: translateX(5px); 
