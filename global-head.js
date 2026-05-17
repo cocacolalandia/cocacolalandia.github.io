@@ -25,7 +25,7 @@
         body.theme-cyberpunk { --primary: #fcee0a; --primary-rgb: 252, 238, 10; --bg: #000; }
         body.theme-blood { --primary: #ff4d4d; --primary-rgb: 255, 77, 77; --bg: #1a0000; }
         
-        /* --- REDISEÑO TOTAL TERMSFEED (COOKIES UI) --- */
+        /* --- REDISEÑO TOTAL TERMSFEED (COOKIES UI - BANNER INFERIOR) --- */
         #termsfeed-com---nb {
             background: rgba(10, 10, 10, 0.96) !important;
             backdrop-filter: blur(15px) !important;
@@ -69,49 +69,172 @@
             transition: var(--transition) !important;
         }
 
-        /* --- REDISEÑO AVANZADO DEL CENTRO DE PREFERENCIAS (MODAL DETALLADO TERMSFEED) --- */
-        #termsfeed-com---pc {
+        /* --- REDISEÑO DEL CENTRO DE PREFERENCIAS (MODAL GRANDE SEGÚN TU ESTRUCTURA REAL) --- */
+        
+        /* 1. Capa externa translúcida de fondo */
+        .termsfeed-com---pc-dialog {
+            background: rgba(0, 0, 0, 0.85) !important;
+            backdrop-filter: blur(10px) !important;
+        }
+
+        /* 2. Caja principal del modal */
+        .cc-pc-container {
             background: rgba(10, 10, 10, 0.98) !important;
             backdrop-filter: blur(20px) !important;
             border: 2px solid var(--primary) !important;
             border-radius: 24px !important;
             font-family: var(--font) !important;
             box-shadow: 0 0 50px rgba(var(--primary-rgb), 0.25) !important;
-            padding: 30px !important;
+            color: #ffffff !important;
+            overflow: hidden !important;
         }
 
-        /* Títulos principales dentro del modal */
-        #termsfeed-com---pc h2, 
-        #termsfeed-com---pc h3,
-        #termsfeed-com---pc .cc-pc-title {
+        /* 3. Cabecera (Header) */
+        .cc-pc-head {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border-bottom: 1px solid var(--border) !important;
+            padding: 20px 30px !important;
+        }
+        .cc-pc-head-title-text {
+            color: var(--primary) !important;
+            font-family: var(--font) !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 2px !important;
+        }
+        #cc-pc-head-title-headline {
+            color: #ffffff !important;
+            font-family: var(--font) !important;
+            font-weight: 600 !important;
+        }
+        .cc-pc-head-close {
+            background: none !important;
+            border: none !important;
+            color: #888888 !important;
+            font-size: 1.2rem !important;
+            cursor: pointer !important;
+            transition: var(--transition) !important;
+        }
+        .cc-pc-head-close:hover {
+            color: var(--primary) !important;
+            transform: scale(1.1) rotate(90deg) !important;
+        }
+        .cc-pc-head-lang-select {
+            background: var(--surface) !important;
+            color: #ffffff !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 8px !important;
+            font-family: var(--font) !important;
+            padding: 4px 8px !important;
+        }
+
+        /* 4. Columnas Internas (Cuerpo) */
+        .cc-cp-body {
+            background: transparent !important;
+        }
+
+        /* Columna Izquierda: Botones de las pestañas */
+        .cc-cp-body-tabs {
+            border-right: 1px solid var(--border) !important;
+            background: rgba(0, 0, 0, 0.2) !important;
+            padding: 15px !important;
+        }
+        .cc-cp-body-tabs-item {
+            margin-bottom: 8px !important;
+            background: transparent !important;
+        }
+        .cc-cp-body-tabs-item-link {
+            background: rgba(255, 255, 255, 0.02) !important;
+            color: #bbbbbb !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 10px !important;
+            font-family: var(--font) !important;
+            padding: 12px 15px !important;
+            text-align: left !important;
+            width: 100% !important;
+            cursor: pointer !important;
+            transition: var(--transition) !important;
+        }
+        .cc-cp-body-tabs-item-link:hover {
+            background: rgba(var(--primary-rgb), 0.05) !important;
+            border-color: var(--primary) !important;
+            color: #ffffff !important;
+        }
+        /* Cuando la pestaña está activa */
+        .cc-cp-body-tabs-item[active="true"] .cc-cp-body-tabs-item-link {
+            background: var(--primary) !important;
+            border-color: var(--primary) !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3) !important;
+        }
+
+        /* Columna Derecha: Textos y descripciones */
+        .cc-cp-body-content {
+            background: transparent !important;
+            padding: 30px !important;
+        }
+        .cc-cp-body-content-entry-title {
             font-family: var(--font) !important;
             color: #ffffff !important;
             font-weight: 700 !important;
             text-transform: uppercase !important;
-            letter-spacing: 1px !important;
+            letter-spacing: 0.5px !important;
+            margin-bottom: 15px !important;
         }
-
-        /* Descripciones y textos informativos */
-        #termsfeed-com---pc p,
-        #termsfeed-com---pc span,
-        #termsfeed-com---pc div {
+        .cc-cp-body-content-entry-text {
             font-family: var(--font) !important;
-            color: #bbbbbb !important;
+            color: #aaaaaa !important;
+            line-height: 1.6 !important;
+            margin-bottom: 12px !important;
         }
-
-        /* Enlaces internos del texto legal */
-        #termsfeed-com---pc a {
+        .cc-cp-body-content-entry-text a {
             color: var(--primary) !important;
             text-decoration: none !important;
-            transition: var(--transition) !important;
         }
-        #termsfeed-com---pc a:hover {
+        .cc-cp-body-content-entry-text a:hover {
             text-decoration: underline !important;
-            text-shadow: 0 0 8px rgba(var(--primary-rgb), 0.6) !important;
         }
 
-        /* Botón principal de guardar preferencias */
-        #termsfeed-com---pc .cc-pc-save {
+        /* 5. Interruptores de Activación (Checkboxes / Toggles) */
+        .cc-custom-checkbox {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid var(--border) !important;
+            padding: 12px 20px !important;
+            border-radius: 12px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            margin-top: 20px !important;
+        }
+        .cc-custom-checkbox label {
+            font-family: var(--font) !important;
+            font-weight: 600 !important;
+            color: var(--primary) !important;
+        }
+        .cc-custom-checkbox label.is-inactive {
+            color: #666666 !important;
+        }
+        .cc-custom-checkbox input[type="checkbox"] {
+            accent-color: var(--primary) !important;
+            transform: scale(1.2) !important;
+            cursor: pointer !important;
+        }
+
+        /* 6. Pie del modal (Footer interno) */
+        .cc-cp-foot {
+            background: rgba(0, 0, 0, 0.4) !important;
+            border-top: 1px solid var(--border) !important;
+            padding: 20px 30px !important;
+        }
+        
+        /* Ocultar por completo la firma de TermsFeed */
+        .cc-cp-foot-byline {
+            display: none !important;
+        }
+        
+        /* Botón de Guardar Preferencias */
+        .cc-cp-foot-save {
             background: var(--primary) !important;
             color: #ffffff !important;
             border: none !important;
@@ -124,57 +247,14 @@
             transition: var(--transition) !important;
             box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3) !important;
         }
-        #termsfeed-com---pc .cc-pc-save:hover {
+        .cc-cp-foot-save:hover {
             transform: translateY(-2px) !important;
             box-shadow: 0 6px 25px rgba(var(--primary-rgb), 0.5) !important;
             background-color: #ffffff !important;
             color: #000000 !important;
         }
 
-        /* Pestañas / Secciones laterales de categorías */
-        #termsfeed-com---pc .cc-pc-menu-item {
-            background: rgba(255, 255, 255, 0.02) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 10px !important;
-            margin-bottom: 8px !important;
-            transition: var(--transition) !important;
-        }
-        #termsfeed-com---pc .cc-pc-menu-item:hover {
-            background: rgba(var(--primary-rgb), 0.05) !important;
-            border-color: var(--primary) !important;
-        }
-        /* Categoría seleccionada activa */
-        #termsfeed-com---pc .cc-pc-menu-item-active {
-            background: var(--primary) !important;
-            border-color: var(--primary) !important;
-        }
-        #termsfeed-com---pc .cc-pc-menu-item-active span {
-            color: #ffffff !important;
-            font-weight: 600 !important;
-        }
-
-        /* Interruptores de activación (Switches) */
-        #termsfeed-com---pc .cc-pc-toggle input:checked + .cc-pc-toggle-slider {
-            background-color: var(--primary) !important;
-            box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5) !important;
-        }
-        #termsfeed-com---pc .cc-pc-toggle-slider {
-            background-color: rgba(255, 255, 255, 0.1) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 20px !important;
-        }
-
-        /* Botón de cerrar (X) del modal */
-        #termsfeed-com---pc .cc-pc-close {
-            color: #888888 !important;
-            transition: var(--transition) !important;
-        }
-        #termsfeed-com---pc .cc-pc-close:hover {
-            color: var(--primary) !important;
-            transform: scale(1.1) rotate(90deg) !important;
-        }
-
-        /* --- FOOTER REDISEÑADO --- */
+        /* --- FOOTER REDISEÑADO DE COCACOLALANDIA --- */
         .coca-footer {
             background: var(--surface);
             border-top: 1px solid var(--border);
@@ -313,7 +393,7 @@
                 </div>
             </div>
             <div class="legal-box">
-                <strong>Disclaimer:</strong> Cocacolalandia es un sitio web proveedor de juegos. Sin embargo, esos juegos no son almacenados por Cocacolalandia, ni son programados por Cocacolalandia. En el momento en el que un usuario haga click en un botón para acceder a un juego, estará saliendo de la propiedad de Cocacolalandia and, por tanto, fuera de los efectos de la Política de Privacidad, Condiciones de Uso, Copyright y del Aviso Legal. No estamos afiliados con The Coca-Cola Company. Todas las marcas pertenecen a sus respectivos dueños.
+                <strong>Disclaimer:</strong> Cocacolalandia es un sitio web proveedor de juegos. Sin embargo, esos juegos no son almacenados por Cocacolalandia, ni son programados por Cocacolalandia. En el momento en el que un usuario haga click en un botón para acceder a un juego, estará saliendo de la propiedad de Cocacolalandia y, por tanto, fuera de los efectos de la Política de Privacidad, Condiciones de Uso, Copyright y del Aviso Legal. No estamos afiliados con The Coca-Cola Company. Todas las marcas pertenecen a sus respectivos dueños.
             </div>
         `;
         document.body.appendChild(footer);
